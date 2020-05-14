@@ -4,9 +4,6 @@ import { productDetails } from "../actions/ProductAction";
 import './ProductDetails.css';
 import getSymbolFromCurrency from 'currency-symbol-map';
 
-import { Html5Entities } from 'html-entities';
-const htmlEntities = new Html5Entities();
-
 function ProductDetails(props) {  
 
   const dispatch = useDispatch();  
@@ -17,10 +14,21 @@ function ProductDetails(props) {
   const [summary, setSummary] = useState("");
   const [review, setReview] = useState("");
 
+  const [selectedImage, setSelectedImage] = useState("");
+
+  
+
   useEffect(() => {       
-    dispatch(productDetails(props.match.params.sku));    
+    dispatch(productDetails(props.match.params.sku));        
   },[]);
 
+  useEffect(() => {                   
+    const data = selector.product.productDetails.map(item => {
+            setSelectedImage(item.image);
+            return item.image;
+      });      
+      console.log(data);
+  },[selector.product.productDetails]);
 
   return (     
     <section id="productDetails">
@@ -35,12 +43,34 @@ function ProductDetails(props) {
                       <div key={person.id} className="mx-auto">
                           <div className="row mx-auto pt-3">
                           <div className="col-3 pt-2 mx-auto text-center">
-                                <img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+person.image} alt="new" style={{width: "200px", height: "250px"}}/>
-                                <div className="row col-12">                                    
-                                {/*selector.product.productDetails.media_gallery_entries.file*/}
+
+                                <div className="row col-12 text-center">                                                                    
                                     {person.media_gallery_entries.map((productImage, i) => (                     
-                                        <div key={productImage.file} className="p-1">                                            
-                                            <img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "75px", height: "100px"}}/>
+                                        <div className="text-center">
+                                        {selectedImage == productImage.file ?
+                                            <div key={productImage.file} className="p-1 inline-block">
+                                                <img className="" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "200px", height: "250px"}}/>
+                                            </div>
+                                            :
+                                            null
+                                        }
+                                        </div>
+                                    ))}                                    
+                                </div>
+
+                                {/*<img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+person.image} alt="new" style={{width: "200px", height: "250px"}}/>*/}
+                                <div className="row col-12 pic-container">                                                                    
+                                    {person.media_gallery_entries.map((productImage, i) => (                     
+                                        <div>
+                                            {selectedImage == productImage.file ?
+                                            <div key={productImage.file} className="p-1 inline-block border border-primary border-3">                                            
+                                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "75px", height: "100px"}}/>
+                                            </div>
+                                            :
+                                            <div key={productImage.file} className="p-1 inline-block">                                            
+                                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "75px", height: "100px"}}/>
+                                            </div>
+                                            }
                                         </div>
                                     ))}                                    
                                 </div>
