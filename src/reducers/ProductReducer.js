@@ -6,6 +6,8 @@ let InitialState = {
   isFetching: true,     
   total_count: 0,
   currentPage: 1,  
+  productDetalisLoaded: 'true',
+  productDetails: [],
 }
 
 function ProductReducer(state = InitialState, action) {
@@ -22,6 +24,13 @@ function ProductReducer(state = InitialState, action) {
           isFetching: false,        
 
         };   
+        case 'PRODUCT_DETAILS':        
+          let { productDetailsData } = action.payload;          
+          return {
+            ...state,          
+            productDetalisLoaded: 'false',
+            productDetails: productDetailsData,
+          };
 
       default:
         return state;

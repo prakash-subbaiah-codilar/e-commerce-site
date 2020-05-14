@@ -67,3 +67,42 @@ export const productData = (pageNumber, cat_id) => dispatch => {
     });
 
 };
+
+
+
+
+
+
+
+export const productDetails = () => dispatch => {           
+  
+  fetch('http://127.0.0.1/magento2/graphql', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          query: `
+          
+          `,
+          variables: null
+      })
+  }).then(r => r.json()).then((result) => {
+  console.log(result.data);          
+  
+  let datas = {
+    productDetailsData: "",    
+  }
+  return dispatch({
+      type: 'PRODUCT_DETAILS',
+      payload: datas,
+  });  
+}).catch((error) => {
+  console.error(error);
+  return dispatch({
+      type: 'PRODUCT_DETAILS',
+      payload: ""
+  });
+});
+
+};
