@@ -20,6 +20,7 @@ export const productData = (pageNumber, cat_id) => dispatch => {
                         id
                         description 
                         image      
+                        sku
                         price {
                           regularPrice {
                             amount {
@@ -74,7 +75,7 @@ export const productData = (pageNumber, cat_id) => dispatch => {
 
 
 
-export const productDetails = () => dispatch => {           
+export const productDetails = (sku_key) => dispatch => {           
   
   fetch('http://127.0.0.1/magento2/graphql', {
       method: 'POST',
@@ -83,15 +84,51 @@ export const productDetails = () => dispatch => {
       },
       body: JSON.stringify({
           query: `
-          
+          query {
+            products(filter: {
+              sku: {
+                eq: "`+sku_key+`"
+              }
+            } pageSize: 6
+              currentPage:2 ) {
+              items {
+                name
+                id
+                description 
+                image   
+                stock_status
+                sku
+               price {
+                  regularPrice {
+                    amount {
+                      value
+                      currency
+                    }
+                  }
+                }
+                special_price      
+                image
+                small_image      
+                media_gallery_entries {
+                  file
+                }   
+                categories {
+                  id
+                }
+               
+              }
+              total_count
+            }
+          }
           `,
           variables: null
       })
   }).then(r => r.json()).then((result) => {
   console.log(result.data);          
+  console.log(result.data.products.items);
   
   let datas = {
-    productDetailsData: "",    
+    productDetailsData: result.data.products.items,    
   }
   return dispatch({
       type: 'PRODUCT_DETAILS',

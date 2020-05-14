@@ -48,8 +48,8 @@ function Product(props) {
      };
 
   //Go to Product Details Page
-    const push_product_details = () => {       
-      let url = "/ProductDetails";                
+    const push_product_details = (sku) => {       
+      let url = "/ProductDetails/"+sku+"";                      
       props.history.push(url);      
     };
 
@@ -84,7 +84,7 @@ function Product(props) {
                     <div key={person.id} className="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mx-auto p-3 m-1 mb-5 bg-white rounded">
                       <div className="shadowContainer p-3 mx-auto">
                     <h6>{person.name}</h6>                                            
-                      <div className="mx-auto" onClick={push_product_details}><img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
+                      <div className="mx-auto" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
                       <div>
                       {getSymbolFromCurrency(person.price.regularPrice.amount.currency)}
                           {person.price.regularPrice.amount.value}
@@ -107,7 +107,7 @@ function Product(props) {
                       :
                       <div key={person.id} className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-2 pb-2 mx-auto">
                         <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 mx-auto">
-                          <div className="text-center" onClick={push_product_details}><img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
+                          <div className="text-center" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
                         </div>
                         <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-8 col-xl-8 mx-auto">
                           <h6 className="pt-2">{person.name}</h6>   
@@ -160,7 +160,7 @@ function Product(props) {
                     
                       <div key={person.id} className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 pt-2 pb-2 mx-auto" style={{padding: '1px'}}>
                         
-                          <div onClick={push_product_details}>
+                          <div onClick={push_product_details.bind(this, person.sku)}>
                             <img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+person.image} alt="new" style={{width: "100%", height: "%100"}} />
                           </div>
                         
