@@ -68,7 +68,7 @@ const push_product_details = (sku) => {
 
   };
 
-/*Grid, List and Pagination Buttons Layout*/
+/*Grid Button, List Button and Pagination Buttons Layout*/
 const grid_list_pagination = () => {
   return <div className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 mx-auto">
         
@@ -209,7 +209,7 @@ const lesserThanMediumScreenLayout = () => {
         <div className="mx-auto">          
           <h1 className="text-center text-dark">Product List</h1>      
           
-          {/*Grid View, List View and Pagination Buttons*/}
+          {/*Grid Button View, List Button View and Pagination Button View*/}
           {grid_list_pagination()}
           
           {/*Display Only on Large screen and extra-large screen */}

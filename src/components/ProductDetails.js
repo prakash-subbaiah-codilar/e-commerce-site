@@ -9,6 +9,10 @@ import Config from './../../Config';//Get the API_KEY_URL
 
 import './ProductDetails.css';
 
+import './PopupModal.css';
+
+import Popupimage from './Popupimage';
+
 function ProductDetails(props) {  
 
   const dispatch = useDispatch();  
@@ -26,7 +30,7 @@ function ProductDetails(props) {
     dispatch(productDetails(props.match.params.sku));        
   },[]);
 
-  /*Update the selected image to view in first*/
+  /*Asign the selected image to view in first*/
   useEffect(() => {                   
     const data = selector.product.productDetails.map(item => {
             setSelectedImage(item.image);
@@ -35,15 +39,30 @@ function ProductDetails(props) {
     console.log(data);
   },[selector.product.productDetails]);
 
+
+/*Popup Image ZoomIn*/
+function zoomin() {     
+/*    var GFG = document.getElementById('modalImage'); 
+    var currWidth = GFG.clientWidth; 
+    GFG.style.width = (currWidth + 100) + "px"; */
+} 
+/*Popup Image ZoomOut*/  
+function zoomout() {     
+    /*var GFG = document.getElementById('modalImage'); 
+    var currWidth = GFG.clientWidth;     
+    GFG.style.width = (currWidth - 100) + "px"; */
+} 
+
 /*Left Column Product Image View Layout*/
 const left_column_productImageView = (person) => {
     return <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 pt-2 mx-auto text-center">
 
+                {/*View product image large size*/}
                 <div className="row col-12 text-center">                                                                    
                     {person.media_gallery_entries.map((productImage, i) => (                     
                         <div className="text-center">
                         {selectedImage === productImage.file ?
-                            <div key={productImage.file} className="p-1 inline-block">
+                            <div key={productImage.file} className="p-1 inline-block" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">
                                 <img className="" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "200px", height: "250px"}}/>
                             </div>
                             :
@@ -53,6 +72,10 @@ const left_column_productImageView = (person) => {
                     ))}                                    
                 </div>
                 
+                {/*Image Poup in Full Screen slideshow */}
+                <Popupimage person={person} selectedImage={selectedImage} zoomin={zoomin} zoomout={zoomout} />
+
+                {/*View product image small size*/}
                 <div className="row col-12 pic-container">                                                                    
                     {person.media_gallery_entries.map((productImage, i) => (                     
                         <div>
@@ -166,7 +189,6 @@ const detailsReviewTab = (person) => {
   return (     
     <section id="productDetails">
     <div className="mx-auto pt-3">                
-
           {selector.product.productDetalisLoaded ? 
               <div>                
                 {(selector.product.productDetails.length > 0 && selector.product.productDetails.length != null) ?
@@ -200,9 +222,6 @@ const detailsReviewTab = (person) => {
                 :                
                 <div className="mx-auto text-center"><img style={{width:150, height:150}} src={require('./loading_spinner.gif')} alt="new" /></div>                
           }
-
-
-
       </div>
       </section>
   );

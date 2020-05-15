@@ -1,8 +1,8 @@
- //nav bar hide after select menu items in mobile view
- $(document).on('click',function(){
-   $('#navbarNav').collapse('hide');
- });
- 
- 
-
- 
+$(document).ready(function(){
+    $(".show-modal").click(function(){
+        $("#myModal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    });
+});
