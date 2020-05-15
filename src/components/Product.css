@@ -2,19 +2,18 @@
     padding-bottom: 100px;
   }  
 
-  .shadowContainer:hover {
+/*Make a shadow for mouse over the product */
+.shadowContainer:hover {
     -webkit-box-shadow: -1px -1px 1px 2px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     -moz-box-shadow:    -1px -1px 1px 2px #ccc;  /* Firefox 3.5 - 3.6 */
     box-shadow:         -1px -1px 1px 2px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
-  }
+}
 
-  #productHover {
-    /*display: none;*/
+#productHover {
     visibility: hidden;
 }
     
 .shadowContainer:hover #productHover {
-    /*display: block;*/
     visibility: visible;
 }
 
@@ -64,7 +63,7 @@
   
   }
 
-
+/*Remove padding space in mobile device for product image view*/
   .full-width-row {
     overflow-x: hidden;
   }

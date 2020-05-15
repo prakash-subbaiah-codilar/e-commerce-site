@@ -1,4 +1,5 @@
-//import axios from 'axios';
+
+/*Fetch the List of Products*/
 export const productData = (pageNumber, cat_id) => dispatch => {           
   
         fetch('http://127.0.0.1/magento2/graphql', {
@@ -47,8 +48,6 @@ export const productData = (pageNumber, cat_id) => dispatch => {
                 variables: null
             })
         }).then(r => r.json()).then((result) => {
-        //console.log(result.data);        
-        //console.log(result.data.products);
         let datas = {
                       productDatas: result.data.products.items,
                       total_counts: result.data.products.total_count,
@@ -69,12 +68,7 @@ export const productData = (pageNumber, cat_id) => dispatch => {
 
 };
 
-
-
-
-
-
-
+/*Fetch the Product Deatils*/
 export const productDetails = (sku_key) => dispatch => {           
   
   fetch('http://127.0.0.1/magento2/graphql', {

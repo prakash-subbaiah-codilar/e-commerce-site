@@ -16,13 +16,16 @@ import thunk from 'redux-thunk';
 
 import productReducer from "./reducers/ProductReducer";
 
+//Combine the Multiple Reducers
 const rootReducer = combineReducers({    
     product: productReducer    
 });
 
+//Create Store to connect Root Reducre and Middleware
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const rootElement = document.getElementById('root')
+
 ReactDOM.render(
   <Provider store={store}>      
     <App />

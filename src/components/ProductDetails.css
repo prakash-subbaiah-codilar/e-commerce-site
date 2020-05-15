@@ -8,20 +8,16 @@
     font-size: 40px;
   }
 
-  #productDetailsPriceBottom {
+#productDetailsPriceBottom {
     box-shadow: 0px 10px 5px -10px gray;
   }
 
-  .full-width-row {
-    overflow-x: hidden;
-  }
-
-  #tabs .nav-item {
+#tabs .nav-item {
     background-color:#fff;
     color: gray;
   }
   
-  #tabs .nav-item .active {
+#tabs .nav-item .active {
     background-color: #D3D3D3;
     color: #000;    
   }
