@@ -5,6 +5,8 @@ import { productDetails } from "../actions/ProductAction";
 
 import getSymbolFromCurrency from 'currency-symbol-map';
 
+import Config from './../../Config';//Get the API_KEY_URL
+
 import './ProductDetails.css';
 
 function ProductDetails(props) {  
@@ -42,7 +44,7 @@ const left_column_productImageView = (person) => {
                         <div className="text-center">
                         {selectedImage === productImage.file ?
                             <div key={productImage.file} className="p-1 inline-block">
-                                <img className="" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "200px", height: "250px"}}/>
+                                <img className="" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "200px", height: "250px"}}/>
                             </div>
                             :
                             null
@@ -56,11 +58,11 @@ const left_column_productImageView = (person) => {
                         <div>
                             {selectedImage === productImage.file ?
                             <div key={productImage.file} className="p-1 inline-block border border-primary border-3">                                            
-                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "75px", height: "100px"}} />
+                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "75px", height: "100px"}} />
                             </div>
                             :
                             <div key={productImage.file} className="p-1 inline-block">                                            
-                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "75px", height: "100px"}}/>
+                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "75px", height: "100px"}}/>
                             </div>
                             }
                         </div>

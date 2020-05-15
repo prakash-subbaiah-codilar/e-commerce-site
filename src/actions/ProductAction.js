@@ -1,8 +1,9 @@
+import Config from './../../Config';//Get the API_KEY_URL
 
 /*Fetch the List of Products*/
 export const productData = (pageNumber, cat_id) => dispatch => {           
   
-        fetch('http://127.0.0.1/magento2/graphql', {
+        fetch(''+Config[0].API_KEY_URL+'graphql', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -71,7 +72,7 @@ export const productData = (pageNumber, cat_id) => dispatch => {
 /*Fetch the Product Deatils*/
 export const productDetails = (sku_key) => dispatch => {           
   
-  fetch('http://127.0.0.1/magento2/graphql', {
+  fetch(''+Config[0].API_KEY_URL+'graphql', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',

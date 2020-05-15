@@ -12,6 +12,8 @@ import queryString from 'query-string';
 
 import './Product.css';
 
+import Config from './../../Config';//Get the API_KEY_URL
+
 function Product(props) {
     
   const dispatch = useDispatch();
@@ -26,11 +28,15 @@ function Product(props) {
 
 /*Fetch data from productData Function*/
   useEffect(() => {       
-    
+    //alert(Config[0].API_KEY_URL);
     const values = queryString.parse(props.location.search);      
     console.log(queryString.parse(props.location.search).page);
     //Call productData function to fetch data 
-    dispatch(productData(values.page, props.match.params.id));
+    if(values.page){
+        dispatch(productData(values.page, props.match.params.id));
+    }else{
+        dispatch(productData(currentPage, props.match.params.id));
+    }
 
   },[]);
 
@@ -88,7 +94,7 @@ const grid_list_pagination = () => {
 const gridViewStructure = (person) => {
   return  <div className="shadowContainer p-3 mx-auto">
             <h6>{person.name}</h6>                                            
-            <div className="mx-auto" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
+            <div className="mx-auto" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
             <div>
                 {getSymbolFromCurrency(person.price.regularPrice.amount.currency)}
                 {person.price.regularPrice.amount.value}
@@ -150,7 +156,7 @@ const greaterThanMediumScreenLayout = () => {
                           :
                           <div key={person.id} className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-2 pb-2 mx-auto">
                             <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 mx-auto">
-                              <div className="text-center" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
+                              <div className="text-center" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={""+Config[0].API_KEY_URL+"magento2/pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
                             </div>
                             <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-8 col-xl-8 mx-auto">
                               {listViewStructure(person)}                          
@@ -182,7 +188,7 @@ const lesserThanMediumScreenLayout = () => {
                         
                           <div key={person.id} className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 pt-2 pb-2 mx-auto" style={{padding: '1px'}}>                        
                               <div onClick={push_product_details.bind(this, person.sku)}>
-                                <img className="mx-auto" src={"http://127.0.0.1/magento2/pub/media/catalog/product/"+person.image} alt="new" style={{width: "100%", height: "%100"}} />
+                                <img className="mx-auto" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+person.image} alt="new" style={{width: "100%", height: "%100"}} />
                               </div>
                               {listViewStructure(person)}                                                                          
                           </div>
