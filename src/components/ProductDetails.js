@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 import { productDetails } from "../actions/ProductAction";
@@ -17,7 +18,7 @@ function ProductDetails(props) {
 
   const dispatch = useDispatch();  
   const selector = useSelector(state => state);
-  
+    
   const [qty, setQty] = useState(1);
   const [nickname, setNickname] = useState("");
   const [summary, setSummary] = useState("");
@@ -35,22 +36,19 @@ function ProductDetails(props) {
     const data = selector.product.productDetails.map(item => {
             setSelectedImage(item.image);
             return item.image;
-      });      
+      });            
     console.log(data);
   },[selector.product.productDetails]);
 
 
 /*Popup Image ZoomIn*/
-function zoomin() {     
-/*    var GFG = document.getElementById('modalImage'); 
-    var currWidth = GFG.clientWidth; 
-    GFG.style.width = (currWidth + 100) + "px"; */
+function zoomin() {        
+    document.querySelector(".active .modalImage").style.width = (document.querySelector(".active .modalImage").width)+300+"px";    
 } 
+
 /*Popup Image ZoomOut*/  
-function zoomout() {     
-    /*var GFG = document.getElementById('modalImage'); 
-    var currWidth = GFG.clientWidth;     
-    GFG.style.width = (currWidth - 100) + "px"; */
+function zoomout() {         
+    document.querySelector(".active .modalImage").style.width = (document.querySelector(".active .modalImage").width)-300+"px";    
 } 
 
 /*Left Column Product Image View Layout*/

@@ -4,6 +4,8 @@ import './index.css';
 
 const Navigation = () =>
 <header id="header">
+
+  {/*Top header with signin and signup*/}
   <div className="bg-secondary fixed-top pt-0 pb-0">
   <ul className="text-right text-light">    
     <a className="text-right"><button id="back" className="btn btn-sm text-light">Default welcome msg!</button></a>
@@ -12,6 +14,7 @@ const Navigation = () =>
   </ul>
   </div>
 
+{/*Middle header with search and Add cart section*/}
 <nav className="navbar navbar-expand-sm navbar-light bg-light mt-5 pt-4 mb-0">
         <div className="container">
           <a className="navbar-brand" href="#">LUMA</a>
@@ -49,6 +52,8 @@ const Navigation = () =>
             </div>
           </div>
     </nav>
+    
+    {/*Bottom Header with Menus by category*/}
     <div className="pt-2 pb-1" style={{backgroundColor: '#DCDCDC'}}>
       <ul className="text-left text-dark">        
         <a className="text-left p-2 pl-2 pr-2">Menu 1&nbsp;<i className="fa fa-angle-down fa-1x text-center" aria-hidden="true" id="icon"></i></a>
