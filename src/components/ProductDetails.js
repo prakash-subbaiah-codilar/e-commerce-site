@@ -10,7 +10,7 @@ import Config from './../../Config';//Get the API_KEY_URL
 
 import './ProductDetails.css';
 
-import './PopupModal.css';
+import './Popupimage.css';
 
 import Popupimage from './Popupimage';
 
@@ -43,12 +43,24 @@ function ProductDetails(props) {
 
 /*Popup Image ZoomIn*/
 function zoomin() {        
-    document.querySelector(".active .modalImage").style.width = (document.querySelector(".active .modalImage").width)+300+"px";    
+    let myImg = document.querySelector(".active .modalImage");
+    let currWidth = myImg.clientWidth;        
+    if(currWidth >= 900){
+        alert("Maxium zoom-in level reached.")
+    }else{
+        myImg.style.width = (currWidth+20) + "px";
+    }   
 } 
 
 /*Popup Image ZoomOut*/  
-function zoomout() {         
-    document.querySelector(".active .modalImage").style.width = (document.querySelector(".active .modalImage").width)-300+"px";    
+function zoomout() {             
+    let myImg = document.querySelector(".active .modalImage");    
+    let currWidth = myImg.clientWidth;            
+    if(currWidth <= 200){
+        alert("Maxium zoom-out level reached.")
+    }else{
+        myImg.style.width = (currWidth-20) + "px";    
+    }    
 } 
 
 /*Left Column Product Image View Layout*/
