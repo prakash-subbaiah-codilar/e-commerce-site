@@ -62,25 +62,42 @@ function zoomout() {
         myImg.style.width = (currWidth-20) + "px";    
     }    
 } 
-
+/*Click the slider arrow selected image will change*/
+const fire = () => {    
+    let getImg = document.querySelector(".themeImage .active");    
+    setSelectedImage(getImg.id);    
+}
 /*Left Column Product Image View Layout*/
 const left_column_productImageView = (person) => {
     return <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 pt-2 mx-auto text-center">
 
                 {/*View product image large size*/}
                 <div className="row col-12 text-center">                                                                                     
-                        
-                    {person.media_gallery_entries.map((productImage, i) => (                     
-                        <div className="text-center">
-                        {selectedImage === productImage.file ?
-                            <div key={productImage.file} className="p-1 inline-block" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">
-                                <img className="" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "200px", height: "250px"}}/>
-                            </div>
-                            :
-                            null
-                        }
-                        </div>
-                    ))}
+                <div id="slider1" className="carousel slide mb-5 text-center mx-auto">
+                    <div className="carousel-inner themeImage" role="listbox">
+                                {person.media_gallery_entries.map((productImage, i) => (                                                                     
+                                    <React.Fragment>                                        
+                                        {selectedImage === productImage.file ?                                                                                    
+                                                <div id={productImage.file} key={productImage.file} className="carousel-item active" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"> 
+                                                    <img src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" style={{width: "200px", height: "250px"}}/>
+                                                </div>                                                                                    
+                                                :
+                                                <div id={productImage.file} key={productImage.file} className="carousel-item" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">
+                                                    <img src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" style={{width: "200px", height: "250px"}}/>
+                                                </div>                                                                                                                                
+                                        }
+                                    </React.Fragment>                                     
+                                ))}              
+                    </div>
+                    <a id="slideArrow" href="#slider1" className="carousel-control-prev text-dark ml-0 mr-0" data-slide="prev" onClick={fire}>                        
+                        <i class="fa fa-angle-left fa-4x text-dark" aria-hidden="true" id="icon"></i>
+                    </a>
+
+                    <a id="slideArrow" href="#slider1" className="carousel-control-next ml-0 mr-0" data-slide="next" onClick={fire}>
+                        <i class="fa fa-angle-right fa-4x text-dark" aria-hidden="true" id="icon"></i>                        
+                    </a>
+                 </div> 
+                    
                 </div>
                 
                 {/*Image Poup in Full Screen slideshow */}

@@ -22,3 +22,8 @@
     color: #000;    
   }
 
+
+#slideArrow:hover {
+background-color: gray;
+color: #000;
+  }
