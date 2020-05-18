@@ -64,7 +64,7 @@ function zoomout() {
 } 
 /*Click the slider arrow selected image will change*/
 const fire = () => {    
-    let getImg = document.querySelector(".themeImage .active");    
+    let getImg = document.querySelector(".themeImage .active");        
     setSelectedImage(getImg.id);    
 }
 /*Left Column Product Image View Layout*/
@@ -73,7 +73,7 @@ const left_column_productImageView = (person) => {
 
                 {/*View product image large size*/}
                 <div className="row col-12 text-center">                                                                                     
-                <div id="slider1" className="carousel slide mb-5 text-center mx-auto">
+                <div id="slider1" className="carousel slide mb-5 text-center mx-auto" data-ride="carousel" data-interval="false">
                     <div className="carousel-inner themeImage" role="listbox">
                                 {person.media_gallery_entries.map((productImage, i) => (                                                                     
                                     <React.Fragment>                                        

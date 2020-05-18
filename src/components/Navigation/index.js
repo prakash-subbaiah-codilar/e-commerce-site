@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './index.css';
+import './AddCartPopup.css';
+import { createSelectorHook } from 'react-redux';
 
 
-const Navigation = () =>
+import { useDispatch, useSelector } from 'react-redux';
+
+import { createEmptyCart, getCartDetails } from "../../actions/AddcartAction";
+
+const Navigation = () => {
+
+const dispatch = useDispatch();  
+const selector = useSelector(state => state);
+
+useEffect(() => {       
+  //Call createEmptyCart function to create new cart id for guest 
+  if(selector.addcart.cartId){
+    console.log(selector.addcart.cartId);
+    dispatch(getCartDetails(selector.addcart.cartId));
+  }else{
+    dispatch(createEmptyCart());        
+    alert(selector.addcart.cartId);
+  }  
+},[]);
+
+return (
 <header id="header">
 
   {/*Top header with signin and signup*/}
@@ -48,7 +70,31 @@ const Navigation = () =>
                   </div>
                 
               </form>
-              <div className="p-2"><h6><i className="fa fa-shopping-cart fa-2x text-center" aria-hidden="true" id="icon"></i></h6></div>
+              <div className="p-2">
+                <h6>
+                  <i className="fa fa-shopping-cart fa-2x text-center" aria-hidden="true" id="icon" data-toggle="modal" data-target="#loginModal"></i>                                    
+
+                    <div className="modal col-6 ml-auto" id="loginModal">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title">Add Cart</h5>
+                            <button className="close" data-dismiss="modal">&times;</button>
+                          </div>
+                          <div className="modal-body">
+                          You have no items in your shopping cart.  
+                          <br /><br />
+                          <h6>Guest CartID:  {selector.addcart.cartId}</h6>
+
+                          </div>                          
+                        </div>
+                      </div>
+                    </div>
+
+
+                </h6>
+                
+              </div>
             </div>
           </div>
     </nav>
@@ -64,5 +110,6 @@ const Navigation = () =>
   
 
 </header>
+)};
 
 export default Navigation;
