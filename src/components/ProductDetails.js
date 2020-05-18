@@ -68,7 +68,8 @@ const left_column_productImageView = (person) => {
     return <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 pt-2 mx-auto text-center">
 
                 {/*View product image large size*/}
-                <div className="row col-12 text-center">                                                                    
+                <div className="row col-12 text-center">                                                                                     
+                        
                     {person.media_gallery_entries.map((productImage, i) => (                     
                         <div className="text-center">
                         {selectedImage === productImage.file ?
@@ -79,7 +80,7 @@ const left_column_productImageView = (person) => {
                             null
                         }
                         </div>
-                    ))}                                    
+                    ))}
                 </div>
                 
                 {/*Image Poup in Full Screen slideshow */}
@@ -90,12 +91,12 @@ const left_column_productImageView = (person) => {
                     {person.media_gallery_entries.map((productImage, i) => (                     
                         <div>
                             {selectedImage === productImage.file ?
-                            <div key={productImage.file} className="p-1 inline-block border border-primary border-3">                                            
-                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "75px", height: "100px"}} />
+                            <div key={productImage.file} className="inline-block border border-primary border-3" style={{width: '50px', height: '50px'}}>                                            
+                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto p-1" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
                             </div>
                             :
-                            <div key={productImage.file} className="p-1 inline-block">                                            
-                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: "75px", height: "100px"}}/>
+                            <div key={productImage.file} className="inline-block" style={{width: '50px', height: '50px'}}>                                            
+                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto p-1" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
                             </div>
                             }
                         </div>
