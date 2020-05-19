@@ -2,7 +2,8 @@
 
 let InitialState = {           
         cartId: (localStorage.getItem('localCartId') ? localStorage.getItem('localCartId') : ""),
-        cartData: []
+        cartData: [],
+        addCartData: [],
 
   }
   
@@ -24,6 +25,13 @@ let InitialState = {
             cartData: cartDatas  
           }; 
 
+          case 'ADD_CART':        
+          let { addCartDatas } = action.payload;
+          return {
+            ...state,              
+            addCartData: addCartDatas  
+          }; 
+          
         default:
           return state;
       }

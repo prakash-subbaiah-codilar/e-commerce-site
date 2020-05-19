@@ -8,6 +8,8 @@ import getSymbolFromCurrency from 'currency-symbol-map';
 
 import Config from './../../Config';//Get the API_KEY_URL
 
+import { addCart } from "../actions/AddcartAction";
+
 import './ProductDetails.css';
 
 import './Popupimage.css';
@@ -148,7 +150,7 @@ const center_column_productImageView = (person) => {
                 </div>
 
                 <div className="pt-3 pl-2">
-                    <button className="btn btn-primary btn-lg" type="button">Add to Cart</button>
+                    <button className="btn btn-primary btn-lg" type="button" onClick={add_cart.bind(this, person.sku, 1)}>Add to Cart</button>
                 </div>
 
                 <div className="pt-5 pl-2 text-secondary">                                    
@@ -212,6 +214,10 @@ const detailsReviewTab = (person) => {
 </div>
 }
 
+
+const add_cart = (sku, qty) => {    
+    dispatch(addCart(selector.addcart.cartId, sku, qty));
+  }
 
 
   return (     

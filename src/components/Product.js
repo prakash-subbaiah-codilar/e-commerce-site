@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { productData } from "../actions/ProductAction";
 
+import { addCart } from "../actions/AddcartAction";
+
 import getSymbolFromCurrency from 'currency-symbol-map';
 
 import Pagination from './Pagination';
@@ -102,7 +104,7 @@ const gridViewStructure = (person) => {
             <div id="productHover">
               <div className="row pt-2">
                 <div className="pl-2 pr-2">
-                  <button className="btn btn-sm btn-secondary">Add Cart</button>
+                  <button className="btn btn-sm btn-secondary" onClick={add_cart.bind(this, person.sku, 1)}>Add Cart</button>
                 </div>
                 <div className="pl-2 pr-2">
                   <i className="fa fa-heart fa-1x text-center" aria-hidden="true" id="icon"></i>
@@ -125,7 +127,7 @@ const listViewStructure = (person) => {
                       </div>
                       <div className="row pt-2 pl-2">
                       <div className="pl-2">
-                        <button className="btn btn-sm btn-secondary ml-2">Add Cart</button>
+                        <button className="btn btn-sm btn-secondary ml-2" onClick={add_cart.bind(this, person.sku, 1)}>Add Cart</button>
                       </div>
                       <div className="pl-2">
                         <i className="fa fa-heart fa-1x text-center" aria-hidden="true" id="icon"></i>
@@ -156,7 +158,7 @@ const greaterThanMediumScreenLayout = () => {
                           :
                           <div key={person.id} className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-2 pb-2 mx-auto">
                             <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 mx-auto">
-                              <div className="text-center" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={""+Config[0].API_KEY_URL+"magento2/pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
+                              <div className="text-center" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
                             </div>
                             <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-8 col-xl-8 mx-auto">
                               {listViewStructure(person)}                          
@@ -203,6 +205,10 @@ const lesserThanMediumScreenLayout = () => {
                     <div className="mx-auto text-center"><img style={{width:150, height:150}} src={require('./loading_spinner.gif')} alt="new" /></div>                
               }
             </div>
+  }
+
+  const add_cart = (sku, qty) => {    
+    dispatch(addCart(selector.addcart.cartId, sku, qty));
   }
   return (
       <section id="product">

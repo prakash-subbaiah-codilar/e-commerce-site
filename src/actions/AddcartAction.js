@@ -58,8 +58,7 @@ export const getCartDetails = (cartId) => dispatch => {
                     quantity
                   }        
                 }
-              }
-            
+              }            
                     `,
             variables: null
         })
@@ -81,6 +80,71 @@ export const getCartDetails = (cartId) => dispatch => {
 });
 
 };
+
+
+
+export const addCart = (cartId, sku, qty) => dispatch => {           
+
+  alert(cartId);
+  alert(sku);
+  alert(qty);
+
+    fetch(''+Config[0].API_KEY_URL+'graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            query: `
+            mutation {
+                addSimpleProductsToCart(
+                  input: {
+                    cart_id: `+cartId+`
+                    cart_items: [
+                      {
+                        data: {
+                          quantity: `+qty+`
+                          sku: `+sku+`
+                        }
+                      }
+                    ]
+                  }
+                ) {
+                  cart {
+                    items {
+                      id
+                      product {
+                        name
+                        sku
+                      }
+                      quantity
+                    }
+                  }
+                }
+            }                        
+            `
+        })
+    }).then(r => r.json()).then((result) => {
+        console.log(result);                
+        alert("Added");
+        let datas = {
+            addCartDatas: result,                                            
+          }
+      
+    return dispatch({
+        type: 'ADD_CART',
+        payload: datas
+    });
+  }).catch((error) => {     
+    console.log(error);
+    return dispatch({
+        type: 'ADD_CART',
+        payload: ""
+    });
+});
+};
+
+
 
 
   

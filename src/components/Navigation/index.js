@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { createEmptyCart, getCartDetails } from "../../actions/AddcartAction";
 
+
 const Navigation = () => {
 
 const dispatch = useDispatch();  
@@ -20,10 +21,27 @@ useEffect(() => {
     dispatch(getCartDetails(selector.addcart.cartId));
   }else{
     dispatch(createEmptyCart());        
-    alert(selector.addcart.cartId);
   }  
 },[]);
 
+const addCartPopup = () => {
+  return <div className="modal col-12 col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 ml-auto" id="loginModal" style={{marginTop: '100px'}}>
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Add Cart</h5>
+                  <button className="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div className="modal-body">
+                You have no items in your shopping cart.  
+                <br /><br />
+                <h6>Guest CartID:  {selector.addcart.cartId}</h6>
+
+                </div>                          
+              </div>
+            </div>
+          </div>;
+}
 return (
 <header id="header">
 
@@ -42,20 +60,7 @@ return (
           <a className="navbar-brand" href="#">LUMA</a>
           <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarNav"><span className="navbar-toggler-icon"></span></button>
             <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav mr-auto">
-                  <li className="nav-item">
-                      <a className="nav-link text-light" href="#"></a>
-                  </li>
-                  <li className="nav-item">
-                      <a className="nav-link text-light" href="#"></a>
-                  </li>
-                  <li className="nav-item">
-                      <a className="nav-link text-light" href="#"></a>
-                  </li>
-                  <li className="nav-item">
-                      <a className="nav-link text-light" href="#"></a>
-                  </li>
-              </ul>
+              <ul className="navbar-nav ml-auto">               
 
               <form className="form-inline my-2 my-lg-0">                                              
                   <div className="container mt-3">                    
@@ -72,29 +77,16 @@ return (
               </form>
               <div className="p-2">
                 <h6>
-                  <i className="fa fa-shopping-cart fa-2x text-center" aria-hidden="true" id="icon" data-toggle="modal" data-target="#loginModal"></i>                                    
-
-                    <div className="modal col-6 ml-auto" id="loginModal">
-                      <div className="modal-dialog">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title">Add Cart</h5>
-                            <button className="close" data-dismiss="modal">&times;</button>
-                          </div>
-                          <div className="modal-body">
-                          You have no items in your shopping cart.  
-                          <br /><br />
-                          <h6>Guest CartID:  {selector.addcart.cartId}</h6>
-
-                          </div>                          
-                        </div>
-                      </div>
-                    </div>
-
-
+                  <i className="fa fa-shopping-cart fa-2x text-center pt-2" aria-hidden="true" id="icon" data-toggle="modal" data-target="#loginModal"></i> 
                 </h6>
+
+                  {addCartPopup()}
+                                   
                 
               </div>
+
+              </ul>
+
             </div>
           </div>
     </nav>

@@ -293,3 +293,8 @@ font-weight: 700;
   float:right;
   text-align: right;
 }
+
+.modal-backdrop
+{
+    opacity:0 !important;
+}
