@@ -15,3 +15,5 @@ $(document).ready(function(){
 $(document).on('click',function(){
     $('#navbarNav').collapse('hide');
 });
+
+

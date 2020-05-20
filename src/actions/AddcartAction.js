@@ -175,7 +175,7 @@ export const getCartDetails = (cartId) => dispatch => {
                   sku
                 }
                 quantity
-              }
+              }              
               available_payment_methods {
                 code
                 title
@@ -184,8 +184,17 @@ export const getCartDetails = (cartId) => dispatch => {
                 code
                 title
               }
-              
               prices {
+                subtotal_excluding_tax {
+                  value
+                  currency
+                }
+                applied_taxes {
+                  label
+                  amount {
+                    value
+                  }
+                }
                 grand_total {
                   value
                   currency
@@ -197,9 +206,11 @@ export const getCartDetails = (cartId) => dispatch => {
           variables: null
       })
   }).then(r => r.json()).then((result) => {
+    console.log("Welcome 1");        
       console.log(result.data);        
+      console.log("Welcome 2");        
       let datas = {
-          cartData: "",                                            
+          cartDatas: result.data,                                            
         }
     
   return dispatch({
@@ -207,9 +218,12 @@ export const getCartDetails = (cartId) => dispatch => {
       payload: datas
   });
 }).catch((error) => {        
+  let datas = {
+    cartDatas: [],                                            
+  }
   return dispatch({
       type: 'CART_DETAILS',
-      payload: ""
+      payload: datas
   });
 });
 

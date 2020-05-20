@@ -18,7 +18,7 @@ let InitialState = {
   
           }; 
 
-        case 'CART_DATA':        
+        case 'CART_DETAILS':        
         let { cartDatas } = action.payload;
           return {
             ...state,              

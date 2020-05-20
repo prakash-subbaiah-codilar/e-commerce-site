@@ -1,47 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './index.css';
 import './AddCartPopup.css';
 
-import { useDispatch, useSelector } from 'react-redux';
-
-import { createEmptyCart, getCartDetails } from "../../actions/AddcartAction";
-
+import CartButton from "../CartButton";
 
 const Navigation = () => {
 
-const dispatch = useDispatch();  
-const selector = useSelector(state => state);
-
-useEffect(() => {       
-  //Call createEmptyCart function to create new cart id for guest 
-  if(selector.addcart.cartId){
-    console.log(selector.addcart.cartId);
-    //localStorage.clear();
-    dispatch(getCartDetails(selector.addcart.cartId));
-  }else{
-    dispatch(createEmptyCart());        
-  }  
-},[]);
-
-const addCartPopup = () => {
-  return <div className="modal col-12 col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 ml-auto" id="loginModal" style={{marginTop: '100px'}}>
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Add Cart</h5>
-                  <button className="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div className="modal-body">
-                You have no items in your shopping cart.  
-                <br /><br />
-                <h6>Guest CartID:  {selector.addcart.cartId}</h6>
-
-                </div>                          
-              </div>
-            </div>
-          </div>;
-}
 return (
+  
 <header id="header">
 
   {/*Top header with signin and signup*/}
@@ -76,12 +42,10 @@ return (
               </form>
               <div className="p-2">
                 <h6>
-                  <i className="fa fa-shopping-cart fa-2x text-center pt-2" aria-hidden="true" id="icon" data-toggle="modal" data-target="#loginModal"></i> 
+                  {/*Cart Button Component*/}
+                  <CartButton />
                 </h6>
 
-                  {addCartPopup()}
-                                   
-                
               </div>
 
               </ul>
