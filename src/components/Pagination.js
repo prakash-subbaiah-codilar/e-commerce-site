@@ -11,8 +11,8 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
     <nav style={{border: 0}}>
       <ul className='pagination justify-content-end'>
         {pageNumbers.map(number => (
-            <React.Fragment>
-            {(currentPage == number) ?
+            <React.Fragment key={number}>
+            {(currentPage === Number(number)) ?
                 <li key={number} className='page-item active'>
                     <a onClick={() => paginate(number)} className='page-link'>
                     {number}

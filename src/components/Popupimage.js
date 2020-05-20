@@ -19,7 +19,7 @@ const Popupimage = (props) => {
                  <div id="slider2" className="carousel slide mb-5" data-ride="carousel" data-interval="false">
                     <div className="carousel-inner" role="listbox">
                                 {props.person.media_gallery_entries.map((productImage, i) => (                                                                     
-                                    <React.Fragment>                                        
+                                    <React.Fragment key={productImage.file}>                                        
                                         {props.selectedImage === productImage.file ?                                                                                    
                                                 <div key={productImage.file} className="carousel-item active"> 
                                                     <img className="modalImage d-block img-fluid" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" id={i} ref={props.imgRef} />
@@ -33,11 +33,11 @@ const Popupimage = (props) => {
                                 ))}              
                     </div>
                     <a href="#slider2" className="carousel-control-prev text-dark" data-slide="prev">                        
-                        <i class="fa fa-angle-left fa-4x text-dark" aria-hidden="true" id="icon"></i>
+                        <i className="fa fa-angle-left fa-4x text-dark" aria-hidden="true" id="icon"></i>
                     </a>
 
                     <a href="#slider2" className="carousel-control-next" data-slide="next">
-                        <i class="fa fa-angle-right fa-4x text-dark" aria-hidden="true" id="icon"></i>                        
+                        <i className="fa fa-angle-right fa-4x text-dark" aria-hidden="true" id="icon"></i>                        
                     </a>
                  </div>
 

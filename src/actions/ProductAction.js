@@ -9,8 +9,8 @@ export const productData = (pageNumber, cat_id) => dispatch => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                query: `
-                query {
+                query: `                
+                  query {
                     products(filter: {
                       category_id: {
                         eq: "`+cat_id+`"
@@ -19,10 +19,16 @@ export const productData = (pageNumber, cat_id) => dispatch => {
                     currentPage: `+pageNumber+`) {
                       items {
                         name
-                        id
-                        description 
-                        image      
+                        id                                                
                         sku
+                        meta_description
+                        small_image{
+                          url
+                        }
+                        image {
+                          label
+                          url
+                        }
                         price {
                           regularPrice {
                             amount {
@@ -31,9 +37,7 @@ export const productData = (pageNumber, cat_id) => dispatch => {
                             }
                           }
                         }
-                        special_price      
-                        image
-                        small_image                        
+                        special_price                              
                         media_gallery_entries {
                           file
                         }   
@@ -49,6 +53,7 @@ export const productData = (pageNumber, cat_id) => dispatch => {
                 variables: null
             })
         }).then(r => r.json()).then((result) => {
+          console.log(result);
         let datas = {
                       productDatas: result.data.products.items,
                       total_counts: result.data.products.total_count,
@@ -84,13 +89,15 @@ export const productDetails = (sku_key) => dispatch => {
               sku: {
                 eq: "`+sku_key+`"
               }
-            } pageSize: 6
-              currentPage:2 ) {
+            }) {
               items {
                 name
                 id
-                description 
-                image   
+                meta_description
+                image {
+                  label
+                  url
+                }   
                 stock_status
                 sku
                price {
@@ -102,8 +109,14 @@ export const productDetails = (sku_key) => dispatch => {
                   }
                 }
                 special_price      
-                image
-                small_image      
+                image {
+                  label
+                  url
+                }
+                small_image {
+                  label
+                  url
+                }      
                 media_gallery_entries {
                   file
                 }   

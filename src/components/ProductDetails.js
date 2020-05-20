@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,7 +8,7 @@ import getSymbolFromCurrency from 'currency-symbol-map';
 
 import Config from './../../Config';//Get the API_KEY_URL
 
-import { addCart } from "../actions/AddcartAction";
+import { addSimpleProductToCart } from "../actions/AddcartAction";
 
 import './ProductDetails.css';
 
@@ -35,9 +35,9 @@ function ProductDetails(props) {
 
   /*Asign the selected image to view in first*/
   useEffect(() => {                   
-    const data = selector.product.productDetails.map(item => {
-            setSelectedImage(item.image);
-            return item.image;
+    const data = selector.product.productDetails.map(item => {        
+            setSelectedImage(item.media_gallery_entries[0].file);            
+            return item.media_gallery_entries[0].file;    
       });            
     console.log(data);
   },[selector.product.productDetails]);
@@ -69,6 +69,13 @@ const fire = () => {
     let getImg = document.querySelector(".themeImage .active");        
     setSelectedImage(getImg.id);    
 }
+
+
+const add_cart = (sku, qty) => {    
+    dispatch(addSimpleProductToCart(selector.addcart.cartId, sku, qty));
+  }
+
+
 /*Left Column Product Image View Layout*/
 const left_column_productImageView = (person) => {
     return <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 pt-2 mx-auto text-center">
@@ -78,7 +85,7 @@ const left_column_productImageView = (person) => {
                 <div id="slider1" className="carousel slide mb-5 text-center mx-auto" data-ride="carousel" data-interval="false">
                     <div className="carousel-inner themeImage" role="listbox">
                                 {person.media_gallery_entries.map((productImage, i) => (                                                                     
-                                    <React.Fragment>                                        
+                                    <React.Fragment key={productImage.file}>                                        
                                         {selectedImage === productImage.file ?                                                                                    
                                                 <div id={productImage.file} key={productImage.file} className="carousel-item active" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"> 
                                                     <img src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" style={{width: "200px", height: "250px"}}/>
@@ -92,11 +99,11 @@ const left_column_productImageView = (person) => {
                                 ))}              
                     </div>
                     <a id="slideArrow" href="#slider1" className="carousel-control-prev text-dark ml-0 mr-0" data-slide="prev" onClick={fire}>                        
-                        <i class="fa fa-angle-left fa-4x text-dark" aria-hidden="true" id="icon"></i>
+                        <i className="fa fa-angle-left fa-4x text-dark" aria-hidden="true" id="icon"></i>
                     </a>
 
                     <a id="slideArrow" href="#slider1" className="carousel-control-next ml-0 mr-0" data-slide="next" onClick={fire}>
-                        <i class="fa fa-angle-right fa-4x text-dark" aria-hidden="true" id="icon"></i>                        
+                        <i className="fa fa-angle-right fa-4x text-dark" aria-hidden="true" id="icon"></i>                        
                     </a>
                  </div> 
                     
@@ -108,7 +115,7 @@ const left_column_productImageView = (person) => {
                 {/*View product image small size*/}
                 <div className="row col-12 pic-container">                                                                    
                     {person.media_gallery_entries.map((productImage, i) => (                     
-                        <div>
+                        <div key={productImage.file}>
                             {selectedImage === productImage.file ?
                             <div key={productImage.file} className="inline-block border border-primary border-3" style={{width: '50px', height: '50px'}}>                                            
                                 <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto p-1" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
@@ -131,12 +138,12 @@ const center_column_productImageView = (person) => {
                 <p className="pt-2 pl-2 text-secondary" id="productDetailsTitle">{person.name}</p>
                 <a href="" className="pt-2 pl-2" >Be the first to review this product</a>
                 <div className="row col-8" id="productDetailsPriceBottom">
-                    <p className="pt-2 pl-2 text-secondary col-6">
+                    <div className="pt-2 pl-2 text-secondary col-6">
                         <h1>
                             {getSymbolFromCurrency(person.price.regularPrice.amount.currency)}
                             {person.price.regularPrice.amount.value}                                  
                         </h1>
-                    </p>   
+                    </div>   
                     <p className="pt-2 pl-2 text-secondary col-6 text-right">
                         <b>{person.stock_status}</b><br />
                         SKU#: {person.sku}
@@ -179,7 +186,7 @@ const detailsReviewTab = (person) => {
             <div id="tabsContent" className="tab-content">                                        
                 <div id="details" className="tab-pane fade active show">
                     <div className="list-group">                                                                                                
-                        <p className="list-group-item d-inline-block" dangerouslySetInnerHTML={{ __html: person.description }} />
+                        <p className="list-group-item d-inline-block" dangerouslySetInnerHTML={{ __html: person.meta_description }} />
                     </div>
                 </div>
                 <div id="review" className="tab-pane fade">
@@ -190,15 +197,15 @@ const detailsReviewTab = (person) => {
                             <form role="form">
                                 <div className="form-group col-lg-12">
                                     <label className="form-control-label">Nickname <span className="text-danger">*</span></label>
-                                    <input type="text" className="form-control" id="form-group-input" name="nickname" value={nickname} onChange={e => setNickname(e.target.value)} />
+                                    <input type="text" className="form-control" name="nickname" value={nickname} onChange={e => setNickname(e.target.value)} />
                                 </div>
                                 <div className="form-group col-lg-12">
                                     <label className="form-control-label">Summary <span className="text-danger">*</span></label>
-                                    <input type="text" className="form-control" id="form-group-input" name="summary" value={summary} onChange={e => setSummary(e.target.value)} />
+                                    <input type="text" className="form-control" name="summary" value={summary} onChange={e => setSummary(e.target.value)} />
                                 </div>
                                 <div className="form-group col-lg-12">
                                     <label className="form-control-label">Review <span className="text-danger">*</span></label>
-                                    <textarea className="form-control" id="form-group-input" name="review" rows="3" value={review} onChange={e => setReview(e.target.value)} ></textarea>
+                                    <textarea className="form-control" name="review" rows="3" value={review} onChange={e => setReview(e.target.value)} ></textarea>
                                 </div>
                                 <div className="form-group col-lg-12">
                                     <button className="btn btn-outline-secondary btn-sm" type="button">Submit Review</button>
@@ -214,10 +221,6 @@ const detailsReviewTab = (person) => {
 </div>
 }
 
-
-const add_cart = (sku, qty) => {    
-    dispatch(addCart(selector.addcart.cartId, sku, qty));
-  }
 
 
   return (     

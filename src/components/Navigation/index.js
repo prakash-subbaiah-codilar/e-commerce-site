@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import './index.css';
 import './AddCartPopup.css';
-import { createSelectorHook } from 'react-redux';
-
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -18,6 +16,7 @@ useEffect(() => {
   //Call createEmptyCart function to create new cart id for guest 
   if(selector.addcart.cartId){
     console.log(selector.addcart.cartId);
+    //localStorage.clear();
     dispatch(getCartDetails(selector.addcart.cartId));
   }else{
     dispatch(createEmptyCart());        

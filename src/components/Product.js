@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { productData } from "../actions/ProductAction";
 
-import { addCart } from "../actions/AddcartAction";
+import { addSimpleProductToCart } from "../actions/AddcartAction";
 
 import getSymbolFromCurrency from 'currency-symbol-map';
 
@@ -14,7 +14,7 @@ import queryString from 'query-string';
 
 import './Product.css';
 
-import Config from './../../Config';//Get the API_KEY_URL
+//import Config from './../../Config';//Get the API_KEY_URL
 
 function Product(props) {
     
@@ -24,7 +24,7 @@ function Product(props) {
   
   const [gridView, setGridView] = useState(true);
     
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
 
   const [postsPerPage] = useState(6);
 
@@ -46,7 +46,7 @@ function Product(props) {
 // Get current posts and set as number of product view in per page
 const indexOfLastPost = currentPage * postsPerPage;
 const indexOfFirstPost = indexOfLastPost - postsPerPage;
-const currentPosts = selector.product.productData.slice(indexOfFirstPost, indexOfLastPost);
+//const currentPosts = selector.product.productData.slice(indexOfFirstPost, indexOfLastPost);
   
 // Change page by clickig page number
 const paginate = (pageNumber) => {             
@@ -69,6 +69,10 @@ const push_product_details = (sku) => {
     props.history.push(url);      
 
   };
+
+const add_cart = (sku, qty) => {    
+    dispatch(addSimpleProductToCart(selector.addcart.cartId, sku, qty));
+ }
 
 /*Grid Button, List Button and Pagination Buttons Layout*/
 const grid_list_pagination = () => {
@@ -96,7 +100,7 @@ const grid_list_pagination = () => {
 const gridViewStructure = (person) => {
   return  <div className="shadowContainer p-3 mx-auto">
             <h6>{person.name}</h6>                                            
-            <div className="mx-auto" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
+            <div className="mx-auto" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={person.image.url} alt="new" id="productImage" /> </div>
             <div>
                 {getSymbolFromCurrency(person.price.regularPrice.amount.currency)}
                 {person.price.regularPrice.amount.value}
@@ -142,15 +146,15 @@ const listViewStructure = (person) => {
           </div>
 }
 
-{/*Display Only on Large screen and extra-large screen Layout*/}
+/*Display Only on Large screen and extra-large screen Layout*/
 const greaterThanMediumScreenLayout = () => {
   return <div className="d-none d-lg-block">
               {selector.product.productDataLength === '1' ? 
                   <div>                
                     {(selector.product.productData.length > 0 && selector.product.productData.length != null) ?
                     <div className="row mx-auto col-9">
-                      {currentPosts.map((person, i) => ( 
-                        <React.Fragment>
+                      {selector.product.productData.slice(indexOfFirstPost, indexOfLastPost).map((person, i) => ( 
+                        <React.Fragment key={person.id}>
                         {gridView ?
                         <div key={person.id} className="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mx-auto p-3 m-1 mb-5 bg-white rounded">
                             {gridViewStructure(person)}                 
@@ -158,7 +162,7 @@ const greaterThanMediumScreenLayout = () => {
                           :
                           <div key={person.id} className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-2 pb-2 mx-auto">
                             <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 mx-auto">
-                              <div className="text-center" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+person.image} alt="new" id="productImage" /> </div>
+                              <div className="text-center" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={person.image.url} alt="new" id="productImage" /> </div>
                             </div>
                             <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-8 col-xl-8 mx-auto">
                               {listViewStructure(person)}                          
@@ -179,18 +183,18 @@ const greaterThanMediumScreenLayout = () => {
             </div>
 }
 
-{/*Display Only on lesser than Medium screen Layout*/}
+/*Display Only on lesser than Medium screen Layout*/
 const lesserThanMediumScreenLayout = () => {
     return <div className="d-lg-none mx-auto">
               {selector.product.productDataLength === '1' ? 
                   <React.Fragment>                
                     {(selector.product.productData.length > 0 && selector.product.productData.length != null) ?
                     <div className="row col-12 mx-auto m-0 p-0 full-width-row">
-                      {currentPosts.map((person, i) => (                     
+                      {selector.product.productData.slice(indexOfFirstPost, indexOfLastPost).map((person, i) => (                     
                         
                           <div key={person.id} className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 pt-2 pb-2 mx-auto" style={{padding: '1px'}}>                        
                               <div onClick={push_product_details.bind(this, person.sku)}>
-                                <img className="mx-auto" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+person.image} alt="new" style={{width: "100%", height: "%100"}} />
+                                <img className="mx-auto" src={person.image.url} alt="new" style={{width: "100%", height: "%100"}} />
                               </div>
                               {listViewStructure(person)}                                                                          
                           </div>
@@ -207,9 +211,7 @@ const lesserThanMediumScreenLayout = () => {
             </div>
   }
 
-  const add_cart = (sku, qty) => {    
-    dispatch(addCart(selector.addcart.cartId, sku, qty));
-  }
+
   return (
       <section id="product">
         <div className="mx-auto">          
