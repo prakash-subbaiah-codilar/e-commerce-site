@@ -12,7 +12,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
       <ul className='pagination justify-content-end'>
         {pageNumbers.map(number => (
             <React.Fragment key={number}>
-            {(currentPage === Number(number)) ?
+            {(currentPage == number) ?
                 <li key={number} className='page-item active'>
                     <a onClick={() => paginate(number)} className='page-link'>
                     {number}

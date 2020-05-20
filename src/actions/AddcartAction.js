@@ -104,7 +104,7 @@ export const getCartDetails = (cartId) => dispatch => {
       },
       body: JSON.stringify({
           query: `
-          {
+          query {
             cart(cart_id: "`+cartId+`") {
               email
               billing_address {
@@ -173,6 +173,17 @@ export const getCartDetails = (cartId) => dispatch => {
                 product {
                   name
                   sku
+                  small_image {
+                    url
+                  }   
+                  price {
+                    regularPrice {
+                      amount {
+                        value
+                        currency
+                      }
+                    }
+                  }
                 }
                 quantity
               }              
@@ -201,7 +212,8 @@ export const getCartDetails = (cartId) => dispatch => {
                 }
               }
             }
-          }            
+          }                 
+
                   `,
           variables: null
       })

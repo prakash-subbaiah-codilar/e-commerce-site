@@ -26,7 +26,8 @@ function Product(props) {
     
   const [currentPage] = useState(1);
 
-  const [postsPerPage] = useState(6);
+  //This postsPerPage is only used for Pagination perpose  
+  const [postsPerPage] = useState(3);
 
 /*Fetch data from productData Function*/
   useEffect(() => {       
@@ -46,7 +47,7 @@ function Product(props) {
 // Get current posts and set as number of product view in per page
 const indexOfLastPost = currentPage * postsPerPage;
 const indexOfFirstPost = indexOfLastPost - postsPerPage;
-//const currentPosts = selector.product.productData.slice(indexOfFirstPost, indexOfLastPost);
+
   
 // Change page by clickig page number
 const paginate = (pageNumber) => {             
