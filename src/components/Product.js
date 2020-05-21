@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { productData } from "../actions/ProductAction";
 
-import { addSimpleProductToCart } from "../actions/AddcartAction";
+import { addSimpleProductToCart, getCartDetails } from "../actions/AddcartAction";
 
 import getSymbolFromCurrency from 'currency-symbol-map';
 
@@ -71,8 +71,11 @@ const push_product_details = (sku) => {
 
   };
 
+//Add product to cart
 const add_cart = (sku, qty) => {    
     dispatch(addSimpleProductToCart(selector.addcart.cartId, sku, qty));
+    //Fetch Cart Details after Add the Product to cart
+    //dispatch(getCartDetails(selector.addcart.cartId));
  }
 
 /*Grid Button, List Button and Pagination Buttons Layout*/

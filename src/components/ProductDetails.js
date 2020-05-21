@@ -8,7 +8,7 @@ import getSymbolFromCurrency from 'currency-symbol-map';
 
 import Config from './../../Config';//Get the API_KEY_URL
 
-import { addSimpleProductToCart } from "../actions/AddcartAction";
+import { addSimpleProductToCart, getCartDetails } from "../actions/AddcartAction";
 
 import './ProductDetails.css';
 
@@ -70,9 +70,11 @@ const fire = () => {
     setSelectedImage(getImg.id);    
 }
 
-
-const add_cart = (sku, qty) => {    
+//Add product to cart
+const add_cart = (sku, qty) => {        
     dispatch(addSimpleProductToCart(selector.addcart.cartId, sku, qty));
+    //Fetch Cart Details after Add the Product to cart
+    //dispatch(getCartDetails(selector.addcart.cartId));
   }
 
 
