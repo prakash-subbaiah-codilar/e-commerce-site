@@ -58,15 +58,14 @@ const delete_cart_item = (cart_item_id) => {
     dispatch(removeItemFromCart(selector.addcart.cartId, cart_item_id)); 
   }
 }
-
-
-
+//Update Quantity input field value
 const handleQuantityChange = (e) => {    
     const updatedArray = [...items];
     updatedArray[e.target.id].quantity = e.target.value;
     setCart(updatedArray);   
 }
 
+//Update Cart Items Quantity
 const updateCart = (qty, cart_item_id) => {
   dispatch(updateCartItems(selector.addcart.cartId, cart_item_id, qty));
   toggleClose();
@@ -102,7 +101,7 @@ const updateCart = (qty, cart_item_id) => {
                                     <hr className="text-secondary p-1"></hr>
                                     {console.log(items)}
                                     {items.map((cartItem, i) => (                                       
-                                      <div id={cartItem.id}>
+                                      <div key={cartItem.id}>
                                         <div className="row">
                                           <div className="col-4">
                                             <div style={{width: '75px', height: '75px'}}>                                            

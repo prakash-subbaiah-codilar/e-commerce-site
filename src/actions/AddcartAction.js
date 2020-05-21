@@ -365,6 +365,71 @@ return dispatch({
 
 };
 
+
+
+/*Update Multiple Cart Items*/
+export const updateMultipleCartItems = (cartId, data) => dispatch => {           
+  
+  let dataString = JSON.stringify(data);
+  dataString = dataString.replace(/\"/g, "");
+      
+  fetch(''+Config[0].API_KEY_URL+'graphql', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        query: `
+        mutation {
+          updateCartItems(
+            input: {
+              cart_id: "`+cartId+`",
+              cart_items: `+[dataString]+`
+            }
+          ){
+            cart {
+              items {
+                id
+                product {
+                  name
+                }
+                quantity
+              }
+              prices {
+                grand_total{
+                  value
+                  currency
+                }
+              }
+            }
+          }
+        }         
+                `,
+        variables: null
+    })
+}).then(r => r.json()).then((result) => {
+  alert("Cart Updated")
+    dispatch(getCartDetails(cartId));
+
+    /*let datas = {
+        cartData: "",                                            
+      }
+  
+return dispatch({
+    type: 'CART_DETAILS',
+    payload: datas
+});*/
+}).catch((error) => {        
+
+return dispatch({
+    type: 'CART_DETAILS',
+    payload: ""
+});
+});
+
+};
+
+
 /*Remove Item from cart*/
 export const removeItemFromCart = (cartId, cart_item_id) => dispatch => {           
 
