@@ -25,9 +25,7 @@ const CartButton = (props) => {
   const [items, setItems] = useState([]);
   const [prices, setPrices] = useState([]);
   
-  
-  
-  
+//Open and close Popover Cart function
   const toggle = () => setPopoverOpen(!popoverOpen);
   const toggleClose = () => setPopoverOpen(!popoverOpen);
 
@@ -70,6 +68,44 @@ const updateCart = (qty, cart_item_id) => {
   dispatch(updateCartItems(selector.addcart.cartId, cart_item_id, qty));
   toggleClose();
 }
+
+//Cart Item List Layout
+const cartList = () => {
+  return <div>
+    {items.map((cartItem, i) => (                                       
+    <div key={cartItem.id}>
+      <div className="row">
+        <div className="col-4">
+          <div style={{width: '75px', height: '75px'}}>                                            
+            <img className="mx-auto" src={cartItem.product.small_image.url} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
+          </div>
+        </div>
+        <div className="col-8">
+          <p className="m-0">{cartItem.product.name}</p>
+          <p className="m-0"><b>{getSymbolFromCurrency(cartItem.product.price.regularPrice.amount.currency)}&nbsp;{cartItem.product.price.regularPrice.amount.value}</b></p>
+          <p className="m-0">
+            Qty: <span className="pl-2">                                                         
+                      <input type="text" id={i} className="p-1 text-center" style={{width: '50px', height: '30px'}}
+                        value={cartItem.quantity} 
+                        onChange={handleQuantityChange}
+                       />
+                      <button className="btn btn-sm btn-secondary ml-1" onClick={updateCart.bind(this, cartItem.quantity, cartItem.id )}>Update</button>
+                 </span>
+            <div className="ml-auto text-secondary text-right">
+              <i className="fa fa-edit fa-1x pl-2 pr-2" aria-hidden="true" id="icon"></i>
+              <i className="fa fa-trash fa-1x pl-2 pr-2" aria-hidden="true" id="icon" onClick={delete_cart_item.bind(this, cartItem.id)}></i>
+            </div>
+            </p>                                           
+        </div>                                                                                                                                                                                                                                                                                                 
+
+    </div>                                      
+    <hr className="text-secondary p-1"></hr>                                      
+    
+    </div>
+  ))}
+</div>
+}
+
   return (            
             <div>
                 <div className="row" id="Popover1">                    
@@ -98,39 +134,11 @@ const updateCart = (qty, cart_item_id) => {
                                         <button className="btn btn-primary btn-lg" type="button"> Proceed to Checkout </button>
                                     </div>      
 
-                                    <hr className="text-secondary p-1"></hr>
-                                    {console.log(items)}
-                                    {items.map((cartItem, i) => (                                       
-                                      <div key={cartItem.id}>
-                                        <div className="row">
-                                          <div className="col-4">
-                                            <div style={{width: '75px', height: '75px'}}>                                            
-                                              <img className="mx-auto" src={cartItem.product.small_image.url} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
-                                            </div>
-                                          </div>
-                                          <div className="col-8">
-                                            <p className="m-0">{cartItem.product.name}</p>
-                                            <p className="m-0"><b>{getSymbolFromCurrency(cartItem.product.price.regularPrice.amount.currency)}&nbsp;{cartItem.product.price.regularPrice.amount.value}</b></p>
-                                            <p className="m-0">
-                                              Qty: <span className="pl-2">                                                         
-                                                        <input type="text" id={i} className="p-1 text-center" style={{width: '50px', height: '30px'}}
-                                                          value={cartItem.quantity} 
-                                                          onChange={handleQuantityChange}
-                                                         />
-                                                        <button className="btn btn-sm btn-secondary ml-1" onClick={updateCart.bind(this, cartItem.quantity, cartItem.id )}>Update</button>
-                                                   </span>
-                                              <div className="ml-auto text-secondary text-right">
-                                                <i className="fa fa-edit fa-1x pl-2 pr-2" aria-hidden="true" id="icon"></i>
-                                                <i className="fa fa-trash fa-1x pl-2 pr-2" aria-hidden="true" id="icon" onClick={delete_cart_item.bind(this, cartItem.id)}></i>
-                                              </div>
-                                              </p>                                           
-                                          </div>                                                                                                                                                                                                                                                                                                 
+                                    <hr className="text-secondary p-1"></hr>                                    
 
-                                      </div>                                      
-                                      <hr className="text-secondary p-1"></hr>                                      
-                                      
-                                      </div>
-                                    ))}
+                                    {/*Cart Item List Layout*/}
+                                    {cartList()}                                 
+
                                     <p className="text-center text-primary m-0" onClick={toggleClose}><Link to={"/checkout/cart"}>View and Edit Cart</Link></p>                                    
                                 </div>
                                 }

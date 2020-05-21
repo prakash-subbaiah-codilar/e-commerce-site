@@ -408,7 +408,7 @@ export const updateMultipleCartItems = (cartId, data) => dispatch => {
         variables: null
     })
 }).then(r => r.json()).then((result) => {
-  alert("Cart Updated")
+  alert("Shopping Cart Updated")
     dispatch(getCartDetails(cartId));
 
     /*let datas = {
