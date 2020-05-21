@@ -4,7 +4,7 @@ import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { createEmptyCart, getCartDetails, removeItemFromCart } from "../actions/AddcartAction";
+import { createEmptyCart, getCartDetails, removeItemFromCart, updateCartItems } from "../actions/AddcartAction";
 
 import getSymbolFromCurrency from 'currency-symbol-map';
 
@@ -20,6 +20,14 @@ const CartButton = (props) => {
   
   const [popoverOpen, setPopoverOpen] = useState(false);
 
+  const [cartItemsList, setCartItemsList] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [items, setItems] = useState([]);
+  const [prices, setPrices] = useState([]);
+  
+  
+  
+  
   const toggle = () => setPopoverOpen(!popoverOpen);
   const toggleClose = () => setPopoverOpen(!popoverOpen);
 
@@ -29,10 +37,19 @@ useEffect(() => {
     console.log(selector.addcart.cartId);
     //localStorage.clear();
     dispatch(getCartDetails(selector.addcart.cartId));
+
+    
   }else{
     dispatch(createEmptyCart());        
   }  
 },[selector.addcart.cartId]);
+
+useEffect(() => {
+  setCartItemsList(selector.addcart.cartData);
+    setCart(selector.addcart.cart);
+    setItems(selector.addcart.items);
+    setPrices(selector.addcart.prices);
+}, [selector.addcart.cartData]);
 
 //Detele the cart from Add cart popup
 const delete_cart_item = (cart_item_id) => {    
@@ -42,11 +59,23 @@ const delete_cart_item = (cart_item_id) => {
   }
 }
 
+
+
+const handleQuantityChange = (e) => {    
+    const updatedArray = [...items];
+    updatedArray[e.target.id].quantity = e.target.value;
+    setCart(updatedArray);   
+}
+
+const updateCart = (qty, cart_item_id) => {
+  dispatch(updateCartItems(selector.addcart.cartId, cart_item_id, qty));
+  toggleClose();
+}
   return (            
             <div>
                 <div className="row" id="Popover1">                    
                     <div className="text-left p-1"><i className="fa fa-shopping-cart fa-2x text-center pt-2" aria-hidden="true" id="icon"></i> </div>
-                    <div className="text-right p-1 pt-3">{selector.addcart.cartData.cart ? <div>{selector.addcart.cartData.cart.items.length == 0 ? null : <div className="text-light bg-danger pl-2 pt-1 pr-2 pb-1">{selector.addcart.cartData.cart.items.length}</div>}</div> : null }</div>
+                    <div className="text-right p-1 pt-3">{cartItemsList ? <div>{(items.length == 0 || items == undefined) ? null : <div className="text-light bg-danger pl-2 pt-1 pr-2 pb-1">{items.length}</div>}</div> : null }</div>
                 </div>
                 <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>                
                 <PopoverBody>
@@ -55,24 +84,24 @@ const delete_cart_item = (cart_item_id) => {
                     </span>
 
                     <div>                        
-                        {selector.addcart.cartData.cart  ?
+                        {cartItemsList ?
                             <div>
-                                {selector.addcart.cartData.cart.items.length == 0 ?
+                                {(items.length == 0 || items == undefined) ?
                                 <div className="text-center text-secondary pt-3 pb-3">You have no items in your shopping cart.  </div>
                                 :
                                 <div className="pt-3 p-2">                        
                                     
                                     <div className="clearfix p-1">
-                                        <div className="float-left">{selector.addcart.cartData.cart.items.length == 1 ? <div>1 Item in Cart</div> : <div>{selector.addcart.cartData.cart.items.length} Items in cart</div>}</div>
-                                        <div className="float-right text-right">Cart Subtotal: <br />  <b>{getSymbolFromCurrency(selector.addcart.cartData.cart.prices.subtotal_excluding_tax.currency)} {selector.addcart.cartData.cart.prices.subtotal_excluding_tax.value}</b></div>
+                                        <div className="float-left">{items.length == 1 ? <div>1 Item in Cart</div> : <div>{items.length} Items in cart</div>}</div>
+                                        <div className="float-right text-right">Cart Subtotal: <br />  <b>{getSymbolFromCurrency(cartItemsList.cart.prices.subtotal_excluding_tax.currency)} {cartItemsList.cart.prices.subtotal_excluding_tax.value}</b></div>
                                     </div>                                  
                                     <div className="text-center p-1">
                                         <button className="btn btn-primary btn-lg" type="button"> Proceed to Checkout </button>
                                     </div>      
 
                                     <hr className="text-secondary p-1"></hr>
-                                    
-                                    {selector.addcart.cartData.cart.items.map((cartItem, i) => (                                       
+                                    {console.log(items)}
+                                    {items.map((cartItem, i) => (                                       
                                       <div id={cartItem.id}>
                                         <div className="row">
                                           <div className="col-4">
@@ -84,7 +113,13 @@ const delete_cart_item = (cart_item_id) => {
                                             <p className="m-0">{cartItem.product.name}</p>
                                             <p className="m-0"><b>{getSymbolFromCurrency(cartItem.product.price.regularPrice.amount.currency)}&nbsp;{cartItem.product.price.regularPrice.amount.value}</b></p>
                                             <p className="m-0">
-                                              Qty: <span className="pl-2"><input type="text" value={cartItem.quantity} className="p-1 text-center" style={{width: '50px', height: '30px'}}/></span>
+                                              Qty: <span className="pl-2">                                                         
+                                                        <input type="text" id={i} className="p-1 text-center" style={{width: '50px', height: '30px'}}
+                                                          value={cartItem.quantity} 
+                                                          onChange={handleQuantityChange}
+                                                         />
+                                                        <button className="btn btn-sm btn-secondary ml-1" onClick={updateCart.bind(this, cartItem.quantity, cartItem.id )}>Update</button>
+                                                   </span>
                                               <div className="ml-auto text-secondary text-right">
                                                 <i className="fa fa-edit fa-1x pl-2 pr-2" aria-hidden="true" id="icon"></i>
                                                 <i className="fa fa-trash fa-1x pl-2 pr-2" aria-hidden="true" id="icon" onClick={delete_cart_item.bind(this, cartItem.id)}></i>

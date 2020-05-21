@@ -4,7 +4,10 @@ let InitialState = {
         cartId: (localStorage.getItem('localCartId') ? localStorage.getItem('localCartId') : ""),
         cartData: [],
         addCartData: [],
-
+        cartData: [],   
+        cart: [],
+        items: [],
+        prices: []                                           
   }
   
   function AddcartReducer(state = InitialState, action) {
@@ -19,10 +22,13 @@ let InitialState = {
           }; 
 
         case 'CART_DETAILS':        
-        let { cartDatas } = action.payload;
+        let { cartDatas_get, cart_get, items_get, prices_get } = action.payload;
           return {
-            ...state,              
-            cartData: cartDatas  
+            ...state,                          
+            cartData: cartDatas_get,   
+            cart: cart_get,
+            items: items_get,
+            prices: prices_get                                           
           }; 
 
           case 'ADD_CART':        

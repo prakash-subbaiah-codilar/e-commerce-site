@@ -223,7 +223,10 @@ export const getCartDetails = (cartId) => dispatch => {
       console.log(result.data);        
       console.log("Welcome 2");        
       let datas = {
-          cartDatas: result.data,                                            
+          cartDatas_get: result.data,   
+          cart_get: result.data.cart,
+          items_get: result.data.cart.items,
+          prices_get: result.data.cart.prices                                         
         }
     
   return dispatch({
@@ -344,14 +347,15 @@ export const updateCartItems = (cartId, cart_item_id, qty) => dispatch => {
     })
 }).then(r => r.json()).then((result) => {
     console.log(result.data);        
-    let datas = {
+    dispatch(getCartDetails(cartId));
+    /*let datas = {
         cartData: "",                                            
       }
   
 return dispatch({
     type: 'CART_DETAILS',
     payload: datas
-});
+});*/
 }).catch((error) => {        
 return dispatch({
     type: 'CART_DETAILS',
