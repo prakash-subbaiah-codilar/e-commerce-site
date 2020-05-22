@@ -8,7 +8,7 @@ import getSymbolFromCurrency from 'currency-symbol-map';
 
 import Config from './../../Config';//Get the API_KEY_URL
 
-import { updateCartItems, productQtyDetails, addSimpleProductToCart, getCartDetails } from "../actions/AddcartAction";
+import { updateCartItems, getCartDetails } from "../actions/AddcartAction";
 
 import './ProductDetails.css';
 
@@ -26,9 +26,8 @@ function ProductDetails(props) {
   const [summary, setSummary] = useState("");
   const [review, setReview] = useState("");
   const [selectedImage, setSelectedImage] = useState(""); 
-  //const [items, setItems] = useState([]);
 
-  /*Fetch data from productDetals Function*/
+//Fetch data from productDetals Function
   useEffect(() => {             
     dispatch(productDetails(props.match.params.product_sku));   
     dispatch(getCartDetails(selector.addcart.cartId));     
@@ -39,12 +38,13 @@ function ProductDetails(props) {
       const data = selector.addcart.items.map(item => {        
           if(item.id == props.match.params.cart_item_Id){
             setQty(item.quantity);            
+            return item.quantity;
           }        
         });            
         console.log(data);      
   }, [selector.addcart.cartData]);
   
-  /*Asign the selected image to view in first*/
+//Asign the selected image to view in first
   useEffect(() => {                   
     const data = selector.product.productDetails.map(item => {        
             setSelectedImage(item.media_gallery_entries[0].file);            
@@ -54,7 +54,7 @@ function ProductDetails(props) {
   },[selector.product.productDetails]);
 
 
-/*Popup Image ZoomIn*/
+//Popup Image ZoomIn
 function zoomin() {        
     let myImg = document.querySelector(".active .modalImage");
     let currWidth = myImg.clientWidth;        
@@ -65,7 +65,7 @@ function zoomin() {
     }   
 } 
 
-/*Popup Image ZoomOut*/  
+//Popup Image ZoomOut
 function zoomout() {             
     let myImg = document.querySelector(".active .modalImage");    
     let currWidth = myImg.clientWidth;            
@@ -75,19 +75,19 @@ function zoomout() {
         myImg.style.width = (currWidth-20) + "px";    
     }    
 } 
-/*Click the slider arrow selected image will change*/
+//Click the slider arrow selected image will change
 const fire = () => {    
     let getImg = document.querySelector(".themeImage .active");        
     setSelectedImage(getImg.id);    
 }
 
-/*Update Cart Items Quantity*/
+//Update Cart Items Quantity
 const updateCart = (qty) => {
     dispatch(updateCartItems(selector.addcart.cartId, props.match.params.cart_item_Id, qty));
   }
   
 
-/*Left Column Product Image View Layout*/
+//Left Column Product Image View Layout
 const left_column_productImageView = (person) => {
     return <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 pt-2 mx-auto text-center">
 
@@ -142,13 +142,13 @@ const left_column_productImageView = (person) => {
             </div>   
 }
 
-/*Center Column Product Details View Layout*/
+//Center Column Product Details View Layout
 const center_column_productImageView = (person) => {
     
     return <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <p className="pt-2 pl-2 text-secondary" id="productDetailsTitle">{person.name}</p>
                 <a href="" className="pt-2 pl-2" >Be the first to review this product</a>
-                <div className="row col-8" id="productDetailsPriceBottom">
+                <div className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8" id="productDetailsPriceBottom">
                     <div className="pt-2 pl-2 text-secondary col-6">
                         <h1>
                             {getSymbolFromCurrency(person.price.regularPrice.amount.currency)}
@@ -185,11 +185,11 @@ const center_column_productImageView = (person) => {
             </div>
 }
 
-/*Details and Review Tab Layout*/  
+//Details and Review Tab Layout
 const detailsReviewTab = (person) => {
     return <div className="container py-4">
     <div className="row">
-        <div className="col-md-6">                                
+        <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">                                
             <ul id="tabs" className="nav nav-tabs">                                        
                 <li className="nav-item border border-bottom-0" style={{borderColor: "D3D3D3"}}><a data-target="#details" data-toggle="tab" className="nav-link small text-uppercase active">Details</a></li>
                 <li className="nav-item border border-bottom-0" style={{borderColor: "D3D3D3"}}><a data-target="#review" data-toggle="tab" className="nav-link small text-uppercase">Reviews</a></li>

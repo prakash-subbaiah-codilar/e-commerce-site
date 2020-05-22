@@ -1,6 +1,5 @@
 import React from 'react';
 import './index.css';
-import './AddCartPopup.css';
 
 import CartButton from "../CartButton";
 

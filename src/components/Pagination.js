@@ -1,8 +1,8 @@
 import React from 'react';
 
+//Display the Number of page in Pagination Layout for Product List Page
 const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
   const pageNumbers = [];
-
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
   }
@@ -11,20 +11,12 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
     <nav style={{border: 0}}>
       <ul className='pagination justify-content-end'>
         {pageNumbers.map(number => (
-            <React.Fragment key={number}>
-            {(currentPage == number) ?
-                <li key={number} className='page-item active'>
+            <React.Fragment key={number}>              
+              <li key={number} className={(currentPage == number) ? 'page-item active' : 'page-item'}>
                     <a onClick={() => paginate(number)} className='page-link'>
                     {number}
                     </a>
-                </li>
-                :
-                <li key={number} className='page-item'>
-                    <a onClick={() => paginate(number)} className='page-link'>
-                    {number}
-                    </a>
-                </li>
-            }
+                </li>            
             </React.Fragment>
           
         ))}

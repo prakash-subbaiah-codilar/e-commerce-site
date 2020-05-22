@@ -53,7 +53,7 @@ export const productData = (pageNumber, cat_id) => dispatch => {
                 variables: null
             })
         }).then(r => r.json()).then((result) => {
-          console.log(result);
+          //console.log(result);
         let datas = {
                       productDatas: result.data.products.items,
                       total_counts: result.data.products.total_count,

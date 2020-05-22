@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+//Static Home Page
 const Home = () => {
   
   return (

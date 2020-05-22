@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { productData } from "../actions/ProductAction";
 
-import { addSimpleProductToCart, getCartDetails } from "../actions/AddcartAction";
+import { addSimpleProductToCart } from "../actions/AddcartAction";
 
 import getSymbolFromCurrency from 'currency-symbol-map';
 
@@ -14,7 +14,6 @@ import queryString from 'query-string';
 
 import './Product.css';
 
-//import Config from './../../Config';//Get the API_KEY_URL
 
 function Product(props) {
     
@@ -29,11 +28,9 @@ function Product(props) {
   //This postsPerPage is only used for Pagination perpose  
   const [postsPerPage] = useState(6);
 
-/*Fetch data from productData Function*/
-  useEffect(() => {       
-    //alert(Config[0].API_KEY_URL);
-    const values = queryString.parse(props.location.search);      
-    console.log(queryString.parse(props.location.search).page);
+//Fetch data from productData Function
+  useEffect(() => {           
+    const values = queryString.parse(props.location.search);          
     //Call productData function to fetch data 
     if(values.page){
         dispatch(productData(values.page, props.match.params.id));
@@ -49,36 +46,28 @@ const indexOfLastPost = currentPage * postsPerPage;
 const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
   
-// Change page by clickig page number
-const paginate = (pageNumber) => {             
-  
-  let url = "/category/"+props.match.params.id+"?page="+pageNumber+"";                
-    
-  //Reload the page with new page number
-  props.history.push(url);
-    
+//Go to Next page by clickig page number
+const paginate = (pageNumber) => {               
+  let url = "/category/"+props.match.params.id+"?page="+pageNumber+"";                      
+  props.history.push(url);    
   //Call productData function to fetch data
-  dispatch(productData(pageNumber, props.match.params.id));            
-  
+  dispatch(productData(pageNumber, props.match.params.id));              
 };
 
 //Go to Product Details Page
 const push_product_details = (sku) => {       
-
     let url = "/ProductDetails/"+sku+"";                      
-
     props.history.push(url);      
-
   };
 
 //Add product to cart
 const add_cart = (sku, qty) => {    
-    dispatch(addSimpleProductToCart(selector.addcart.cartId, sku, qty));
-    //Fetch Cart Details after Add the Product to cart
-    //dispatch(getCartDetails(selector.addcart.cartId));
+    dispatch(addSimpleProductToCart(selector.addcart.cartId, sku, qty));    
  }
 
-/*Grid Button, List Button and Pagination Buttons Layout*/
+
+ 
+//Grid Button, List Button and Pagination Buttons Layout
 const grid_list_pagination = () => {
   return <div className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 mx-auto">
         
@@ -100,7 +89,7 @@ const grid_list_pagination = () => {
     </div>
 }
 
-/*Grid View Layout*/
+//Grid View Layout
 const gridViewStructure = (person) => {
   return  <div className="shadowContainer p-3 mx-auto">
             <h6>{person.name}</h6>                                            
@@ -125,7 +114,7 @@ const gridViewStructure = (person) => {
           </div>     
 }
 
-/*List View and Mobile View Layout*/
+//List View and Mobile View Layout
 const listViewStructure = (person) => {
   return <div>
                     <h6 className="pt-2 pl-2">{person.name}</h6>   
@@ -150,7 +139,7 @@ const listViewStructure = (person) => {
           </div>
 }
 
-/*Display Only on Large screen and extra-large screen Layout*/
+//Display Only on Large screen and extra-large screen Layout
 const greaterThanMediumScreenLayout = () => {
   return <div className="d-none d-lg-block">
               {selector.product.productDataLength === '1' ? 
@@ -187,7 +176,7 @@ const greaterThanMediumScreenLayout = () => {
             </div>
 }
 
-/*Display Only on lesser than Medium screen Layout*/
+//Display Only on lesser than Medium screen Layout
 const lesserThanMediumScreenLayout = () => {
     return <div className="d-lg-none mx-auto">
               {selector.product.productDataLength === '1' ? 

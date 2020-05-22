@@ -13,30 +13,27 @@ const CartAddEdit = (props) => {
   const dispatch = useDispatch();    
   const selector = useSelector(state => state);
 
-  const [cartItemsList, setCartItemsList] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [items, setItems] = useState([]);
-  const [prices, setPrices] = useState([]);
+  const [cartItemsList, setCartItemsList] = useState([]);  
+  const [items, setItems] = useState([]);  
   const [discountcode, setDiscountcode] = useState("");
  
-  
+//Refresh Cart Details When update  
   useEffect(() => {
-    setCartItemsList(selector.addcart.cartData);
-      setCart(selector.addcart.cart);
-      setItems(selector.addcart.items);
-      setPrices(selector.addcart.prices);
+      setCartItemsList(selector.addcart.cartData);      
+      setItems(selector.addcart.items);      
   }, [selector.addcart.cartData]);
 
+//Fetch the countries details for Summary Section
   useEffect(() => {
-    dispatch(getCountries());
-    //setCountries(selector.addcart.countries);    
+    dispatch(getCountries());    
   });
-//Update Quantity input field value
+
+//Change Quantity input field value
   const handleQuantityChange = (e) => {    
     const updatedArray = [...items];
     let update_qty = Number(e.target.value)
     updatedArray[e.target.id].quantity = update_qty;
-    setCart(updatedArray);   
+    setItems(updatedArray);   
 }
 
 //Update Multiple Cart Items Quantity
@@ -65,6 +62,7 @@ const push_productQtyUpdate = (sku, cartItemId) => {
   props.history.push(url);      
 };
 
+//Apply Discount
 const applyDiscountCode = () => {    
   dispatch(ApplyDiscount(selector.addcart.cartId, discountcode));
 }
@@ -75,7 +73,7 @@ const countrySelectbox = () => {
             {selector.addcart.countries && selector.addcart.countries.length > 0 ?
               <React.Fragment>                
                 {selector.addcart.countries.map((country, i) => (
-                  <option value={country.full_name_english}>{country.full_name_english}</option>                
+                  <option key={country.id} value={country.full_name_english}>{country.full_name_english}</option>                
                 ))};    
               </React.Fragment>              
               :
@@ -112,13 +110,13 @@ const CartTaxDiscountShipping = () => {
   return <div>
             {cartItemsList ? 
                   <span>
-                    {(items.length == 0 || items == undefined) ?
+                    {(items.length === 0 || items === undefined) ?
                     null
                     :
                     <div>
                         <div className="clearfix">
                             <p className="float-left">Subtotal</p>
-                              <p className="float-right">{cartItemsList ? <span>{(items.length == 0 || items == undefined) ? null : <span>{getSymbolFromCurrency(cartItemsList.cart.prices.subtotal_excluding_tax.currency)} {cartItemsList.cart.prices.subtotal_excluding_tax.value}</span>}</span> : null }</p>
+                              <p className="float-right">{cartItemsList ? <span>{(items.length === 0 || items === undefined) ? null : <span>{getSymbolFromCurrency(cartItemsList.cart.prices.subtotal_excluding_tax.currency)} {cartItemsList.cart.prices.subtotal_excluding_tax.value}</span>}</span> : null }</p>
                         </div>  
                         <div className="clearfix">
                             <p className="float-left">Shipping (Flat Rate - Fixed)</p>
@@ -151,8 +149,8 @@ const ShoppingCartTableBody = () => {
   return <tbody className="col-12">
               {cartItemsList ?
                 <React.Fragment>
-                  {(items.length == 0 || items == undefined) ?
-                      <tr className="text-center text-secondary text-center pt-3 pb-3">No Items from cart.  </tr>
+                  {(items.length === 0 || items === undefined) ?
+                      <tr><td className="text-center text-secondary text-center pt-3 pb-3">No Items from cart.</td></tr>
                   :
                   <React.Fragment>
                     {items.map((cartItem, i) => (                                                                           
@@ -251,7 +249,7 @@ const summaryCart = () => {
         <div className="clearfix">
             <h4><p className="float-left">Order Total</p>
             <p className="float-right">
-              {cartItemsList ? <span>{(items.length == 0 || items == undefined) ? null : <span>{getSymbolFromCurrency(cartItemsList.cart.prices.grand_total.currency)} {cartItemsList.cart.prices.grand_total.value}</span>}</span> : null }              
+              {cartItemsList ? <span>{(items.length === 0 || items === undefined) ? null : <span>{getSymbolFromCurrency(cartItemsList.cart.prices.grand_total.currency)} {cartItemsList.cart.prices.grand_total.value}</span>}</span> : null }              
             </p></h4>
         </div>                                        
         <div className="text-center p-2">
@@ -265,7 +263,7 @@ const summaryCart = () => {
 return (
             <div id="cartAddEdit">               
                 <p className="p-3 text-secondary" id="shoppingCartTitle">Shopping Cart</p>
-                <div className="row col-12">
+                <div className="row col-12 mx-auto">
                   
                   {/*Left Side Shopping Cart*/}
                   {shoppingCart()}

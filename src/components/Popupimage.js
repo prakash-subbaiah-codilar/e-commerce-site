@@ -2,7 +2,7 @@ import React from 'react';
 import Config from './../../Config';//Get the API_KEY_URL
 import './Popupimage.css';
 
-/*Popup Image Layout*/
+//Popup Image Layout for Product Details Page
 const Popupimage = (props) => {
 
   return (

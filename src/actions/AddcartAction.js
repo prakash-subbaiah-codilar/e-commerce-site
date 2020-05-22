@@ -18,7 +18,7 @@ export const createEmptyCart = () => dispatch => {
             })
         }).then(r => r.json()).then((result) => {
             localStorage.setItem('localCartId', result.data.createEmptyCart);
-            console.log(result.data.createEmptyCart);
+//            console.log(result.data.createEmptyCart);
         let datas = {
                       cartIds: result.data.createEmptyCart,                                            
                     }
@@ -36,56 +36,6 @@ export const createEmptyCart = () => dispatch => {
 
 };
 
-/*Add the poduct in cart*/
-export const addSimpleProductToCart = (cartId, sku, qty) => dispatch => {           
-  
-    fetch(''+Config[0].API_KEY_URL+'graphql', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            query: `
-            mutation {
-              addSimpleProductsToCart(
-                input: {
-                  cart_id: "`+cartId+`"
-                  cart_items: [
-                    {
-                      data: {
-                        quantity: `+qty+`                         
-                        sku: "`+sku+`"
-                      }
-                    }
-                  ]
-                }
-              ) {
-                cart {
-                  items {
-                    id
-                    product {
-                      name
-                      sku
-                    }
-                    quantity
-                  }
-                }
-              }
-          }
-            `
-        })
-    }).then(r => r.json()).then((result) => {
-        //console.log(result);                
-        alert("Cart Added");        
-        dispatch(getCartDetails(cartId));        
-  }).catch((error) => {     
-    console.log(error);
-    return dispatch({
-        type: 'ADD_CART',
-        payload: ""
-    });
-});
-};
 
 /*Fetch the list of product in cart*/
 export const getCartDetails = (cartId) => dispatch => {           
@@ -98,69 +48,7 @@ export const getCartDetails = (cartId) => dispatch => {
       body: JSON.stringify({
           query: `
           query {
-            cart(cart_id: "`+cartId+`") {
-              email
-              billing_address {
-                city
-                country {
-                  code
-                  label
-                }
-                firstname
-                lastname
-                postcode
-                region {
-                  code
-                  label
-                }
-                street
-                telephone
-              }
-              shipping_addresses {
-                firstname
-                lastname
-                street
-                city
-                region {
-                  code
-                  label
-                }
-                country {
-                  code
-                  label
-                }
-                telephone
-                available_shipping_methods {
-                  amount {
-                    currency
-                    value
-                  }
-                  available
-                  carrier_code
-                  carrier_title
-                  error_message
-                  method_code
-                  method_title
-                  price_excl_tax {
-                    value
-                    currency
-                  }
-                  price_incl_tax {
-                    value
-                    currency
-                  }
-                }
-                selected_shipping_method {
-                  amount {
-                    value
-                    currency
-                  }
-                  carrier_code
-                  carrier_title
-                  method_code
-                  method_title
-                }
-              }
+            cart(cart_id: "`+cartId+`") {              
               items {
                 id
                 product {
@@ -179,15 +67,7 @@ export const getCartDetails = (cartId) => dispatch => {
                   }
                 }
                 quantity
-              }              
-              available_payment_methods {
-                code
-                title
-              }
-              selected_payment_method {
-                code
-                title
-              }
+              }                            
               prices {
                 subtotal_excluding_tax {
                   value
@@ -217,10 +97,8 @@ export const getCartDetails = (cartId) => dispatch => {
                   `,
           variables: null
       })
-  }).then(r => r.json()).then((result) => {
-    console.log("Welcome 1");        
-      console.log(result.data);        
-      console.log("Welcome 2");        
+  }).then(r => r.json()).then((result) => {  
+  //    console.log(result.data);            
       let datas = {
           cartDatas_get: result.data,   
           cart_get: result.data.cart,
@@ -245,62 +123,57 @@ export const getCartDetails = (cartId) => dispatch => {
 };
 
 
-/*Price Details in cart*/
-export const getCartPriceDetails = (cartId) => dispatch => {           
-
+/*Add the poduct in cart*/
+export const addSimpleProductToCart = (cartId, sku, qty) => dispatch => {           
+  
   fetch(''+Config[0].API_KEY_URL+'graphql', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        query: `
-        query {
-          cart(cart_id: "`+cartId+`"){
-            items {
-              id
-              quantity
-              product{
-                name
-                sku        
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          query: `
+          mutation {
+            addSimpleProductsToCart(
+              input: {
+                cart_id: "`+cartId+`"
+                cart_items: [
+                  {
+                    data: {
+                      quantity: `+qty+`                         
+                      sku: "`+sku+`"
+                    }
+                  }
+                ]
               }
-              
-            }
-            prices {
-              
-              subtotal_excluding_tax {
-                value
-              }
-              applied_taxes {
-                label
-                amount {
-                  value
+            ) {
+              cart {
+                items {
+                  id
+                  product {
+                    name
+                    sku
+                  }
+                  quantity
                 }
               }
             }
-          }
-        }                    
-                `,
-        variables: null
-    })
-}).then(r => r.json()).then((result) => {
-    console.log(result.data);        
-    let datas = {
-        cartData: "",                                            
-      }
-  
-return dispatch({
-    type: 'CART_DETAILS',
-    payload: datas
+        }
+          `
+      })
+  }).then(r => r.json()).then((result) => {
+      //console.log(result);                
+      alert("Cart Added");        
+      dispatch(getCartDetails(cartId));        
+}).catch((error) => {     
+  console.log(error);
+  return dispatch({
+      type: 'ADD_CART',
+      payload: ""
+  });
 });
-}).catch((error) => {        
-return dispatch({
-    type: 'CART_DETAILS',
-    payload: ""
-});
-});
-
 };
+
 
 /*Update Cart Items*/
 export const updateCartItems = (cartId, cart_item_id, qty) => dispatch => {           
@@ -345,7 +218,7 @@ export const updateCartItems = (cartId, cart_item_id, qty) => dispatch => {
         variables: null
     })
 }).then(r => r.json()).then((result) => {
-    console.log(result.data);        
+    //console.log(result.data);        
     alert("Quantity Updated");
     dispatch(getCartDetails(cartId));    
 }).catch((error) => {        
@@ -363,6 +236,7 @@ return dispatch({
 export const updateMultipleCartItems = (cartId, data) => dispatch => {           
   
   let dataString = JSON.stringify(data);
+
   dataString = dataString.replace(/\"/g, "");
       
   fetch(''+Config[0].API_KEY_URL+'graphql', {
@@ -453,7 +327,7 @@ export const ApplyDiscount = (cartId, discountCode) => dispatch => {
         variables: null
     })
 }).then(r => r.json()).then((result) => {
-  console.log(result.data);
+  //console.log(result.data);
   alert("Applied Code");
   dispatch(getCartDetails(cartId));   
 }).catch((error) => {        
@@ -518,7 +392,7 @@ export const removeItemFromCart = (cartId, cart_item_id) => dispatch => {
         variables: null
     })
 }).then(r => r.json()).then((result) => {
-    console.log(result.data);        
+    //console.log(result.data);        
     dispatch(getCartDetails(cartId));
 }).catch((error) => {        
 return dispatch({
