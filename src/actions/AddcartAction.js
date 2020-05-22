@@ -406,6 +406,62 @@ return dispatch({
 };
 
 
+/*Apply discount code to cart*/
+export const ApplyDiscount = (cartId, discountCode) => dispatch => {           
+       
+  fetch(''+Config[0].API_KEY_URL+'graphql', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        query: `
+        mutation {
+          applyCouponToCart(
+            input: {
+              cart_id: "`+cartId+`",
+              coupon_code: "`+discountCode+`"
+            }
+          ) {
+            cart {
+              items {
+                product {
+                  name
+                }
+                quantity
+              }
+              applied_coupon {
+                code
+              }
+              prices {
+                grand_total{
+                  value
+                  currency
+                }
+              }
+            }
+          }
+        }
+                `,
+        variables: null
+    })
+}).then(r => r.json()).then((result) => {
+  console.log(result.data);
+  alert("Applied Code");
+  dispatch(getCartDetails(cartId));   
+}).catch((error) => {        
+
+return dispatch({
+    type: 'CART_DETAILS',
+    payload: ""
+});
+});
+
+};
+
+
+
+
 
 /*Remove Item from cart*/
 export const removeItemFromCart = (cartId, cart_item_id) => dispatch => {           

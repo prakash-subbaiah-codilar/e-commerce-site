@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateMultipleCartItems, getCartDetails, removeItemFromCart, updateCartItems } from "../actions/AddcartAction";
+import { ApplyDiscount, updateMultipleCartItems, getCartDetails, removeItemFromCart, updateCartItems } from "../actions/AddcartAction";
 
 import getSymbolFromCurrency from 'currency-symbol-map';
 
@@ -17,6 +17,7 @@ const CartAddEdit = (props) => {
   const [cart, setCart] = useState([]);
   const [items, setItems] = useState([]);
   const [prices, setPrices] = useState([]);
+  const [discountcode, setDiscountcode] = useState("");
 
   useEffect(() => {
     setCartItemsList(selector.addcart.cartData);
@@ -59,6 +60,10 @@ const push_productQtyUpdate = (sku, cartItemId) => {
   props.history.push(url);      
 };
 
+const applyDiscountCode = () => {    
+  dispatch(ApplyDiscount(selector.addcart.cartId, discountcode));
+}
+
 
 //Left Side Shopping Cart Layout
 const shoppingCart = () => {
@@ -78,7 +83,7 @@ const shoppingCart = () => {
                     {cartItemsList ?
                       <React.Fragment>
                         {(items.length == 0 || items == undefined) ?
-                            <tr className="text-center text-secondary pt-3 pb-3">No Items from cart.  </tr>
+                            <tr className="text-center text-secondary text-center pt-3 pb-3">No Items from cart.  </tr>
                         :
                         <React.Fragment>
                           {items.map((cartItem, i) => (                                                                           
@@ -123,8 +128,8 @@ const shoppingCart = () => {
               <p data-toggle="collapse" data-target="#applyCode">Apply Discount Code&nbsp;&nbsp;<i className="fa fa-angle-down fa-1x" aria-hidden="true" id="icon"></i></p>
               <div className="collapse mb-5" id="applyCode">
                 <div className="input-group col-5">
-                    <input type="text" className="form-control" placeholder="Enter discount code" />
-                    <button className="input-group-addon btn btn-secondary">Apply Discount</button>
+                    <input type="text" className="form-control" value={discountcode} onChange={(e) => setDiscountcode(e.target.value)}placeholder="Enter discount code" />
+                    <button className="input-group-addon btn btn-secondary" onClick={applyDiscountCode}>Apply Discount</button>
                 </div>
               </div>
             </div>
@@ -165,7 +170,7 @@ const summaryCart = () => {
         <hr className="text-secondary p-2"></hr>                   
         <div className="clearfix">
             <p className="float-left">Subtotal</p>
-              <p className="float-right">{cartItemsList ? <span>{(items.length == 0 || items == undefined) ? null : <span>{getSymbolFromCurrency(cart.prices.subtotal_excluding_tax.currency)} {cart.prices.subtotal_excluding_tax.value}</span>}</span> : null }</p>
+              <p className="float-right">{cartItemsList ? <span>{(items.length == 0 || items == undefined) ? null : <span>{getSymbolFromCurrency(cartItemsList.cart.prices.subtotal_excluding_tax.currency)} {cartItemsList.cart.prices.subtotal_excluding_tax.value}</span>}</span> : null }</p>
         </div>  
         <div className="clearfix">
             <p className="float-left">Shipping (Flat Rate - Fixed)</p>
@@ -176,7 +181,7 @@ const summaryCart = () => {
         <div className="clearfix">
             <h4><p className="float-left">Order Total</p>
             <p className="float-right">
-              {cartItemsList ? <span>{(items.length == 0 || items == undefined) ? null : <span>{getSymbolFromCurrency(cart.prices.grand_total.currency)} {cart.prices.grand_total.value}</span>}</span> : null }              
+              {cartItemsList ? <span>{(items.length == 0 || items == undefined) ? null : <span>{getSymbolFromCurrency(cartItemsList.cart.prices.grand_total.currency)} {cartItemsList.cart.prices.grand_total.value}</span>}</span> : null }              
             </p></h4>
         </div>                                        
         <div className="text-center p-2">
