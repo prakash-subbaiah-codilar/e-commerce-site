@@ -7,7 +7,11 @@ let InitialState = {
         cartData: [],   
         cart: [],
         items: [],
-        prices: []                                           
+        prices: [],
+        productDetailsCartData: [],
+        productDetailsCart: [],
+        productDetailsItems: [],
+        productDetailsPrices: []
   }
   
   function AddcartReducer(state = InitialState, action) {
@@ -38,6 +42,16 @@ let InitialState = {
             addCartData: addCartDatas  
           }; 
           
+          case 'PRODUCT_DETAILS_INCART':
+            let { productDetailsCartData_get, productDetailsCart_get, productDetailsItems_get, productDetailsPrices_get } = action.payload;
+            return {
+              ...state,                          
+              productDetailsCartData: productDetailsCartData_get,   
+              productDetailsCart: productDetailsCart_get,
+              productDetailsItems: productDetailsItems_get,
+              productDetailsPrices: productDetailsPrices_get                                           
+            }; 
+
         default:
           return state;
       }

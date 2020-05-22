@@ -69,6 +69,8 @@ const updateCart = (qty, cart_item_id) => {
   toggleClose();
 }
 
+
+
 //Cart Item List Layout
 const cartList = () => {
   return <div>
@@ -91,8 +93,8 @@ const cartList = () => {
                        />
                       <button className="btn btn-sm btn-secondary ml-1" onClick={updateCart.bind(this, cartItem.quantity, cartItem.id )}>Update</button>
                  </span>
-            <div className="ml-auto text-secondary text-right">
-              <i className="fa fa-edit fa-1x pl-2 pr-2" aria-hidden="true" id="icon"></i>
+            <div className="ml-auto text-secondary text-right">             
+            <Link to={"/checkout/cart/configure/id/"+cartItem.id+"/product_id/"+cartItem.product.sku+""}><i className="fa fa-edit fa-1x pl-2 pr-2 text-secondary" aria-hidden="true" id="icon" onClick={toggleClose}></i></Link>
               <i className="fa fa-trash fa-1x pl-2 pr-2" aria-hidden="true" id="icon" onClick={delete_cart_item.bind(this, cartItem.id)}></i>
             </div>
             </p>                                           

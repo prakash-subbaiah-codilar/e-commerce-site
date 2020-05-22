@@ -8,7 +8,7 @@ import getSymbolFromCurrency from 'currency-symbol-map';
 
 import './CartAddEdit.css';
 
-const CartAddEdit = () => {
+const CartAddEdit = (props) => {
 
   const dispatch = useDispatch();    
   const selector = useSelector(state => state);
@@ -53,6 +53,12 @@ const delete_cart_item = (cart_item_id) => {
   }
 }
 
+//Go to Product Details Page to update cart_item quantity
+const push_productQtyUpdate = (sku, cartItemId) => {           
+  let url = "/checkout/cart/configure/id/"+cartItemId+"/product_id/"+sku+"";  
+  props.history.push(url);      
+};
+
 
 //Left Side Shopping Cart Layout
 const shoppingCart = () => {
@@ -92,7 +98,7 @@ const shoppingCart = () => {
                             </td>
                             <td><b>{getSymbolFromCurrency(cartItem.product.price.regularPrice.amount.currency)}&nbsp;{cartItem.product.price.regularPrice.amount.value * cartItem.quantity}</b><br />
                             <div className="text-secondary">                                                                      
-                              <i className="fa fa-edit fa-1x p-2 pt-5 mt-2" aria-hidden="true" id="icon"></i>
+                              <i className="fa fa-edit fa-1x p-2 pt-5 mt-2" aria-hidden="true" id="icon" onClick={push_productQtyUpdate.bind(this, cartItem.product.sku, cartItem.id)}></i>
                               <i className="fa fa-trash fa-1x p-2 pt-5 mt-2" aria-hidden="true" id="icon" onClick={delete_cart_item.bind(this, cartItem.id)}></i>
                             </div>                                    
                             </td>
@@ -135,23 +141,23 @@ const summaryCart = () => {
           <p data-toggle="collapse" data-target="#estimateShipping">Estimate Shipping and Tax&nbsp;<i className="fa fa-angle-down fa-1x float-right text-right" aria-hidden="true" id="icon"></i></p>
           <div className="collapse mb-5" id="estimateShipping">      
             <p>Enter your destination to get a shipping estimate.</p>      
-            <div class="form-group">
+            <div className="form-group">
               <label>Country</label>
-              <select class="form-control" name="Country">
+              <select className="form-control" name="Country">
                 <option>1</option>
                 <option>2</option>                            
               </select>
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <label>State/Province</label>
-              <select class="form-control" name="Country">
+              <select className="form-control" name="Country">
                 <option>1</option>
                 <option>2</option>
               </select>
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <label>Zip/Postal Code</label>    
-              <input type="text" class="form-control" name="postalcode" />                      
+              <input type="text" className="form-control" name="postalcode" />                      
             </div>
           </div>      
         </div>                                                                  
@@ -159,7 +165,7 @@ const summaryCart = () => {
         <hr className="text-secondary p-2"></hr>                   
         <div className="clearfix">
             <p className="float-left">Subtotal</p>
-              <p className="float-right">{cartItemsList ? <span>{(items.length == 0 || items == undefined) ? null : <span>{getSymbolFromCurrency(cartItemsList.cart.prices.subtotal_excluding_tax.currency)} {cartItemsList.cart.prices.subtotal_excluding_tax.value}</span>}</span> : null }</p>
+              <p className="float-right">{cartItemsList ? <span>{(items.length == 0 || items == undefined) ? null : <span>{getSymbolFromCurrency(cart.prices.subtotal_excluding_tax.currency)} {cart.prices.subtotal_excluding_tax.value}</span>}</span> : null }</p>
         </div>  
         <div className="clearfix">
             <p className="float-left">Shipping (Flat Rate - Fixed)</p>
@@ -168,8 +174,10 @@ const summaryCart = () => {
                             
         <hr className="text-secondary p-2"></hr>
         <div className="clearfix">
-            <p className="float-left">Order Total</p>
-            <p className="float-right">{/*$1,204.00*/}</p>
+            <h4><p className="float-left">Order Total</p>
+            <p className="float-right">
+              {cartItemsList ? <span>{(items.length == 0 || items == undefined) ? null : <span>{getSymbolFromCurrency(cart.prices.grand_total.currency)} {cart.prices.grand_total.value}</span>}</span> : null }              
+            </p></h4>
         </div>                                        
         <div className="text-center p-2">
         <button className="btn btn-primary btn-lg" type="button"> Proceed to Checkout </button>

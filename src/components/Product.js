@@ -27,7 +27,7 @@ function Product(props) {
   const [currentPage] = useState(1);
 
   //This postsPerPage is only used for Pagination perpose  
-  const [postsPerPage] = useState(3);
+  const [postsPerPage] = useState(6);
 
 /*Fetch data from productData Function*/
   useEffect(() => {       

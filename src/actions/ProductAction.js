@@ -15,7 +15,7 @@ export const productData = (pageNumber, cat_id) => dispatch => {
                       category_id: {
                         eq: "`+cat_id+`"
                       }
-                    } pageSize: 3
+                    } pageSize: 6
                     currentPage: `+pageNumber+`) {
                       items {
                         name

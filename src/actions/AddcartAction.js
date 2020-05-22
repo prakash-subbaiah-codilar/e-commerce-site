@@ -77,15 +77,7 @@ export const addSimpleProductToCart = (cartId, sku, qty) => dispatch => {
     }).then(r => r.json()).then((result) => {
         //console.log(result);                
         alert("Cart Added");        
-        dispatch(getCartDetails(cartId));
-        /*let datas = {
-            addCartDatas: result,                                            
-          }
-          
-    return dispatch({
-        type: 'ADD_CART',
-        payload: datas
-    });*/
+        dispatch(getCartDetails(cartId));        
   }).catch((error) => {     
     console.log(error);
     return dispatch({
@@ -347,15 +339,8 @@ export const updateCartItems = (cartId, cart_item_id, qty) => dispatch => {
     })
 }).then(r => r.json()).then((result) => {
     console.log(result.data);        
-    dispatch(getCartDetails(cartId));
-    /*let datas = {
-        cartData: "",                                            
-      }
-  
-return dispatch({
-    type: 'CART_DETAILS',
-    payload: datas
-});*/
+    alert("Quantity Updated");
+    dispatch(getCartDetails(cartId));    
 }).catch((error) => {        
 return dispatch({
     type: 'CART_DETAILS',
@@ -409,16 +394,7 @@ export const updateMultipleCartItems = (cartId, data) => dispatch => {
     })
 }).then(r => r.json()).then((result) => {
   alert("Shopping Cart Updated")
-    dispatch(getCartDetails(cartId));
-
-    /*let datas = {
-        cartData: "",                                            
-      }
-  
-return dispatch({
-    type: 'CART_DETAILS',
-    payload: datas
-});*/
+  dispatch(getCartDetails(cartId));   
 }).catch((error) => {        
 
 return dispatch({
@@ -428,6 +404,7 @@ return dispatch({
 });
 
 };
+
 
 
 /*Remove Item from cart*/
@@ -471,14 +448,6 @@ export const removeItemFromCart = (cartId, cart_item_id) => dispatch => {
 }).then(r => r.json()).then((result) => {
     console.log(result.data);        
     dispatch(getCartDetails(cartId));
-/*    let datas = {
-        cartData: "",                                            
-      }
-  
-return dispatch({
-    type: 'CART_DETAILS',
-    payload: datas
-});*/
 }).catch((error) => {        
 return dispatch({
     type: 'CART_DETAILS',
