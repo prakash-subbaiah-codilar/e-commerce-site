@@ -199,6 +199,13 @@ export const getCartDetails = (cartId) => dispatch => {
                     value
                   }
                 }
+                discount {
+                  label
+                  amount{
+                    value
+                    currency
+                  }
+                } 
                 grand_total {
                   value
                   currency
@@ -459,7 +466,16 @@ return dispatch({
 
 };
 
-
+/*Delete discount Code from cart*/
+/*mutation {
+  removeCouponFromCart(input: { cart_id: "{ CART_ID }" }) {
+    cart {
+      applied_coupons {
+        code
+      }
+    }
+  }
+}*/
 
 
 
@@ -512,4 +528,58 @@ return dispatch({
 });
 
 };
+
+
+
+
+
+
+/*Fetch the list of Countries*/
+export const getCountries = () => dispatch => {           
+  
+  fetch(''+Config[0].API_KEY_URL+'graphql', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          query: `
+          query {
+            countries {
+                id
+                two_letter_abbreviation
+                three_letter_abbreviation
+                full_name_locale
+                full_name_english
+                available_regions {
+                    id
+                    code
+                    name
+                }
+            }
+          }
+                  `,
+          variables: null
+      })
+  }).then(r => r.json()).then((result) => {      
+      let datas = {
+          countries_get: result.data.countries
+      }    
+  return dispatch({
+      type: 'COUNTRIES_DETAILS',
+      payload: datas
+  });
+}).catch((error) => {        
+  let datas = {
+    countries_get: [],                                            
+  }
+  return dispatch({
+      type: 'COUNTRIES_DETAILS',
+      payload: datas
+  });
+});
+
+};
+
+
 
