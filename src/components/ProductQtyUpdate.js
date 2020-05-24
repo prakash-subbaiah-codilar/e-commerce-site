@@ -75,11 +75,12 @@ function zoomout() {
         myImg.style.width = (currWidth-20) + "px";    
     }    
 } 
+
 //Click the slider arrow selected image will change
-const fire = () => {    
-    let getImg = document.querySelector(".themeImage .active");        
-    setSelectedImage(getImg.id);    
+const selectedSmallImage = () => {        
+    setTimeout(() => setSelectedImage(document.querySelector(".themeImage .active").id), 600);    
 }
+
 
 //Update Cart Items Quantity
 const updateCart = (qty) => {
@@ -97,23 +98,17 @@ const left_column_productImageView = (person) => {
                     <div className="carousel-inner themeImage" role="listbox">
                                 {person.media_gallery_entries.map((productImage, i) => (                                                                     
                                     <React.Fragment key={productImage.file}>                                        
-                                        {selectedImage === productImage.file ?                                                                                    
-                                                <div id={productImage.file} key={productImage.file} className="carousel-item active" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"> 
-                                                    <img src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" style={{width: "200px", height: "250px"}}/>
-                                                </div>                                                                                    
-                                                :
-                                                <div id={productImage.file} key={productImage.file} className="carousel-item" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">
-                                                    <img src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" style={{width: "200px", height: "250px"}}/>
-                                                </div>                                                                                                                                
-                                        }
+                                        <div id={productImage.file} key={productImage.file} className={selectedImage === productImage.file ? "carousel-item active" : "carousel-item" } data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"> 
+                                            <img src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" style={{width: "200px", height: "250px"}}/>
+                                        </div>                                                                                                                            
                                     </React.Fragment>                                     
                                 ))}              
                     </div>
-                    <a id="slideArrow" href="#slider1" className="carousel-control-prev text-dark ml-0 mr-0" data-slide="prev" onClick={fire}>                        
+                    <a id="slideArrow" href="#slider1" className="carousel-control-prev text-dark ml-0 mr-0" data-slide="prev" onClick={selectedSmallImage}>                        
                         <i className="fa fa-angle-left fa-4x text-dark" aria-hidden="true" id="icon"></i>
                     </a>
 
-                    <a id="slideArrow" href="#slider1" className="carousel-control-next ml-0 mr-0" data-slide="next" onClick={fire}>
+                    <a id="slideArrow" href="#slider1" className="carousel-control-next ml-0 mr-0" data-slide="next" onClick={selectedSmallImage}>
                         <i className="fa fa-angle-right fa-4x text-dark" aria-hidden="true" id="icon"></i>                        
                     </a>
                  </div> 
@@ -124,19 +119,11 @@ const left_column_productImageView = (person) => {
                 <Popupimage person={person} selectedImage={selectedImage} zoomin={zoomin} zoomout={zoomout} />
 
                 {/*View product image small size*/}
-                <div className="row col-12 pic-container">                                                                    
+                <div className="row col-12">                                                                    
                     {person.media_gallery_entries.map((productImage, i) => (                     
-                        <div key={productImage.file}>
-                            {selectedImage === productImage.file ?
-                            <div key={productImage.file} className="inline-block border border-primary border-3" style={{width: '50px', height: '50px'}}>                                            
-                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto p-1" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
-                            </div>
-                            :
-                            <div key={productImage.file} className="inline-block" style={{width: '50px', height: '50px'}}>                                            
-                                <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto p-1" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
-                            </div>
-                            }
-                        </div>
+                        <div key={productImage.file} className={selectedImage === productImage.file ? "inline-block border border-primary border-3" : "inline-block"} style={{width: '50px', height: '50px'}}>                                            
+                            <img onClick={() => setSelectedImage(productImage.file)} className="mx-auto p-1" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
+                        </div>                                                    
                     ))}                                    
                 </div>
             </div>   
