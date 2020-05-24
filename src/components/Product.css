@@ -1,6 +1,6 @@
 #product{
     padding-bottom: 100px;
-  }  
+}  
 
 /*--------------------------------------
 Make a shadow for mouse over the product
@@ -18,54 +18,6 @@ Make a shadow for mouse over the product
 .shadowContainer:hover #productHover {
     visibility: visible;
 }
-
-#productImage{
-  width: 200px;
-  height: 250px;
-}
-
-
-/*-------------------------------
- Desktops, laptops and taps
- --------------------------------*/
-@media only screen  and (min-width : 1224px) {
-  #productImage{
-    width: 200px;
-    height: 250px;
-  }
-  }
-  
-  @media only screen  and (min-width : 1199px) {
-    #productImage{
-      width: 200px;
-      height: 250px;
-    }
-  }
-  @media only screen  and (min-width : 991px) {
-    #productImage{
-      width: 200px;
-      height: 250px;
-    }
-  }
-  @media only screen  and (min-width : 767px) {
-    #productImage{
-      width: 100px;
-      height: 150px;
-    }
-  }
-  @media only screen  and (min-width : 575px) {
-    #productImage{
-      width: 200px;
-      height: 250px;
-    }
-  }
-    @media only screen  and (max-width : 574px) {
-      #productImage{
-        width: 100px;
-        height: 150px;
-      }
-  
-  }
 
 /*---------------------------------------------------------
 Remove padding space in mobile device for product image view

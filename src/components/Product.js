@@ -26,7 +26,7 @@ function Product(props) {
   const [currentPage] = useState(1);
 
   //This postsPerPage is only used for Pagination perpose  
-  const [postsPerPage] = useState(6);
+  const [postsPerPage] = useState(5);
 
 //Fetch data from productData Function
   useEffect(() => {           
@@ -89,19 +89,18 @@ const grid_list_pagination = () => {
     </div>
 }
 
-//Grid View Layout
-const gridViewStructure = (person) => {
-  return  <div className="shadowContainer p-3 mx-auto">
-            <h6>{person.name}</h6>                                            
-            <div className="mx-auto" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={person.image.url} alt="new" id="productImage" /> </div>
-            <div>
+//Content For Grid View and List View
+const content = (person, structure) => {
+return <React.Fragment>
+            <p>{person.name}</p>                                                        
+            <b>
                 {getSymbolFromCurrency(person.price.regularPrice.amount.currency)}
                 {person.price.regularPrice.amount.value}
-            </div>   
-            <div id="productHover">
-              <div className="row pt-2">
+            </b>   
+            <div id={structure === "gridStructure" ? "productHover" : null}>
+              <div className="row pt-2 pl-2">
                 <div className="pl-2 pr-2">
-                  <button className="btn btn-sm btn-secondary" onClick={add_cart.bind(this, person.sku, 1)}>Add Cart</button>
+                  <button className="btn btn-sm btn-primary" onClick={add_cart.bind(this, person.sku, 1)}>Add Cart</button>
                 </div>
                 <div className="pl-2 pr-2">
                   <i className="fa fa-heart fa-1x text-center" aria-hidden="true" id="icon"></i>
@@ -111,31 +110,28 @@ const gridViewStructure = (person) => {
                 </div>
               </div>
             </div>
+      </React.Fragment>
+};
+
+//Grid View Layout
+const gridViewStructure = (person) => {
+  return  <div className="shadowContainer p-3 mx-auto">            
+            <div className="mx-auto" onClick={push_product_details.bind(this, person.sku)}>
+              <img className="mx-auto" src={person.image.url} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}}/>
+            </div> 
+            {/*Content For Grid View and List View*/}
+            {content(person, "gridStructure")}            
           </div>     
 }
 
 //List View and Mobile View Layout
 const listViewStructure = (person) => {
-  return <div>
-                    <h6 className="pt-2 pl-2">{person.name}</h6>   
-                    <div className="pt-2 pl-2">
-                      {getSymbolFromCurrency(person.price.regularPrice.amount.currency)}
-                      {person.price.regularPrice.amount.value}
-                      </div>
-                      <div className="row pt-2 pl-2">
-                      <div className="pl-2">
-                        <button className="btn btn-sm btn-secondary ml-2" onClick={add_cart.bind(this, person.sku, 1)}>Add Cart</button>
-                      </div>
-                      <div className="pl-2">
-                        <i className="fa fa-heart fa-1x text-center" aria-hidden="true" id="icon"></i>
-                      </div>
-                      <div className="pl-2">
-                        <i className="fa fa-bar-chart fa-1x text-center" aria-hidden="true" id="icon"></i>
-                      </div>
-                    </div>  
-                    <div className="pt-3 pl-2">
-                      <a href="" className="link">Learn More</a>                                       
-                    </div>
+  return <div className="pt-2 pl-2">
+            {/*Content For Grid View and List View*/}
+            {content(person, "listStructure")}            
+            <div className="pt-3">
+              <a href="" className="link" onClick={push_product_details.bind(this, person.sku)}>Learn More</a>                                       
+            </div>
           </div>
 }
 
@@ -145,19 +141,19 @@ const greaterThanMediumScreenLayout = () => {
               {selector.product.productDataLength === '1' ? 
                   <div>                
                     {(selector.product.productData.length > 0 && selector.product.productData.length != null) ?
-                    <div className="row mx-auto col-9">
+                    <div className="row mx-auto col-8">
                       {selector.product.productData.slice(indexOfFirstPost, indexOfLastPost).map((person, i) => ( 
                         <React.Fragment key={person.id}>
                         {gridView ?
-                        <div key={person.id} className="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mx-auto p-3 m-1 mb-5 bg-white rounded">
+                        <div key={person.id} className="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 p-3">
                             {gridViewStructure(person)}                 
                           </div>
                           :
                           <div key={person.id} className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-2 pb-2 mx-auto">
-                            <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 mx-auto">
-                              <div className="text-center" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={person.image.url} alt="new" id="productImage" /> </div>
+                            <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mx-auto">
+                              <div className="mx-auto" onClick={push_product_details.bind(this, person.sku)}><img className="mx-auto" src={person.image.url} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}}/> </div>                               
                             </div>
-                            <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-8 col-xl-8 mx-auto">
+                            <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-9 col-xl-9 mx-auto">
                               {listViewStructure(person)}                          
                             </div>                       
                           </div>
@@ -185,9 +181,9 @@ const lesserThanMediumScreenLayout = () => {
                     <div className="row col-12 mx-auto m-0 p-0 full-width-row">
                       {selector.product.productData.slice(indexOfFirstPost, indexOfLastPost).map((person, i) => (                     
                         
-                          <div key={person.id} className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 pt-2 pb-2 mx-auto" style={{padding: '1px'}}>                        
+                          <div key={person.id} className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 pt-2 pb-2" style={{padding: '1px'}}>                        
                               <div onClick={push_product_details.bind(this, person.sku)}>
-                                <img className="mx-auto" src={person.image.url} alt="new" style={{width: "100%", height: "%100"}} />
+                                <img className="mx-auto" src={person.image.url} alt="new" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
                               </div>
                               {listViewStructure(person)}                                                                          
                           </div>
