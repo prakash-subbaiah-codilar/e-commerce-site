@@ -12,9 +12,9 @@ return (
   {/*Top header with signin and signup*/}
   <div className="bg-secondary fixed-top pt-0 pb-0">
   <ul className="text-right text-light">    
-    <a className="text-right"><button id="back" className="btn btn-sm text-light">Default welcome msg!</button></a>
-    <a className="text-right"><button id="back" className="btn btn-sm text-light">Sign In</button></a>
-    <a className="text-right"><button id="back" className="btn btn-sm text-light">Create an Account</button></a>
+    <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Default welcome msg!</button></a>
+    <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Sign In</button></a>
+    <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Create an Account</button></a>
   </ul>
   </div>
 
