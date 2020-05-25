@@ -298,3 +298,15 @@ font-weight: 700;
 {
     opacity:0 !important;
 }
+
+
+
+
+
+/*.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown>.dropdown-toggle:active {  
+    pointer-events: none;
+}*/
