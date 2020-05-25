@@ -20,15 +20,9 @@ const Popupimage = (props) => {
                     <div className="carousel-inner" role="listbox">
                                 {props.person.media_gallery_entries.map((productImage, i) => (                                                                     
                                     <React.Fragment key={productImage.file}>                                        
-                                        {props.selectedImage === productImage.file ?                                                                                    
-                                                <div key={productImage.file} className="carousel-item active"> 
+                                                <div key={productImage.file} className={props.selectedImage === productImage.file ? "carousel-item active" : "carousel-item"}> 
                                                     <img className="modalImage d-block img-fluid" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" id={i} ref={props.imgRef} />
-                                                </div>                                                                                    
-                                                :
-                                                <div key={productImage.file} className="carousel-item">
-                                                    <img className="modalImage d-block img-fluid" src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" id={i}  ref={props.imgRef} />
-                                                </div>                                                                                                                                
-                                        }
+                                                </div>                                        
                                     </React.Fragment>                                    
                                 ))}              
                     </div>

@@ -14,18 +14,19 @@ import { Link } from 'react-router-dom';
 
 const CartButton = (props) => {
   
-  const dispatch = useDispatch();  
+const dispatch = useDispatch();  
   
-  const selector = useSelector(state => state);
+const selector = useSelector(state => state);
   
-  const [popoverOpen, setPopoverOpen] = useState(false);
+const [popoverOpen, setPopoverOpen] = useState(false);
 
-  const [cartItemsList, setCartItemsList] = useState([]);  
-  const [items, setItems] = useState([]);  
+const [cartItemsList, setCartItemsList] = useState([]);  
+
+const [items, setItems] = useState([]);  
   
 //Open and close Popover Cart function
-  const toggle = () => setPopoverOpen(!popoverOpen);
-  const toggleClose = () => setPopoverOpen(!popoverOpen);
+const toggle = () => setPopoverOpen(!popoverOpen);
+const toggleClose = () => setPopoverOpen(!popoverOpen);
 
 //Call createEmptyCart function to create new cart id for guest 
 useEffect(() => {         
@@ -65,7 +66,7 @@ const updateCart = (qty, cart_item_id) => {
 }
 
 
-//Cart Item List Layout
+//Cart Items List Layout
 const cartList = () => {
   return <div>
     {items.map((cartItem, i) => (                                       
@@ -132,7 +133,7 @@ const cartList = () => {
 
                                     <hr className="text-secondary p-1"></hr>                                    
 
-                                    {/*Cart Item List Layout*/}
+                                    {/*Cart Items List Layout*/}
                                     {cartList()}                                 
 
                                     <p className="text-center text-primary m-0" onClick={toggleClose}><Link to={"/checkout/cart"}>View and Edit Cart</Link></p>                                    

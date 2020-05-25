@@ -93,13 +93,13 @@ const left_column_productImageView = (person) => {
     return <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 pt-2 mx-auto text-center">
 
                 {/*View product image large size*/}
-                <div className="row col-12 text-center">                                                                                     
+                <div className="row col-12 text-center mx-auto">                                                                                     
                 <div id="slider1" className="carousel slide mb-5 text-center mx-auto" data-ride="carousel" data-interval="false">
                     <div className="carousel-inner themeImage" role="listbox">
                                 {person.media_gallery_entries.map((productImage, i) => (                                                                     
                                     <React.Fragment key={productImage.file}>                                        
-                                        <div id={productImage.file} key={productImage.file} className={selectedImage === productImage.file ? "carousel-item active" : "carousel-item" } data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"> 
-                                            <img src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" style={{width: "200px", height: "250px"}}/>
+                                        <div id={productImage.file} key={productImage.file} className={selectedImage === productImage.file ? "carousel-item active" : "carousel-item" } data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" style={{width: '100%', height: 'auto'}}> 
+                                            <img src={""+Config[0].API_KEY_URL+"pub/media/catalog/product/"+productImage.file} alt="First Slide" style={{width: '100%', height: '100%', objectFit: 'contain'}}/>
                                         </div>                                                                                                                            
                                     </React.Fragment>                                     
                                 ))}              
@@ -132,10 +132,10 @@ const left_column_productImageView = (person) => {
 //Center Column Product Details View Layout
 const center_column_productImageView = (person) => {
     
-    return <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+    return <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mx-auto">
                 <p className="pt-2 pl-2 text-secondary" id="productDetailsTitle">{person.name}</p>
                 <a href="" className="pt-2 pl-2" >Be the first to review this product</a>
-                <div className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8" id="productDetailsPriceBottom">
+                <div className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 mx-auto" id="productDetailsPriceBottom">
                     <div className="pt-2 pl-2 text-secondary col-6">
                         <h1>
                             {getSymbolFromCurrency(person.price.regularPrice.amount.currency)}
@@ -148,17 +148,17 @@ const center_column_productImageView = (person) => {
                     </p>
                 </div>
 
-                <p className="pt-5 pl-2 text-secondary"><b>Qty</b></p>
+                <p className="pt-5 pl-3 text-secondary"><b>Qty</b></p>
 
-                <div className="pl-2">                                    
+                <div className="pt-3 pl-3">                                    
                     <input type="text" value={qty} onChange={e => setQty(e.target.value)} className="p-1 text-center" style={{width: '50px'}}/>
                 </div>
 
-                <div className="pt-3 pl-2">
+                <div className="pt-3 pl-3">
                     <button className="btn btn-primary btn-lg" type="button" onClick={updateCart.bind(this, qty )}>Update Cart</button>
                 </div>
 
-                <div className="pt-5 pl-2 text-secondary">                                    
+                <div className="pt-5 pl-3 text-secondary">                                    
                     <div>
                         <i className="fa fa-heart fa-1x text-center" aria-hidden="true" id="icon"></i>  ADD TO WISHLIST
                     </div>
@@ -174,7 +174,7 @@ const center_column_productImageView = (person) => {
 
 //Details and Review Tab Layout
 const detailsReviewTab = (person) => {
-    return <div className="container py-4">
+    return <div className="p-3 py-4">
     <div className="row">
         <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">                                
             <ul id="tabs" className="nav nav-tabs">                                        
@@ -251,7 +251,10 @@ const detailsReviewTab = (person) => {
                     ))}
                 </div>
                 :
-                <div className="text-center">No Records Found</div>
+                <div className="mx-auto text-center">
+                    <img style={{width:150, height:150}} src={require('./loading_spinner.gif')} alt="new" />
+                    <div className="text-center">No Records Found</div>                    
+                </div>
                   }
                 </div>
                 :                

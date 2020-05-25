@@ -97,7 +97,7 @@ const ApplyDiscountLayout = () => {
   return <div>
             <p data-toggle="collapse" data-target="#applyCode">Apply Discount Code&nbsp;&nbsp;<i className="fa fa-angle-down fa-1x" aria-hidden="true" id="icon"></i></p>
             <div className="collapse mb-5" id="applyCode">
-              <div className="input-group col-5">
+              <div className="input-group col-12 col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
                   <input type="text" className="form-control" value={discountcode} onChange={(e) => setDiscountcode(e.target.value)}placeholder="Enter discount code" />
                   <button className="input-group-addon btn btn-secondary" onClick={applyDiscountCode}>Apply Discount</button>
               </div>
