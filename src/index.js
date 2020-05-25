@@ -14,6 +14,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 
 import thunk from 'redux-thunk';
 
+import menusReducer from "./reducers/MenusReducer";
+
 import productReducer from "./reducers/ProductReducer";
 
 import addcartReducer from "./reducers/AddcartReducer";
@@ -21,7 +23,8 @@ import addcartReducer from "./reducers/AddcartReducer";
 //Combine the Multiple Reducers
 const rootReducer = combineReducers({    
     product: productReducer,  
-    addcart: addcartReducer
+    addcart: addcartReducer,
+    menus: menusReducer    
 });
 
 //Create Store to connect Root Reducre and Middleware

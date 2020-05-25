@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './index.css';
+import { Link } from 'react-router-dom';
 
 import CartButton from "../CartButton";
+import { categoriesList } from "../../actions/MenusAction";
+
 
 const Navigation = () => {
+  
+  const dispatch = useDispatch();    
+  const selector = useSelector(state => state);
+  
+  const [categoryList, setCategoryList] = useState([]);  
+
+  useEffect(() => {         
+      dispatch(categoriesList(1));          
+  },[]);
+  
+  useEffect(() => {    
+    setCategoryList(selector.menus.categories);      
+  }, [selector.menus.categories]);
 
 return (
   
@@ -56,9 +73,15 @@ return (
     {/*Bottom Header with Menus by category*/}
     <div className="pt-2 pb-1" style={{backgroundColor: '#DCDCDC'}}>
       <ul className="text-left text-dark">        
-        <a className="text-left p-2 pl-2 pr-2">Menu 1&nbsp;<i className="fa fa-angle-down fa-1x text-center" aria-hidden="true" id="icon"></i></a>
-        <a className="text-left p-2 pl-2 pr-2">Menu 2&nbsp;<i className="fa fa-angle-down fa-1x text-center" aria-hidden="true" id="icon"></i></a>
-        <a className="text-left p-2 pl-2 pr-2">Menu 3&nbsp;<i className="fa fa-angle-down fa-1x text-center" aria-hidden="true" id="icon"></i></a>
+      {categoryList.children_count >= 0 ? 
+      <React.Fragment>
+        {categoryList.children.slice(0).reverse().map((category, i) => (
+          <Link to={"/category/"+category.id+""}><a className="text-left text-dark p-2 pl-2 pr-2">{category.name}&nbsp;<i className="fa fa-angle-down fa-1x text-center" aria-hidden="true" id="icon"></i></a></Link>
+        ))}
+      </React.Fragment>
+      :
+      <div>Loading</div>
+      }        
       </ul>
   </div>
   

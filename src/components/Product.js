@@ -38,7 +38,7 @@ function Product(props) {
         dispatch(productData(currentPage, props.match.params.id));
     }
 
-  },[]);
+  },[props.match.params.id]);
 
 
 // Get current posts and set as number of product view in per page
