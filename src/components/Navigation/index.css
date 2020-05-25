@@ -310,3 +310,8 @@ font-weight: 700;
 .dropdown>.dropdown-toggle:active {  
     pointer-events: none;
 }*/
+@media only screen  and (max-width : 991px) {
+  #top {
+    visibility: hidden; 
+  }
+}

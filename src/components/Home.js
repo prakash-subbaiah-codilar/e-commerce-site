@@ -7,9 +7,7 @@ const Home = () => {
             <div className="text-center text-secondary">               
                 <h4>Welcome to E-commerce Site</h4>
                 <br />
-                <h6>Please check the URL with category/:id</h6>
-                <br />
-                <h6><i>eg: http://127.0.0.1/category/3</i></h6>
+                <h6>Start your shopping by select category from menu</h6>                
                 <br />
 
             </div>
