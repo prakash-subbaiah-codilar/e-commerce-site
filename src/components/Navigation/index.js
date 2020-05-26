@@ -14,53 +14,41 @@ const Navigation = (props) => {
   
   const [categoryList, setCategoryList] = useState([]);  
 
-
+  const [activeId, setActiveId] = useState(null);  
+  
   useEffect(() => {         
       dispatch(categoriesList(1));          
   },[]);
   
   useEffect(() => {    
     setCategoryList(selector.menus.categories);      
-  }, [selector.menus.categories]);
+  }, [selector.menus.categories]); 
 
-  
-const nestedMenu2 = (categoryLevel, id) => {
-  return <React.Fragment>
-          {categoryLevel.children.length >= 0 ?
-                <React.Fragment>
-                <div className="dropdown-menu m-0 p-0" id="submenu" aria-labelledby={id}>                                
-                {categoryLevel.children.slice(0).reverse().map((categoryLevelNext, i) => (
-                  <React.Fragment>
-                  <Link to={"/category/"+categoryLevelNext.id+""} style={{textDecoration: 'none'}}>
-                    <a className="dropdown-item text-left text-dark m-0 p-3" style={{width: "200px"}}>{categoryLevelNext.name}{categoryLevelNext.children.length > 0 ? <i className="fa fa-angle-down fa-1x text-center" aria-hidden="true" id="icon"></i> : null}</a>                   
-                  </Link>
-                  {nestedMenu2(categoryLevelNext)}
-                  </React.Fragment>
-                ))}                
-                </div>
-                </React.Fragment>
-                :
-                null
-                }
-  </React.Fragment>
-};
 
-const nestedMenu = (categoryLevel, id) => {
+//Declare the active submenu  
+  const handleClick = (id) => {
+    setActiveId(id);
+  };
+/*Nested Sub Menu Layout*/
+const nestedMenu = (categoryLevel, id, menuType) => {
   return <React.Fragment>
             {categoryLevel.children.length > 0 ?
                   <React.Fragment>
-                    <div className="dropdown-menu m-0 p-0 ml-1 mr-1" aria-labelledby={id}>                              
+                    <div className={menuType === "directmenu" ? "dropdown-menu m-0 p-0 ml-1 mr-1" : "dropdown-menu m-0 p-0"} id={menuType} aria-labelledby={id}>                              
                       {categoryLevel.children.slice(0).reverse().map((categoryLevelNext, i) => (
                         <React.Fragment>
                           <div className="dropdown-item m-0 p-0">
-                            <div className="dropdown m-0 p-0">
-                              <Link to={"/category/"+categoryLevelNext.id+""} style={{textDecoration: 'none'}}>                                                                          
-                                <li className="nav-item text-left text-dark m-0 p-3" style={{width: "200px"}}>                                        
-                                    <a>{categoryLevelNext.name}{categoryLevelNext.children.length > 0 ? <i className="fa fa-angle-right fa-1x float-right" aria-hidden="true" id="icon"></i> : null }</a>                                          
+                            <div className="dropdown bg-light m-0 p-0">
+                              <Link to={"/category/"+categoryLevelNext.id+""} style={{textDecoration: 'none'}}>
+                                <li className={activeId === categoryLevelNext.id ? "nav-item text-left text-dark m-0 p-2 active" : "nav-item text-left text-dark m-0 p-2"} style={{width: "200px"}} onClick={ handleClick.bind(this, categoryLevelNext.id) } >                                        
+                                    <a className="nav-link">{categoryLevelNext.name}{categoryLevelNext.children.length > 0 ? <i className="fa fa-angle-right fa-1x float-right" aria-hidden="true" id="icon"></i> : null }</a>                                          
                                 </li>
                               </Link>
-                                                                  
-                            {nestedMenu2(categoryLevelNext, categoryLevelNext.id)}                                        
+                              {categoryLevelNext.children.length > 0 ?                                                                  
+                                nestedMenu(categoryLevelNext, categoryLevelNext.id, "submenu")
+                                :
+                                null
+                              }
                             </div>
                           </div>                                    
                         </React.Fragment>                
@@ -132,8 +120,9 @@ return (
                   <li className="nav-item dropdown m-0 p-0">                                                   
                     <Link to={"/category/"+categoryLevel1.id+""} style={{textDecoration: 'none'}}>                                                                          
                       <a className="nav-link text-light m-0 p-3 btn">{categoryLevel1.name}&nbsp;&nbsp;<i className="fa fa-angle-down float-right" aria-hidden="true" id="icon" style={{fontSize: 20, margin: "0px"}}></i></a>
-                    </Link>
-                    {nestedMenu(categoryLevel1, categoryLevel1.id)}
+                    </Link>                    
+                    {/*Nested Submenu Layout*/}
+                    {nestedMenu(categoryLevel1, categoryLevel1.id, "directmenu")}                    
                   </li>                  
                 </React.Fragment>
               ))}        
