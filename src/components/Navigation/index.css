@@ -378,6 +378,12 @@ font-weight: 700;
   background-color: #DCDCDC;
   border-color: #fff;
 }
+.dropdown .dropdown-item a:hover
+{
+  color: #000;
+  background-color: #DCDCDC;
+  border-color: #fff;
+}
 .dropdown .nav-item:hover
 {
   color: #000;
