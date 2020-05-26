@@ -12,6 +12,11 @@ $(document).ready(function(){
     $('[data-toggle="popover"]').popover();   
   });
 
-$(document).on('click',function(){
-    $('#navbarNav').collapse('hide');
-});
+
+/*$(function(){
+  // mobile menu slide from the left
+  $('[data-toggle="slide-collapse"]').on('click', function() {
+    $navMenuCont = $($(this).data('target'));
+    $navMenuCont.animate({'width':'toggle'}, 280);
+  });
+})*/

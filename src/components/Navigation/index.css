@@ -358,7 +358,17 @@ font-weight: 700;
 }
 
 /*Active menu highlighted with left border*/
-.nav-item .active {
+.nav-item .active {  
   border-left: 3px solid red;
   margin-left: 0px;
 }
+
+/*#navbarCollapse {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 280px;*/ /*example + never use min-width with this solution */
+  /*height: 100%;
+  background: #000;
+}*/

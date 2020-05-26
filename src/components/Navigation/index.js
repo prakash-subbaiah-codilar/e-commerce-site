@@ -15,6 +15,9 @@ const Navigation = (props) => {
   const [categoryList, setCategoryList] = useState([]);  
 
   const [activeId, setActiveId] = useState(null);  
+  const [activeIdMobile, setActiveIdMobile] = useState(null);  
+
+  const [collapseNav, setCollapseNav] = useState(false);  
   
   useEffect(() => {         
       dispatch(categoriesList(1));          
@@ -28,6 +31,15 @@ const Navigation = (props) => {
 //Declare the active submenu  
   const handleClick = (id) => {
     setActiveId(id);
+  };
+  //Declare the active submenu in mobile 
+  const handleClickMobile = (id) => {
+    setCollapseNav(false);
+    setActiveIdMobile(id);
+  };
+  const handleNavbar = () => {
+//alert("clicked");
+    document.getElementsByClassName('navbar-toggler').collapse('toggle');
   };
 /*Nested Sub Menu Layout*/
 const nestedMenu = (categoryLevel, id, menuType) => {
@@ -60,6 +72,42 @@ const nestedMenu = (categoryLevel, id, menuType) => {
                   }
           </React.Fragment>
 }
+
+/*Nested Sub Menu Mobile Layout*/
+const nestedMenu1Mobile = (categoryLevel, menuType) => {
+  return <React.Fragment>
+          {categoryLevel.children.length >= 0 ?
+                <React.Fragment>
+                  <div className={menuType === "mainmenu" ? "pt-2 pb-2" : "pl-2 pr-2"}>
+          {menuType === "mainmenu" ? <Link to={"/category/"+categoryLevel.id+""} className="text-left text-dark p-1 menulist" onClick={ handleClickMobile.bind(this, categoryLevel.id) }>{activeIdMobile === categoryLevel.id ? <h6 style={{borderLeft: "3px solid red", marginLeft: "0px"}}>All {categoryLevel.name}</h6> : <h6>All {categoryLevel.name}</h6>}</Link> : null }
+                  {categoryLevel.children.slice(0).reverse().map((categoryLevelNext, i) => (
+                  <React.Fragment>                    
+                    {activeIdMobile === categoryLevelNext.id ?
+                    <div style={{borderLeft: "3px solid red", marginLeft: "0px"}}>
+                    <Link to={"/category/"+categoryLevelNext.id+""} className={menuType === "mainmenu" ? "text-left text-dark p-2 menulist" : "text-secondary p-2 menulist"} onClick={ handleClickMobile.bind(this, categoryLevelNext.id) }>                                          
+                        <div>{categoryLevelNext.name}</div>                          
+                    </Link>
+                     </div>
+                     :
+                     <div>
+                    <Link to={"/category/"+categoryLevelNext.id+""} className={menuType === "mainmenu" ? "text-left text-dark p-2 menulist" : "text-secondary p-2 menulist"} onClick={ handleClickMobile.bind(this, categoryLevelNext.id) }>                                          
+                        <div>{categoryLevelNext.name}</div>                          
+                    </Link>
+                     </div>
+                    }
+                                        
+                  {nestedMenu1Mobile(categoryLevelNext, "submenu")}
+                  </React.Fragment>                
+                ))}
+                </div>
+                </React.Fragment>                
+                :
+                null
+                }
+  </React.Fragment>
+};
+
+
 return (
   
 <header id="header">
@@ -76,7 +124,7 @@ return (
 <nav className="navbar navbar-expand-sm navbar-light bg-light m-0 p-0">       
 
         <div className="container p-0">
-        <button className="navbar-toggler p-2 m-2 mr-auto" data-toggle="collapse" data-target="#navbarNav"><span className="navbar-toggler-icon"></span></button>
+        <button className={collapseNav ? "navbar-toggler p-2 m-2 mr-auto collapsed" : "navbar-toggler p-2 m-2 mr-auto"} data-toggle="collapse" data-target="#navbarNav" aria-expanded={collapseNav ? true : false}><span className="navbar-toggler-icon" onClick={() => setCollapseNav(!collapseNav)}></span></button>
         <Link to={"/"}><a className="navbar-brand text-dark p-2">LUMA</a></Link>
         <div className="d-sm-block d-md-none">
                 <h6 className="p-3">
@@ -84,10 +132,10 @@ return (
                   <CartButton />
                 </h6>
         </div>
-            <div className="collapse navbar-collapse" id="navbarNav">
+            <div className={collapseNav ? "navbar-collapse collapse show" : "collapse navbar-collapse"} id="navbarNav">
               <ul className="navbar-nav ml-auto">               
 
-              <form className="form-inline my-2 my-lg-0">                                              
+              <form className="form-inline my-2 my-lg-0 d-none d-md-block">                                              
                   <div className="container mt-3">                    
 
                     <div className="input-group mb-3">
@@ -115,11 +163,10 @@ return (
                     <React.Fragment>
                       <hr className="text-secondary m-0 p-0"></hr>
                       <li className="m-0 p-2">
-                          <div className="pt-2 pb-2" data-toggle="collapse" data-target={"#"+categoryLevel1.id+""}>{categoryLevel1.name}<i className="fa fa-angle-down fa-1x float-right text-right" aria-hidden="true" id="icon"></i></div>
-                          {/*nestedMenu1(categoryLevel1, categoryLevel1.id)*/}
+                          <div className="pt-2 pb-2" data-toggle="collapse" data-target={"#"+categoryLevel1.id+""}><h5>{categoryLevel1.name}<i className="fa fa-angle-down fa-1x float-right text-right" aria-hidden="true" id="icon"></i></h5></div>                          
                           <div class="collapse" id={categoryLevel1.id}>                
-                            <div className="pt-2 pb-2">Menu1</div>
-                            <div className="pt-2 pb-2">Menu2</div>                
+                            {/*Nested Sub Menu Mobile Layout*/}
+                            {nestedMenu1Mobile(categoryLevel1, "mainmenu")}                                                        
                           </div>
                       </li>                                    
                     </React.Fragment>
@@ -128,7 +175,10 @@ return (
                   :
                   <div>Loading</div>
                   } 
-                </div>                
+                </div>  
+
+
+
 
               </ul>
 
