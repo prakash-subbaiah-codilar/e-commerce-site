@@ -366,12 +366,12 @@ font-weight: 700;
   left: 100%;
   margin-top: -1px;
 }*/
-.dropdown .dropdown-menu .active
+/*.dropdown .dropdown-menu .active
 {
   color: #000;
   background-color: red;
   border-color: 2px solid red;
-}
+}*/
 .dropdown .dropdown-menu a:hover
 {
   color: #000;
@@ -392,6 +392,6 @@ font-weight: 700;
 }
 */
 /* and this styles the dropdwon trigger link, when open */
-.navbar .dropdown.show a { 
+/*.navbar .dropdown.show a { 
   background-color: #BADA55;
-}
+}*/
