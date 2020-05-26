@@ -65,7 +65,7 @@ return (
 <header id="header">
 
   {/*Top header with signin and signup*/}
-  <div className="bg-secondary fixed-top pt-0 pb-0" id="top">
+  <div className="bg-secondary p-1 d-none d-md-block">
           <ul className="text-right text-light">    
             <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Default welcome msg!</button></a>
             <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Sign In</button></a>
@@ -73,11 +73,17 @@ return (
           </ul>
         </div>
 {/*Middle header with search and Add cart section*/}
-<nav className="navbar navbar-expand-sm navbar-light bg-light mt-5 pt-4 mb-0">       
+<nav className="navbar navbar-expand-sm navbar-light bg-light m-0 p-0">       
 
-        <div className="container">
-        <Link to={"/"}><a className="navbar-brand text-dark">LUMA</a></Link>
-          <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarNav"><span className="navbar-toggler-icon"></span></button>
+        <div className="container p-0">
+        <button className="navbar-toggler p-2 m-2 mr-auto" data-toggle="collapse" data-target="#navbarNav"><span className="navbar-toggler-icon"></span></button>
+        <Link to={"/"}><a className="navbar-brand text-dark p-2">LUMA</a></Link>
+        <div className="d-sm-block d-md-none">
+                <h6 className="p-3">
+                  {/*Cart Button Component*/}
+                  <CartButton />
+                </h6>
+        </div>
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ml-auto">               
 
@@ -94,13 +100,35 @@ return (
                   </div>
                 
               </form>
-              <div className="p-2">
-                <h6>
+              <div className="d-none d-md-block p-2">
+                <h6 className="pl-2">
                   {/*Cart Button Component*/}
                   <CartButton />
                 </h6>
-
               </div>
+              
+              {/*Mobile view Menu Structure*/}
+              <div className="d-sm-block d-md-none m-0 p-0">
+                  {categoryList.children_count >= 0 ? 
+                  <React.Fragment>
+                  {categoryList.children.slice(0).reverse().map((categoryLevel1, i) => (
+                    <React.Fragment>
+                      <hr className="text-secondary m-0 p-0"></hr>
+                      <li className="m-0 p-2">
+                          <div className="pt-2 pb-2" data-toggle="collapse" data-target={"#"+categoryLevel1.id+""}>{categoryLevel1.name}<i className="fa fa-angle-down fa-1x float-right text-right" aria-hidden="true" id="icon"></i></div>
+                          {/*nestedMenu1(categoryLevel1, categoryLevel1.id)*/}
+                          <div class="collapse" id={categoryLevel1.id}>                
+                            <div className="pt-2 pb-2">Menu1</div>
+                            <div className="pt-2 pb-2">Menu2</div>                
+                          </div>
+                      </li>                                    
+                    </React.Fragment>
+                  ))}        
+                  </React.Fragment>
+                  :
+                  <div>Loading</div>
+                  } 
+                </div>                
 
               </ul>
 
@@ -110,7 +138,7 @@ return (
     
  {/*Bottom Header with Menus by category*/}
     
-<nav className="navbar navbar-expand-sm navbar-light m-0 p-0 bg-secondary">
+<nav className="navbar navbar-expand-sm navbar-light m-0 p-0 bg-secondary d-none d-md-block">
   <div className="col-12 m-0 p-0">            
       <ul className="navbar-nav m-0 p-0">                  
           {categoryList.children_count > 0 ? 
