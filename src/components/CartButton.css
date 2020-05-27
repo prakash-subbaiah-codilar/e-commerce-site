@@ -1,4 +1,36 @@
 .popover {
-    min-width: 400px;
-    max-width: 400px;    
+    min-width: 340px;
+    max-width: 340px;    
 }
+
+@media only screen  and (min-width : 1224px) {
+    .popover {
+        min-width: 400px;
+        max-width: 400px;    
+    }
+    }
+    
+    @media only screen  and (min-width : 1199px) {
+        .popover {
+            min-width: 400px;
+            max-width: 400px;    
+        }
+    }
+    @media only screen  and (min-width : 991px) {
+        .popover {
+            min-width: 400px;
+            max-width: 400px;    
+        }
+    }
+    @media only screen  and (min-width : 767px) {
+        .popover {
+            min-width: 370px;
+            max-width: 370px;    
+        }
+    }
+    @media only screen  and (min-width : 575px) {
+        .popover {
+            min-width: 340px;
+            max-width: 340px;    
+        }
+    }

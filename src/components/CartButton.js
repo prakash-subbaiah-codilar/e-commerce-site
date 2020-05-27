@@ -106,7 +106,7 @@ const cartList = () => {
   return (            
             <div>
                 <div className="row" id="Popover1">                    
-                    <div className="text-left p-1"><i className="fa fa-shopping-cart text-center pt-2" style={{fontSize: "26px"}} aria-hidden="true" id="icon"></i> </div>
+                    <div className="text-left p-1"><i className="fa fa-shopping-cart text-center pt-2" style={{fontSize: "28px"}} aria-hidden="true" id="icon"></i> </div>
                     <div className="text-right p-1 pt-3">{cartItemsList ? <div>{(items.length === 0 || items === undefined) ? null : <div className="text-light bg-danger pl-2 pt-1 pr-2 pb-1">{items.length}</div>}</div> : null }</div>
                 </div>
                 <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>                
