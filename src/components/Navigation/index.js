@@ -22,7 +22,7 @@ const Navigation = (props) => {
   const [menuTab, setMenuTab] = useState(true);    
   
   useEffect(() => {         
-      dispatch(categoriesList(1));          
+      dispatch(categoriesList(2));          
   },[]);
   
   useEffect(() => {        
@@ -204,21 +204,28 @@ return (
 {/*Middle header with search and Add cart section*/}
 <nav className="navbar navbar-expand-md navbar-light bg-light p-0" id="main">       
 
-        <div className="container p-0">        
-        <button onClick={sidebarView == "open" ? closeNav.bind(this) : openNav.bind(this) } className="navbar-toggler p-2 m-2 mr-auto" ><span className="navbar-toggler-icon"></span></button>
+        <div className="container p-0">  
+        <React.Fragment>
+        <button onClick={sidebarView === "open" ? closeNav.bind(this) : openNav.bind(this) } className="navbar-toggler p-2 m-2 float-right" ><span className="navbar-toggler-icon"></span></button>
         {sidebarView === "open" ?
           null
         :
         <React.Fragment>
-        <Link to={"/"}><a className="navbar-brand text-dark p-2">LUMA</a></Link>
-        <div className="d-sm-block d-md-none">
+        <Link to={"/"}><a className="navbar-brand text-dark p-2 mr-auto">LUMA</a></Link>        
+        
+        <div className="d-sm-block d-md-none ml-auto row m-0">              
+                <h6 className="pl-3 pr-3 pt-0 pb-0" data-toggle="collapse" data-target="#searchbox">
+                  <i className="fa fa-search text-secondary text-right float-right pt-3" style={{fontSize: "22px"}} aria-hidden="true" id="icon"></i>            
+                </h6>
                 <h6 className="pl-3 pr-3 pt-0 pb-0">
                   {/*Cart Button Component*/}
                   <CartButton />
                 </h6>
         </div>
+        
         </React.Fragment>
         }
+        </React.Fragment>      
         
             <div className={collapseNav ? "navbar-collapse collapse show mobileMenu" : "collapse navbar-collapse mobileMenu"} id="navbarNav">
               <ul className="navbar-nav ml-auto">               
@@ -246,9 +253,28 @@ return (
               </ul>
 
             </div>
+
+
+
+
+            
           </div>
     </nav>
-    
+    <div className="collapse mb-5 col-12 m-0 p-0" id="searchbox">
+              <form className="form-inline my-2 my-lg-0">                                              
+                  <div className="container mt-3">                    
+
+                    <div className="input-group mb-3">
+                      <input type="text" className="form-control" placeholder="Search entire store here..." />
+                      <div className="input-group-append bg-secondary">
+                        <i className="fa fa-search text-center text-light p-1" style={{fontSize: "22px"}} aria-hidden="true" id="icon"></i>
+                      </div>
+                    </div>
+                    
+                  </div>                
+              </form>
+              <hr className="text-dark col-12 m-0 p-0"></hr>
+        </div>
  {/*Bottom Header with Menus by category*/}
     
 <nav className="navbar navbar-expand-sm navbar-light m-0 p-0 d-none d-md-block" style={{backgroundColor: "#DCDCDC"}}>
