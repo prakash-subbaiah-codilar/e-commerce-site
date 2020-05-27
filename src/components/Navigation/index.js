@@ -18,12 +18,14 @@ const Navigation = (props) => {
   const [activeIdMobile, setActiveIdMobile] = useState(null);  
 
   const [collapseNav, setCollapseNav] = useState(false);  
+  const [sidebarView, setSidebarView] = useState("close");    
+  const [menuTab, setMenuTab] = useState(true);    
   
   useEffect(() => {         
       dispatch(categoriesList(1));          
   },[]);
   
-  useEffect(() => {    
+  useEffect(() => {        
     setCategoryList(selector.menus.categories);      
   }, [selector.menus.categories]); 
 
@@ -34,13 +36,11 @@ const Navigation = (props) => {
   };
   //Declare the active submenu in mobile 
   const handleClickMobile = (id) => {
+    closeNav();
     setCollapseNav(false);
-    setActiveIdMobile(id);
+    setActiveIdMobile(id);        
   };
-  const handleNavbar = () => {
-//alert("clicked");
-    document.getElementsByClassName('navbar-toggler').collapse('toggle');
-  };
+  
 /*Nested Sub Menu Layout*/
 const nestedMenu = (categoryLevel, id, menuType) => {
   return <React.Fragment>
@@ -78,8 +78,25 @@ const nestedMenu1Mobile = (categoryLevel, menuType) => {
   return <React.Fragment>
           {categoryLevel.children.length >= 0 ?
                 <React.Fragment>
-                  <div className={menuType === "mainmenu" ? "pt-2 pb-2" : "pl-2 pr-2"}>
-          {menuType === "mainmenu" ? <Link to={"/category/"+categoryLevel.id+""} className="text-left text-dark p-1 menulist" onClick={ handleClickMobile.bind(this, categoryLevel.id) }>{activeIdMobile === categoryLevel.id ? <h6 style={{borderLeft: "3px solid red", marginLeft: "0px"}}>All {categoryLevel.name}</h6> : <h6>All {categoryLevel.name}</h6>}</Link> : null }
+                  <div className={menuType === "mainmenu" ? "pt-2 pb-2" : "pl-2 pr-2"}>                                    
+
+                  {menuType === "mainmenu" ?
+                  <React.Fragment>
+                    {activeIdMobile === categoryLevel.id ? 
+                      <Link to={"/category/"+categoryLevel.id+""} className="text-left text-dark p-1 menulist" onClick={ handleClickMobile.bind(this, categoryLevel.id) } style={{borderLeft: "3px solid red", marginLeft: "0px"}}>                     
+                        <h6>All {categoryLevel.name}</h6>                      
+                      </Link>
+                    :
+                      <Link to={"/category/"+categoryLevel.id+""} className="text-left text-dark p-1 menulist" onClick={ handleClickMobile.bind(this, categoryLevel.id) }>                                                             
+                        <h6>All {categoryLevel.name}</h6>                    
+                      </Link>
+                    }
+                    </React.Fragment>
+                  :
+                  null
+                  }
+                  
+                                    
                   {categoryLevel.children.slice(0).reverse().map((categoryLevelNext, i) => (
                   <React.Fragment>                    
                     {activeIdMobile === categoryLevelNext.id ?
@@ -106,13 +123,76 @@ const nestedMenu1Mobile = (categoryLevel, menuType) => {
                 }
   </React.Fragment>
 };
+const openNav = () => {
+  setSidebarView("open");
+  document.getElementById("mySidebar").style.width = "75%";
+  //document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("main").style.marginLeft = "75%";  
+};
 
+const closeNav = () => {
+  setSidebarView("close");
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+};
 
 return (
   
 <header id="header">
 
-  {/*Top header with signin and signup*/}
+{/*Mobile Menu side bar Layout*/}
+<div id="mySidebar" className="d-sm-block d-md-none sidebar m-0 p-0">
+  
+  <div className="d-md-block d-lg-none row mx-auto col-12 text-center m-0 p-0">
+    {menuTab ?
+     <React.Fragment>
+      <div className="text-secondary text-center mx-auto col-6 p-2 pt-4 pb-4" style={{backgroundColor: "#DCDCDC"}} onClick={() => setMenuTab(true)}>Menu</div>
+      <div className="text-secondary text-center mx-auto col-6 p-2 pt-4 pb-4" style={{backgroundColor: "#fff"}} onClick={() => setMenuTab(false)}>Account</div>
+     </React.Fragment>
+     :
+     <React.Fragment>
+      <div className="text-secondary text-center mx-auto col-6 p-2 pt-4 pb-4" style={{backgroundColor: "#fff"}} onClick={() => setMenuTab(true)}>Menu</div>
+      <div className="text-secondary text-center mx-auto col-6 p-2 pt-4 pb-4" style={{backgroundColor: "#DCDCDC"}} onClick={() => setMenuTab(false)}>Account</div>
+     </React.Fragment>
+    }    
+  </div>
+  {menuTab ?
+    <div className="d-sm-block d-md-none m-0 p-0">
+                  {categoryList.children_count >= 0 ? 
+                  <React.Fragment>
+                  {categoryList.children.slice(0).reverse().map((categoryLevel1, i) => (
+                    <React.Fragment>
+                      <hr className="text-secondary m-0 p-0"></hr>
+                      <div className="m-0 p-2">
+                          <div className="pt-2 pb-2" data-toggle="collapse" data-target={"#"+categoryLevel1.id+""}><h5>{categoryLevel1.name}<i className="fa fa-angle-down fa-1x float-right text-right" aria-hidden="true" id="icon"></i></h5></div>                                                    
+                          <div class="collapse" id={categoryLevel1.id}>                
+                            {/*Nested Sub Menu Mobile Layout*/}
+                            {nestedMenu1Mobile(categoryLevel1, "mainmenu")}                                                        
+                          </div>
+                      </div>
+                      {categoryLevel1.children.length === i+1 ? <hr className="text-secondary m-0 p-0"></hr> : null}
+                    </React.Fragment>
+                  ))}        
+                  </React.Fragment>
+                  :
+                  <div>Loading</div>
+                  } 
+                </div>  
+  :
+          <ul className="d-sm-block d-md-none text-left text-secondary m-0 p-0">    
+            <hr className="text-secondary m-0 p-0"></hr>
+            <a className="text-left">Default welcome msg!</a>
+            <hr className="text-secondary m-0 p-0"></hr>
+            <a className="text-left">Sign In</a>
+            <hr className="text-secondary m-0 p-0"></hr>
+            <a className="text-left">Create an Account</a>
+            <hr className="text-secondary m-0 p-0"></hr>
+          </ul>
+  }
+    
+</div>
+
+{/*Top header with signin and signup*/}
   <div className="bg-secondary p-1 d-none d-md-block">
           <ul className="text-right text-light">    
             <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Default welcome msg!</button></a>
@@ -120,11 +200,12 @@ return (
             <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Create an Account</button></a>
           </ul>
         </div>
-{/*Middle header with search and Add cart section*/}
-<nav className="navbar navbar-expand-sm navbar-light bg-light m-0 p-0">       
 
-        <div className="container p-0">
-        <button className={collapseNav ? "navbar-toggler p-2 m-2 mr-auto collapsed" : "navbar-toggler p-2 m-2 mr-auto"} data-toggle="collapse" data-target="#navbarNav" aria-expanded={collapseNav ? true : false}><span className="navbar-toggler-icon" onClick={() => setCollapseNav(!collapseNav)}></span></button>
+{/*Middle header with search and Add cart section*/}
+<nav className="navbar navbar-expand-md navbar-light bg-light p-0" id="main">       
+
+        <div className="container p-0">        
+        <button onClick={sidebarView == "open" ? closeNav.bind(this) : openNav.bind(this) } className="navbar-toggler p-2 m-2 mr-auto" ><span className="navbar-toggler-icon"></span></button>
         <Link to={"/"}><a className="navbar-brand text-dark p-2">LUMA</a></Link>
         <div className="d-sm-block d-md-none">
                 <h6 className="p-3">
@@ -132,7 +213,7 @@ return (
                   <CartButton />
                 </h6>
         </div>
-            <div className={collapseNav ? "navbar-collapse collapse show" : "collapse navbar-collapse"} id="navbarNav">
+            <div className={collapseNav ? "navbar-collapse collapse show mobileMenu" : "collapse navbar-collapse mobileMenu"} id="navbarNav">
               <ul className="navbar-nav ml-auto">               
 
               <form className="form-inline my-2 my-lg-0 d-none d-md-block">                                              
@@ -145,40 +226,15 @@ return (
                       </div>
                     </div>
                     
-                  </div>
-                
+                  </div>                
               </form>
+
               <div className="d-none d-md-block p-2">
                 <h6 className="pl-2">
                   {/*Cart Button Component*/}
                   <CartButton />
                 </h6>
-              </div>
-              
-              {/*Mobile view Menu Structure*/}
-              <div className="d-sm-block d-md-none m-0 p-0">
-                  {categoryList.children_count >= 0 ? 
-                  <React.Fragment>
-                  {categoryList.children.slice(0).reverse().map((categoryLevel1, i) => (
-                    <React.Fragment>
-                      <hr className="text-secondary m-0 p-0"></hr>
-                      <li className="m-0 p-2">
-                          <div className="pt-2 pb-2" data-toggle="collapse" data-target={"#"+categoryLevel1.id+""}><h5>{categoryLevel1.name}<i className="fa fa-angle-down fa-1x float-right text-right" aria-hidden="true" id="icon"></i></h5></div>                          
-                          <div class="collapse" id={categoryLevel1.id}>                
-                            {/*Nested Sub Menu Mobile Layout*/}
-                            {nestedMenu1Mobile(categoryLevel1, "mainmenu")}                                                        
-                          </div>
-                      </li>                                    
-                    </React.Fragment>
-                  ))}        
-                  </React.Fragment>
-                  :
-                  <div>Loading</div>
-                  } 
-                </div>  
-
-
-
+              </div>              
 
               </ul>
 
@@ -188,7 +244,7 @@ return (
     
  {/*Bottom Header with Menus by category*/}
     
-<nav className="navbar navbar-expand-sm navbar-light m-0 p-0 bg-secondary d-none d-md-block">
+<nav className="navbar navbar-expand-sm navbar-light m-0 p-0 d-none d-md-block" style={{backgroundColor: "#DCDCDC"}}>
   <div className="col-12 m-0 p-0">            
       <ul className="navbar-nav m-0 p-0">                  
           {categoryList.children_count > 0 ? 
@@ -197,7 +253,7 @@ return (
                 <React.Fragment>
                   <li className="nav-item dropdown m-0 p-0">                                                   
                     <Link to={"/category/"+categoryLevel1.id+""} style={{textDecoration: 'none'}}>                                                                          
-                      <a className="nav-link text-light m-0 p-3 btn">{categoryLevel1.name}&nbsp;&nbsp;<i className="fa fa-angle-down float-right" aria-hidden="true" id="icon" style={{fontSize: 20, margin: "0px"}}></i></a>
+                      <a className="nav-link text-dark m-0 p-3 btn"><b>{categoryLevel1.name}&nbsp;&nbsp;<i className="fa fa-angle-down float-right" aria-hidden="true" id="icon" style={{fontSize: 20, margin: "0px"}}></i></b></a>
                     </Link>                    
                     {/*Nested Submenu Layout*/}
                     {nestedMenu(categoryLevel1, categoryLevel1.id, "directmenu")}                    
@@ -206,7 +262,7 @@ return (
               ))}        
             </React.Fragment>
             :
-            <div>Loading</div>
+            <div className="m-0 p-3 btn">Loading...</div>
             }                                            
       </ul>
   </div>
