@@ -125,9 +125,9 @@ const nestedMenu1Mobile = (categoryLevel, menuType) => {
 };
 const openNav = () => {
   setSidebarView("open");
-  document.getElementById("mySidebar").style.width = "75%";
+  document.getElementById("mySidebar").style.width = "80%";
   //document.getElementById("main").style.marginLeft = "250px";
-  document.getElementById("main").style.marginLeft = "75%";  
+  document.getElementById("main").style.marginLeft = "80%";  
 };
 
 const closeNav = () => {
@@ -206,13 +206,20 @@ return (
 
         <div className="container p-0">        
         <button onClick={sidebarView == "open" ? closeNav.bind(this) : openNav.bind(this) } className="navbar-toggler p-2 m-2 mr-auto" ><span className="navbar-toggler-icon"></span></button>
+        {sidebarView === "open" ?
+          null
+        :
+        <React.Fragment>
         <Link to={"/"}><a className="navbar-brand text-dark p-2">LUMA</a></Link>
         <div className="d-sm-block d-md-none">
-                <h6 className="p-3">
+                <h6 className="pl-3 pr-3 pt-0 pb-0">
                   {/*Cart Button Component*/}
                   <CartButton />
                 </h6>
         </div>
+        </React.Fragment>
+        }
+        
             <div className={collapseNav ? "navbar-collapse collapse show mobileMenu" : "collapse navbar-collapse mobileMenu"} id="navbarNav">
               <ul className="navbar-nav ml-auto">               
 

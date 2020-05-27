@@ -26,7 +26,7 @@ function Product(props) {
   const [currentPage] = useState(1);
 
   //This postsPerPage is only used for Pagination perpose  
-  const [postsPerPage] = useState(9);
+  const [postsPerPage] = useState(2);
 
 //Fetch data from productData Function
   useEffect(() => {           
@@ -65,11 +65,10 @@ const add_cart = (sku, qty) => {
     dispatch(addSimpleProductToCart(selector.addcart.cartId, sku, qty));    
  }
 
-
  
 //Grid Button, List Button and Pagination Buttons Layout
 const grid_list_pagination = () => {
-  return <div className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 mx-auto">
+  return <div className="row col-12 col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 mx-auto" style={{zIndex: "0"}}>
         
       {/*Grid View and List View Toggle button*/}
       <div className="col-6 d-none d-lg-block">            
