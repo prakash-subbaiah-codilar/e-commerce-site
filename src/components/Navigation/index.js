@@ -198,9 +198,9 @@ const sidebar = () => {
                     <hr className="text-secondary m-0 p-0"></hr>
                     <a className="text-left">Default welcome msg!</a>
                     <hr className="text-secondary m-0 p-0"></hr>
-                    <a className="text-left">Sign In</a>
+                    <a className="text-left" onClick={closeNav}><Link to="/account/login" className="p-0 m-0">Sign In</Link></a>
                     <hr className="text-secondary m-0 p-0"></hr>
-                    <a className="text-left">Create an Account</a>
+                    <a className="text-left" onClick={closeNav}><Link to="/account/create" className="p-0 m-0">Create an Account</Link></a>
                     <hr className="text-secondary m-0 p-0"></hr>
                   </ul>
           }
@@ -273,8 +273,8 @@ return (
         <div className="bg-secondary p-1 d-none d-md-block">
                 <ul className="text-right text-light">    
                   <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Default welcome msg!</button></a>
-                  <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Sign In</button></a>
-                  <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Create an Account</button></a>
+                  <Link to="/account/login"><a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Sign In</button></a></Link>
+                  <Link to="/account/create"><a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Create an Account</button></a></Link>
                 </ul>
         </div>
 

@@ -14,6 +14,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 
 import thunk from 'redux-thunk';
 
+import authReducer from "./reducers/AuthReducer";
+
 import menusReducer from "./reducers/MenusReducer";
 
 import productReducer from "./reducers/ProductReducer";
@@ -22,6 +24,7 @@ import addcartReducer from "./reducers/AddcartReducer";
 
 //Combine the Multiple Reducers
 const rootReducer = combineReducers({    
+    auth: authReducer,
     product: productReducer,  
     addcart: addcartReducer,
     menus: menusReducer    
