@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import CartButton from "../CartButton";
 import { categoriesList } from "../../actions/MenusAction";
 
+import { authSignOut } from "../../actions/AuthAction";
+
 
 const Navigation = (props) => {
   
@@ -58,6 +60,12 @@ const closeNav = () => {
   setSidebarView("close");
   document.getElementById("mySidebar").style.width = "0";
   document.getElementById("main").style.marginLeft= "0";
+};
+
+//Make a signout current user
+const signOut = () => {
+  closeNav();
+  dispatch(authSignOut());
 };
 
 //Sidebar menus and account tab button Layout
@@ -195,6 +203,18 @@ const sidebar = () => {
                         </div>  
           :
                   <ul className="d-sm-block d-md-none text-left text-secondary m-0 p-0">    
+                  {selector.auth.customerToken ?
+                  <React.Fragment>
+                    <hr className="text-secondary m-0 p-0"></hr>
+                    <a className="text-left">Welcome User!</a>
+                    <hr className="text-secondary m-0 p-0"></hr>
+                    <a className="text-left" onClick={closeNav}><Link to="/account/myaccount" className="p-0 m-0">My Account</Link></a>                    
+                    <hr className="text-secondary m-0 p-0"></hr>
+                    <a className="text-left" onClick={signOut.bind(this)}>Sign Out</a>
+                    <hr className="text-secondary m-0 p-0"></hr>
+                  </React.Fragment>
+                  :
+                  <React.Fragment>
                     <hr className="text-secondary m-0 p-0"></hr>
                     <a className="text-left">Default welcome msg!</a>
                     <hr className="text-secondary m-0 p-0"></hr>
@@ -202,6 +222,9 @@ const sidebar = () => {
                     <hr className="text-secondary m-0 p-0"></hr>
                     <a className="text-left" onClick={closeNav}><Link to="/account/create" className="p-0 m-0">Create an Account</Link></a>
                     <hr className="text-secondary m-0 p-0"></hr>
+                  </React.Fragment>                  
+                  }
+                    
                   </ul>
           }
             
@@ -261,7 +284,6 @@ const bottomHeaderMenusDesktop = () => {
           </nav>
 };
 
-
 return (
   
 <header id="header">
@@ -272,9 +294,18 @@ return (
       {/*Top header with signin and signup in Desktop*/}
         <div className="bg-secondary p-1 d-none d-md-block">
                 <ul className="text-right text-light">    
-                  <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Default welcome msg!</button></a>
-                  <Link to="/account/login"><a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Sign In</button></a></Link>
-                  <Link to="/account/create"><a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Create an Account</button></a></Link>
+                  {selector.auth.customerToken ?
+                  <React.Fragment>
+                    <Link to="/account/myaccount"><a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Welcome User!</button></a></Link>
+                    <a className="text-right" onClick={signOut.bind(this)}><button id="back" className="btn btn-sm btn-secondary text-light">Sign Out</button></a>
+                  </React.Fragment>
+                  :
+                  <React.Fragment>
+                    <a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Default welcome msg!</button></a>
+                    <Link to="/account/login"><a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Sign In</button></a></Link>
+                    <Link to="/account/create"><a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Create an Account</button></a></Link>
+                  </React.Fragment>                  
+                  }
                 </ul>
         </div>
 

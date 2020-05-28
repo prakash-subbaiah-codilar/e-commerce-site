@@ -7,6 +7,7 @@ import Navigation from './components/Navigation';
 
 import Signup from "./components/account/Signup";
 import Signin from "./components/account/Signin";
+import Myaccount from "./components/account/Myaccount";
 
 import Product from "./components/Product";
 import ProductDetails from "./components/ProductDetails";
@@ -28,6 +29,9 @@ function App() {
 
           {/*Signin Page for login exiting user*/}
           <Route exact path="/account/login" component={Signin} />
+          
+          {/*MyAccount Page for user*/}
+          <Route exact path="/account/myaccount" component={Myaccount} />
           
           {/*Product List Page*/}
           <Route exact path="/category/:id" component={Product} />
