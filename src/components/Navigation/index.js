@@ -29,7 +29,19 @@ const Navigation = (props) => {
   useEffect(() => {         
       dispatch(categoriesList(2));          
   },[]);
-  
+
+  /*useEffect(() => {         
+    if(selector.auth.customerToken){                             
+      dispatch({type: 'AUTH_SIGNOUT', payload: {signOutData: selector.auth.customerToken}});
+      dispatch({type: 'CREATE_CARTID', payload: {cartIds: selector.auth.customerToken}}); 
+    }else{
+      dispatch({type: 'AUTH_SIGNOUT', payload: {signOutData: localStorage.getItem('customerToken')}});
+      dispatch({type: 'CREATE_CARTID', payload: {cartIds: localStorage.getItem('localCartId')}});
+    }     
+    
+  }, [selector.auth.customerToken]);
+*/
+
   useEffect(() => {        
     setCategoryList(selector.menus.categories);      
   }, [selector.menus.categories]); 

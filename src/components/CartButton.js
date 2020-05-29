@@ -32,12 +32,14 @@ const toggleClose = () => setPopoverOpen(!popoverOpen);
 useEffect(() => {         
   if(selector.addcart.cartId){
     //console.log(selector.addcart.cartId);
-    //localStorage.clear();
-    dispatch(getCartDetails(selector.addcart.cartId));    
-  }else{
+    //localStorage.clear();           
+    dispatch(getCartDetails(selector.addcart.cartId));              
+  }else{   
     dispatch(createEmptyCart());        
   }  
-},[selector.addcart.cartId]);
+}, [selector.addcart.cartId]);
+
+
 
 //Refresh the cart details when get updates
 useEffect(() => {

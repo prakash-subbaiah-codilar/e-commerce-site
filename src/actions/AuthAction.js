@@ -36,7 +36,7 @@ export const authSignIn = (email, pwd) => dispatch => {
           payload: datas
       });
     
-    }else{
+    }else{            
 
       localStorage.setItem('customerToken', result.data.generateCustomerToken.token);            
       let datas = {
@@ -140,21 +140,16 @@ export const authSignUp = (fName, lName, email, pwd, subscribed) => dispatch => 
 
 };
 
-
-
-
-
 /*SignUp Process*/
 export const authSignOut = () => dispatch => {     
   
   localStorage.clear();
-  //    localStorage.removeItem("customerToken");    
-      let datas = {
-        signOutData: '',    
-      }
-      return dispatch({
-          type: 'AUTH_SIGNOUT',
-          payload: datas,
-      });      
-  
+  let datas = {
+    signOutData: '',    
+  }
+  return dispatch({
+      type: 'AUTH_SIGNOUT',
+      payload: datas,
+  });
+
   };
