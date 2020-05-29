@@ -14,6 +14,7 @@
     font-size: 24px;
   }
 
+  /* Styles used for password strength progress bar*/
   #week {
     background: linear-gradient(to left, #DCDCDC 80%, red 20%);
   }
