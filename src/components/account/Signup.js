@@ -95,15 +95,15 @@ const Signup = (props) => {
     if(password.length > 0){
     switch (passwordStrengthMeter) {                
     case 0:
-        return <div className="progress" style={{height: "40px"}}><div className="progress-bar bg-danger text-center text-dark" style={{width:"20%", height: "40px"}}>Password Strength: {passwordStrengthText}</div></div>;        
+        return <p id="week" className="text-dark">Password Strength: {passwordStrengthText}</p>;        
     case 1:
-        return <div className="progress" style={{height: "40px"}}><div className="progress-bar bg-warning text-center text-dark" style={{width:"40%", height: "40px"}}>Password Strength: {passwordStrengthText}</div></div>;
+        return <p id="medium" className="text-dark">Password Strength: {passwordStrengthText}</p>;
     case 2:
-        return <div className="progress" style={{height: "40px"}}><div className="progress-bar bg-info text-center text-dark" style={{width:"60%", height: "40px"}}>Password Strength: {passwordStrengthText}</div></div>;
+        return <p id="strong" className="text-dark">Password Strength: {passwordStrengthText}</p>;
     case 3:
-        return <div className="progress" style={{height: "40px"}}><div className="progress-bar bg-success text-center text-dark" style={{width:"80%", height: "40px"}}>Password Strength: {passwordStrengthText}</div></div>;
+        return <p id="verystrong" className="text-dark">Password Strength: {passwordStrengthText}</p>;
     case 4:
-        return <div className="progress" style={{height: "40px"}}><div className="progress-bar bg-success text-center text-dark" style={{width:"100%", height: "40px"}}>Password Strength: {passwordStrengthText}</div></div>;
+        return <p id="verystrong" className="text-dark">Password Strength: {passwordStrengthText}</p>;
     default:
         return <p id="normal" className="text-dark">Password Strength: No Password</p>;        
   }

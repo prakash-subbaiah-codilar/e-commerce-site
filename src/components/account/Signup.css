@@ -13,3 +13,20 @@
     line-height: 1.1;
     font-size: 24px;
   }
+
+  #week {
+    background: linear-gradient(to left, #DCDCDC 80%, red 20%);
+  }
+  #medium {
+    background: linear-gradient(to left, #DCDCDC 60%, orange 40%);
+  }
+  #strong {
+    background: linear-gradient(to left, #DCDCDC 30%, #32CD32 30%, #32CD32 70%);   
+  }
+  #verystrong {
+    background:  green 100%;
+  }
+  #normal {
+    background: #DCDCDC 100%;
+  }
+  
