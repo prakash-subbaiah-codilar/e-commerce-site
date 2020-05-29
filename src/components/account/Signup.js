@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { authSignUp } from "../../actions/AuthAction";
 
+import zxcvbn from 'zxcvbn';
+
 import './Signup.css';
 
 //Signup Page
@@ -18,13 +20,31 @@ const Signup = (props) => {
   const [lastName, setLastName] = useState();
   const [newsletter, setNewsletter] = useState(false);
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState();
   const [signUpError, setSignUpError] = useState('');
+
+  const [passwordStrengthMeter, setPasswordStrengthMeter] = useState(0);
+  const [passwordStrengthText, setPasswordStrengthText] = useState(0);
   
   useEffect(() => {             
     setSignUpError(selector.auth.signUpErrorMsg);
   },[selector.auth.signUpErrorMsg]);
+
+  useEffect(() => {                  
+    let strength = {
+        0: "Week",
+        1: "Medium",
+        2: "Strong",
+        3: "Very Strong",
+        4: "Very Strong"
+      }
+      let text = zxcvbn(""+password+"").score;
+    
+    setPasswordStrengthText(strength[text]);
+    setPasswordStrengthMeter(zxcvbn(""+password+"").score);    
+    
+  },[password]);
 
   useEffect(() => {         
    if(selector.auth.customerToken){
@@ -45,7 +65,55 @@ const Signup = (props) => {
       }    
   };
 
+  const handlePassword = (e) => {
+    //alert(e.target.value);    
+    let strength = {
+        0: "Worst ☹",
+        1: "Bad ☹",
+        2: "Weak ☹",
+        3: "Good ☺",
+        4: "Strong ☻"
+      }
+    
+      setPassword(e.target.value);
+    // Update the text indicator
+    /*if(val !== "") {
+      text.innerHTML = "Strength: " + "<strong>" + strength[result.score] + "</strong>" + "<span class='feedback'>" + result.feedback.warning + " " + result.feedback.suggestions + "</span"; 
+    }
+    else {
+      text.innerHTML = "";
+    }*/
+
+  };
+
+  const meterValue = () => {
+    let metVal = zxcvbn(password).score;
+    alert(metVal);
+    return metVal;
+  }
+  const progressbar = () => {        
+    if(password.length > 0){
+    switch (passwordStrengthMeter) {                
+    case 0:
+        return <div className="progress" style={{height: "40px"}}><div className="progress-bar bg-danger text-center text-dark" style={{width:"20%", height: "40px"}}>Password Strength: {passwordStrengthText}</div></div>;        
+    case 1:
+        return <div className="progress" style={{height: "40px"}}><div className="progress-bar bg-warning text-center text-dark" style={{width:"40%", height: "40px"}}>Password Strength: {passwordStrengthText}</div></div>;
+    case 2:
+        return <div className="progress" style={{height: "40px"}}><div className="progress-bar bg-info text-center text-dark" style={{width:"60%", height: "40px"}}>Password Strength: {passwordStrengthText}</div></div>;
+    case 3:
+        return <div className="progress" style={{height: "40px"}}><div className="progress-bar bg-success text-center text-dark" style={{width:"80%", height: "40px"}}>Password Strength: {passwordStrengthText}</div></div>;
+    case 4:
+        return <div className="progress" style={{height: "40px"}}><div className="progress-bar bg-success text-center text-dark" style={{width:"100%", height: "40px"}}>Password Strength: {passwordStrengthText}</div></div>;
+    default:
+        return <p id="normal" className="text-dark">Password Strength: No Password</p>;        
+  }
+}else{
+    return <p id="normal" className="text-dark">Password Strength: No Password</p>;        
+}           
+};
   const signupContent = () => {
+    
+    
     return <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 text-secondary pt-2">
             {/*Thank you for registering with Main Website Store.*/}
               <p id="subTitle">Personal Information</p>
@@ -78,11 +146,16 @@ const Signup = (props) => {
                     </div>
                   <div className="form-group">
                       <label for="password">Password&nbsp;<span className="text-danger">*</span></label>
-                      <input type="password" id="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                      <input type="password" id="password" className="form-control" value={password} onChange={handlePassword.bind(this)} /*onChange={(e) => setPassword(e.target.value)}*/ required/>
+                      
+                      <div className="" style={{backgroundColor: "#DCDCDC"}}>
+                            {progressbar()}
+                      </div>
+		              
                   </div>
                   <div className="form-group">
                       <label for="password">Confirm Password&nbsp;<span className="text-danger">*</span></label>
-                      <input type="password" id="password" className="form-control" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required/>
+                      <input type="password" id="confirmpassword" className="form-control" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required/>
                   </div>
 
                   <small className="pt-3 pb-3 text-danger">* Required Fields</small>                                          
