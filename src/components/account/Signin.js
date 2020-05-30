@@ -6,6 +6,8 @@ import './Signin.css';
 
 import { authSignIn } from "../../actions/AuthAction";
 
+import { removeCartId } from "../../actions/AddcartAction";
+
 //Signin Page
 const Signin = (props) => {
   
@@ -34,6 +36,8 @@ const Signin = (props) => {
     e.preventDefault();  
     
     dispatch(authSignIn(email, password));
+    //Remove cart id after signin to set customer token as cart id
+    dispatch(removeCartId());
 
   };
 

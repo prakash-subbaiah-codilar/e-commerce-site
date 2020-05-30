@@ -404,10 +404,6 @@ return dispatch({
 };
 
 
-
-
-
-
 /*Fetch the list of Countries*/
 export const getCountries = () => dispatch => {           
   
@@ -455,5 +451,8 @@ export const getCountries = () => dispatch => {
 
 };
 
-
-
+//After signin and signup  remove the guest user cart id
+export const removeCartId = () => dispatch => {  
+  localStorage.setItem('localCartId', '');
+  return dispatch({type: 'CREATE_CARTID', payload: {cartIds: ''}})
+}

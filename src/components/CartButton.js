@@ -39,8 +39,6 @@ useEffect(() => {
   }  
 }, [selector.addcart.cartId]);
 
-
-
 //Refresh the cart details when get updates
 useEffect(() => {
     setCartItemsList(selector.addcart.cartData);    

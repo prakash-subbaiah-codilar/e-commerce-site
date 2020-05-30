@@ -1,7 +1,5 @@
 import Config from './../../Config';//Get the API_KEY_URL
 
-
-
 /*SignIn Process*/
 export const authSignIn = (email, pwd) => dispatch => {           
 
@@ -37,7 +35,8 @@ export const authSignIn = (email, pwd) => dispatch => {
       });
     
     }else{            
-
+      
+      //localStorage.setItem('localCartId', result.data.generateCustomerToken.token);            
       localStorage.setItem('customerToken', result.data.generateCustomerToken.token);            
       let datas = {
         signInToken: result.data.generateCustomerToken.token,    

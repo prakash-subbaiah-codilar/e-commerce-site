@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { authSignUp } from "../../actions/AuthAction";
 
+import { removeCartId } from "../../actions/AddcartAction";
+
 import './Signup.css';
 
 //Calculate the password strength by Alphabet, Digit and Symbol
@@ -109,7 +111,9 @@ const handleSignUp = (e) => {
     e.preventDefault();
     
       if(password === confirmPassword){
-          dispatch(authSignUp(firstName, lastName, email, password, newsletter));    
+          dispatch(authSignUp(firstName, lastName, email, password, newsletter));              
+          //Remove cart id after signup to set customer token as cart id
+          dispatch(removeCartId());
       }else{
           alert("Password and confirm password is mismatching");
       }    

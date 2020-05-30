@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
+
 import './index.css';
+
 import { Link } from 'react-router-dom';
 
 import CartButton from "../CartButton";
+
 import { categoriesList } from "../../actions/MenusAction";
 
 import { authSignOut } from "../../actions/AuthAction";
 
+import { createEmptyCart } from "../../actions/AddcartAction";
 
 const Navigation = (props) => {
   
-  const dispatch = useDispatch();    
+  const dispatch = useDispatch(store => store);    
   const selector = useSelector(state => state);
   
   const [categoryList, setCategoryList] = useState([]);  
@@ -30,17 +35,6 @@ const Navigation = (props) => {
       dispatch(categoriesList(2));          
   },[]);
 
-  /*useEffect(() => {         
-    if(selector.auth.customerToken){                             
-      dispatch({type: 'AUTH_SIGNOUT', payload: {signOutData: selector.auth.customerToken}});
-      dispatch({type: 'CREATE_CARTID', payload: {cartIds: selector.auth.customerToken}}); 
-    }else{
-      dispatch({type: 'AUTH_SIGNOUT', payload: {signOutData: localStorage.getItem('customerToken')}});
-      dispatch({type: 'CREATE_CARTID', payload: {cartIds: localStorage.getItem('localCartId')}});
-    }     
-    
-  }, [selector.auth.customerToken]);
-*/
 
   useEffect(() => {        
     setCategoryList(selector.menus.categories);      
@@ -78,6 +72,8 @@ const closeNav = () => {
 const signOut = () => {
   closeNav();
   dispatch(authSignOut());
+  dispatch(createEmptyCart()); 
+
 };
 
 //Sidebar menus and account tab button Layout

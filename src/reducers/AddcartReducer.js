@@ -1,11 +1,3 @@
-/*let cartIdGlobal;
-if(localStorage.getItem('customerToken')){
-  cartIdGlobal = localStorage.getItem('customerToken');
-}else if(localStorage.getItem('localCartId')){
-  cartIdGlobal = localStorage.getItem('localCartId');
-} else {
-  cartIdGlobal = ""
-}*/
 
 let InitialState = {           
         cartId: (localStorage.getItem('localCartId') ? localStorage.getItem('localCartId') : ""),
