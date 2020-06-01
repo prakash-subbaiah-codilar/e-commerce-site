@@ -32,7 +32,7 @@ const MyaccountComp = (props) => {
                                         <br />
                                         <span>{customerData.email}</span>
                                         <br />
-                                        <span className="text-primary">Edit</span> | <span className="text-primary">Change Password</span>
+                                        <span className="text-primary" onClick={props.handleMainContent.bind(this, "accountinfo")}>Edit</span> | <span className="text-primary" onClick={props.handleMainContent.bind(this, "accountinfo")}>Change Password</span>
                                     </React.Fragment>
                                     :
                                     <small>loading...</small>
@@ -43,25 +43,27 @@ const MyaccountComp = (props) => {
                                     <br />
                                     <span>You are subscribed to "General Subscription".</span>
                                     <br />
-                                    <span className="text-primary">Edit</span>
+                                    <span className="text-primary" onClick={props.handleMainContent.bind(this, "newsletter")}>Edit</span>
                                 </div>
                             </div>
 
-                            <p className="pt-3" id="subTitle">Address Book <span className="text-primary">Manage Addresses</span></p>
+                            <p className="pt-3" id="subTitle">Address Book <span className="text-primary" onClick={props.handleMainContent.bind(this, "addressbook")}>Manage Addresses</span></p>
                             <hr className="text-secondary m-0 p-2"></hr>
                             
                             <div className="row">
                                 <div className="col-6">
                                     <b>Default Billing Address</b>
+                                    <br />
                                     <span>You have not set a default billing address.</span>
                                     <br />
-                                    <span className="text-primary">Edit Address</span>
+                                    <span className="text-primary" onClick={props.handleMainContent.bind(this, "addressbook")}>Edit Address</span>
                                 </div>
                                 <div className="col-6">
                                     <b>Default Shipping Address</b>
-                                    You have not set a default shipping address.
                                     <br />
-                                    <span className="text-primary">Edit Address</span>
+                                    <span>You have not set a default shipping address.</span>
+                                    <br />
+                                    <span className="text-primary" onClick={props.handleMainContent.bind(this, "addressbook")}>Edit Address</span>
                                 </div>
                             </div>
 

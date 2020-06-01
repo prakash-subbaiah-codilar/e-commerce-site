@@ -1,5 +1,6 @@
 let InitialState = {               
     customerDetail: {},    
+    createCustomer: {},
 }
 
 function MyaccountReducer(state = InitialState, action) {
@@ -11,6 +12,13 @@ function MyaccountReducer(state = InitialState, action) {
       return {
         ...state,              
         customerDetail: customerDetailData 
+      }; 
+
+    case 'CREATE_CUSTOMER':        
+    let { createCustomerData } = action.payload;    
+      return {
+        ...state,              
+        createCustomer: createCustomerData 
       }; 
         
     default:

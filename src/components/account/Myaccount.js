@@ -67,7 +67,7 @@ const myAccountSideMenu = () => {
 const myAccountMainContent = () => {
     return <div className="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 mx-auto">
 
-                {content === "myaccount" ? <MyaccountComp /> : null}                
+                {content === "myaccount" ? <MyaccountComp handleMainContent={handleMainContent}/> : null}                
 
                 {content === "myorders"? <MyordersComp /> : null}
 

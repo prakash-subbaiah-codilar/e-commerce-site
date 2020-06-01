@@ -17,3 +17,8 @@
       border-left: 3px solid red;
       margin-left: 0px;
     }
+    span {
+      font-weight: 150;
+      line-height: 1.1;
+      font-size: 14px;
+    }
