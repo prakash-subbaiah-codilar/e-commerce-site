@@ -159,3 +159,63 @@ export const createAddressBook = (customerToken, firstname,
     
     };
     
+
+    
+
+/*Change Customer Password*/
+export const changeCustomerPassword = (customerToken, currentPassword, newPassword) => dispatch => {           
+
+    let authorizationToken = "Bearer "+customerToken+"";
+    
+      fetch(''+Config[0].API_KEY_URL+'graphql', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': authorizationToken
+          },
+          body: JSON.stringify({
+              query: `
+              mutation {
+                changeCustomerPassword(
+                  currentPassword: "`+currentPassword+`"
+                  newPassword: "`+newPassword+`"
+                ) {
+                  id
+                  email
+                }
+              }
+              `,
+              variables: null
+          })
+      }).then(r => r.json()).then((result) => {
+        
+        //console.log(result.errors[0].message);
+        if(result.errors){
+         
+          alert(result.errors[0].message);
+        
+        }else{            
+            alert("Address Created");
+          //console.log(result.data.customer.firstname);
+          //console.log(result.data.customer);
+          let datas = {
+            createCustomerData: result,    
+          }
+          return dispatch({
+              type: 'CREATE_CUSTOMER',
+              payload: datas,
+          });  
+        }
+      
+    }).catch((error) => {
+      
+      let datas = {
+        createCustomerData: [],    
+      }
+      return dispatch({
+          type: 'CREATE_CUSTOMER',
+          payload: datas
+      });
+    });
+    
+    };
