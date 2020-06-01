@@ -16,6 +16,8 @@ import thunk from 'redux-thunk';
 
 import authReducer from "./reducers/AuthReducer";
 
+import myaccountReducer from "./reducers/MyaccountReducer";
+
 import menusReducer from "./reducers/MenusReducer";
 
 import productReducer from "./reducers/ProductReducer";
@@ -25,6 +27,7 @@ import addcartReducer from "./reducers/AddcartReducer";
 //Combine the Multiple Reducers
 const rootReducer = combineReducers({    
     auth: authReducer,
+    myaccount: myaccountReducer,
     product: productReducer,  
     addcart: addcartReducer,
     menus: menusReducer    
