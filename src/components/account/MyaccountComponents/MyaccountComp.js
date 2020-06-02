@@ -35,8 +35,10 @@ const handleMainContent = (data) => {
   return (
     <section>
     
-        <div className="row col-12 pt-3 p-2 m-2">
+        <div className="row col-12 pt-3 p-2">
+        <div className="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 mx-auto">
             <MyaccountSidemenu handleMainContent={handleMainContent} content={"myaccount_dashboard"} />
+        </div>
         <div className="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 mx-auto">
                             <p id="title">My Account</p>
 
@@ -52,7 +54,7 @@ const handleMainContent = (data) => {
                                         <br />
                                         <span>{customerData.email}</span>
                                         <br />
-                                        <span className="text-primary" /*onClick={props.handleMainContent.bind(this, "accountinfo")}*/>Edit</span> | <span className="text-primary" /*onClick={props.handleMainContent.bind(this, "accountinfo")}*/>Change Password</span>
+                                        <span className="text-primary" onClick={handleMainContent.bind(this, "accountinfo")}>Edit</span> | <span className="text-primary" onClick={handleMainContent.bind(this, "accountinfo")}>Change Password</span>
                                     </React.Fragment>
                                     :
                                     <small>loading...</small>
@@ -63,11 +65,11 @@ const handleMainContent = (data) => {
                                     <br />
                                     <span>You are subscribed to "General Subscription".</span>
                                     <br />
-                                    <span className="text-primary" /*onClick={props.handleMainContent.bind(this, "newsletter")}*/>Edit</span>
+                                    <span className="text-primary" onClick={handleMainContent.bind(this, "newsletter")}>Edit</span>
                                 </div>
                             </div>
 
-                            <p className="pt-3" id="subTitle">Address Book <span className="text-primary" /*onClick={props.handleMainContent.bind(this, "addressbook")}*/>Manage Addresses</span></p>
+                            <p className="pt-3" id="subTitle">Address Book <span className="text-primary" onClick={handleMainContent.bind(this, "addressbook")}>Manage Addresses</span></p>
                             <hr className="text-secondary m-0 p-2"></hr>
                             
                             <div className="row">
@@ -76,14 +78,14 @@ const handleMainContent = (data) => {
                                     <br />
                                     <span>You have not set a default billing address.</span>
                                     <br />
-                                    <span className="text-primary" /*onClick={props.handleMainContent.bind(this, "addressbook")}*/>Edit Address</span>
+                                    <span className="text-primary" onClick={handleMainContent.bind(this, "addressbook")}>Edit Address</span>
                                 </div>
                                 <div className="col-6">
                                     <b>Default Shipping Address</b>
                                     <br />
                                     <span>You have not set a default shipping address.</span>
                                     <br />
-                                    <span className="text-primary" /*onClick={props.handleMainContent.bind(this, "addressbook")}*/>Edit Address</span>
+                                    <span className="text-primary" onClick={handleMainContent.bind(this, "addressbook")}>Edit Address</span>
                                 </div>
                             </div>
 

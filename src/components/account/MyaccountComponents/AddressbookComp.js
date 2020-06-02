@@ -8,6 +8,8 @@ import { createAddressBook } from "../../../actions/MyaccountAction";
 
 import MyaccountSidemenu from './MyaccountSidemenu';
 
+import { getCountries } from "../../../actions/AddcartAction";
+
 import './Myaccount.css';
 
 //Display Address book content in My account page Page
@@ -26,7 +28,7 @@ const AddressbookComp = (props) => {
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [zipCode, setZipCode] = useState("");
-    const [country, setCountry] = useState("");
+    const [country, setCountry] = useState("United States");
 
     useEffect(() => {                                                 
         dispatch(customerDetail(selector.auth.customerToken));                
@@ -37,6 +39,10 @@ const AddressbookComp = (props) => {
         setLastname(customerDatas.lastname);        
 
       }, [selector.myaccount.customerDetail]);
+
+      useEffect(() => {
+        dispatch(getCountries());    
+      });
 
 const handleAddressSubmit = (e) => {
         e.preventDefault();
@@ -72,11 +78,40 @@ const handleMainContent = (data) => {
     props.history.push(url);
   }
 
+{/*  <select id="country" onChange={(e) => setCountry(e.target.value)} className="form-control">                            
+                                <option value="United States" >United States</option>                                                                
+                                <option value="Uruguay">Uruguay</option>                                                                
+</select>*/}
+  //Country Select box
+const countrySelectbox = () => {
+    return <select className="form-control"  id="country" onChange={(e) => setCountry(e.target.value)}>            
+              {selector.addcart.countries && selector.addcart.countries.length > 0 ?
+                <React.Fragment>                
+                  {selector.addcart.countries.map((countrie, i) => (
+                      <React.Fragment>
+                      {country === countrie.full_name_english ? 
+                        <option key={countrie.id} value={countrie.full_name_english} selected="selected">{countrie.full_name_english}</option>                
+                        :
+                        <option key={countrie.id} value={countrie.full_name_english}>{countrie.full_name_english}</option>                
+                     }
+                    </React.Fragment>
+                  ))};    
+                </React.Fragment>              
+                :
+                null
+              }                
+            </select>
+  };
+  
   return (
     <section>    
-        <div className="row col-12 pt-3 p-2 m-2">
-        <MyaccountSidemenu handleMainContent={handleMainContent} content={"addressbook"} />
+        <div className="row col-12 pt-3 p-2">
+        <div className="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 mx-auto">
+            <MyaccountSidemenu handleMainContent={handleMainContent} content={"addressbook"} />
+        </div>           
         <div className="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 mx-auto">
+            
+                    
                     {customerDataAddress.length > 0 ?
                     <React.Fragment>
                         <p id="title">Address Book</p>
@@ -141,7 +176,7 @@ const handleMainContent = (data) => {
                         <span className="pb-3 mb-3">You have no other address entries in your address book.</span>
                         <br />
                         <button className="btn btn-primary btn-sm mt-3 col-12 col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3" type="button">Add New Address</button>
-                    </React.Fragment>
+                    </React.Fragment>                    
                     :
                     <React.Fragment>
                         <form onSubmit={handleAddressSubmit}>
@@ -194,10 +229,11 @@ const handleMainContent = (data) => {
                         </div>
                         <div className="form-group">
                             <label for="country">Country&nbsp;<span className="text-danger">*</span></label>
-                            <select id="country" onChange={(e) => setCountry(e.target.value)} className="form-control">                            
+                            {countrySelectbox()}
+                            {/*<select id="country" onChange={(e) => setCountry(e.target.value)} className="form-control">                            
                                 <option value="United States" >United States</option>                                                                
                                 <option value="Uruguay">Uruguay</option>                                                                
-                            </select>
+                                </select>*/}
                         </div>
                          
                          </div>

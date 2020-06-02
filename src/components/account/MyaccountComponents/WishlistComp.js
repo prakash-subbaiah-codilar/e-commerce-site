@@ -16,8 +16,10 @@ const handleMainContent = (data) => {
 
   return (
     <section>    
-        <div className="row col-12 pt-3 p-2 m-2">
-        <MyaccountSidemenu handleMainContent={handleMainContent} content={"wishlist"} />
+        <div className="row col-12 pt-3 p-2">
+        <div className="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 mx-auto">
+          <MyaccountSidemenu handleMainContent={handleMainContent} content={"wishlist"} />
+        </div>        
         <div className="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 mx-auto">
         <p id="title">My Wish List</p>
         <div class="alert alert-warning">

@@ -219,3 +219,53 @@ export const changeCustomerPassword = (customerToken, currentPassword, newPasswo
     });
     
     };
+
+
+
+
+/*Fetch the list of Countries*/
+export const getCountriesList = () => dispatch => {           
+  
+  fetch(''+Config[0].API_KEY_URL+'graphql', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          query: `
+          query {
+            countries {
+                id
+                two_letter_abbreviation
+                three_letter_abbreviation
+                full_name_locale
+                full_name_english
+                available_regions {
+                    id
+                    code
+                    name
+                }
+            }
+          }
+                  `,
+          variables: null
+      })
+  }).then(r => r.json()).then((result) => {      
+      let datas = {
+          countries_get: result.data.countries
+      }    
+  return dispatch({
+      type: 'COUNTRIES_LIST',
+      payload: datas
+  });
+}).catch((error) => {        
+  let datas = {
+    countries_get: [],                                            
+  }
+  return dispatch({
+      type: 'COUNTRIES_LIST',
+      payload: datas
+  });
+});
+
+};

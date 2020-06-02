@@ -31,7 +31,7 @@ const MyaccountSidemenu = (props) => {
 const myAccountSideMenu = () => {
     return <React.Fragment>
 
-                <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto" style={{backgroundColor: "#DCDCDC"}}>
+                <div className="col-12 mx-auto" style={{backgroundColor: "#DCDCDC"}}>
                 {/*<div className="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 mx-auto p-2" style={{backgroundColor: "#DCDCDC"}}>*/}
                 <div className="mx-auto p-3">                
 
