@@ -216,7 +216,7 @@ const sidebar = () => {
                     <hr className="text-secondary m-0 p-0"></hr>
                     <a className="text-left">Welcome User!</a>
                     <hr className="text-secondary m-0 p-0"></hr>
-                    <a className="text-left" onClick={closeNav}><Link to="/account/myaccount" className="p-0 m-0">My Account</Link></a>                    
+                    <a className="text-left" onClick={closeNav}><Link to="/account/myaccount_dashboard" className="p-0 m-0">My Account</Link></a>                    
                     <hr className="text-secondary m-0 p-0"></hr>
                     <a className="text-left" onClick={signOut.bind(this)}>Sign Out</a>
                     <hr className="text-secondary m-0 p-0"></hr>
@@ -304,7 +304,7 @@ return (
                 <ul className="text-right text-light">    
                   {selector.auth.customerToken ?
                   <React.Fragment>
-                    <Link to="/account/myaccount"><a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Welcome User!</button></a></Link>
+                    <Link to="/account/myaccount_dashboard"><a className="text-right"><button id="back" className="btn btn-sm btn-secondary text-light">Welcome User!</button></a></Link>
                     <a className="text-right" onClick={signOut.bind(this)}><button id="back" className="btn btn-sm btn-secondary text-light">Sign Out</button></a>
                   </React.Fragment>
                   :

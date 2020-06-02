@@ -7,7 +7,16 @@ import Navigation from './components/Navigation';
 
 import Signup from "./components/account/Signup";
 import Signin from "./components/account/Signin";
-import Myaccount from "./components/account/Myaccount";
+
+import AccountinfoComp from "./components/account/MyaccountComponents/AccountinfoComp";
+import AddressbookComp from "./components/account/MyaccountComponents/AddressbookComp";
+import DownloadableComp from "./components/account/MyaccountComponents/DownloadableComp";
+import MyaccountComp from "./components/account/MyaccountComponents/MyaccountComp";
+import MyordersComp from "./components/account/MyaccountComponents/MyordersComp";
+import NewsletterComp from "./components/account/MyaccountComponents/NewsletterComp";
+import ProductreviewComp from "./components/account/MyaccountComponents/ProductreviewComp";
+import WishlistComp from "./components/account/MyaccountComponents/WishlistComp";
+
 
 import Product from "./components/Product";
 import ProductDetails from "./components/ProductDetails";
@@ -31,8 +40,16 @@ function App() {
           <Route exact path="/account/login" component={Signin} />
           
           {/*MyAccount Page for user*/}
-          <Route exact path="/account/myaccount" component={Myaccount} />
-          
+
+          <Route exact path="/account/accountinfo" component={AccountinfoComp} />
+          <Route exact path="/account/addressbook" component={AddressbookComp} />
+          <Route exact path="/account/downloadable" component={DownloadableComp} />
+          <Route exact path="/account/myaccount_dashboard" component={MyaccountComp} />
+          <Route exact path="/account/myorders" component={MyordersComp} />
+          <Route exact path="/account/newsletter" component={NewsletterComp} />
+          <Route exact path="/account/productreview" component={ProductreviewComp} />
+          <Route exact path="/account/wishlist" component={WishlistComp} />
+                    
           {/*Product List Page*/}
           <Route exact path="/category/:id" component={Product} />
           

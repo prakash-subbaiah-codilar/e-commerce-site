@@ -6,8 +6,12 @@ import { customerDetail } from "../../../actions/MyaccountAction";
 
 import { createAddressBook } from "../../../actions/MyaccountAction";
 
+import MyaccountSidemenu from './MyaccountSidemenu';
+
+import './Myaccount.css';
+
 //Display Address book content in My account page Page
-const AddressbookComp = () => {
+const AddressbookComp = (props) => {
     const dispatch = useDispatch();  
     const selector = useSelector(state => state);
 
@@ -61,9 +65,18 @@ const handleAddressLine = (e) => {
         setStreetAddress(updatedArray);   
         
    }
-    
+
+//show the selected page content      
+const handleMainContent = (data) => {  
+    let url = "/account/"+data+"";  
+    props.history.push(url);
+  }
+
   return (
-    <div>                                  
+    <section>    
+        <div className="row col-12 pt-3 p-2 m-2">
+        <MyaccountSidemenu handleMainContent={handleMainContent} content={"addressbook"} />
+        <div className="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 mx-auto">
                     {customerDataAddress.length > 0 ?
                     <React.Fragment>
                         <p id="title">Address Book</p>
@@ -196,7 +209,10 @@ const handleAddressLine = (e) => {
                     }
 
                     
-                        </div>
+</div>
+    </div>    
+
+</section>
   );
 };
 

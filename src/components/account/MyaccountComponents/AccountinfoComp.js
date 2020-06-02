@@ -6,8 +6,12 @@ import { changeCustomerPassword } from "../../../actions/MyaccountAction";
 
 import { customerDetail } from "../../../actions/MyaccountAction";
 
+import MyaccountSidemenu from './MyaccountSidemenu';
+
+import './Myaccount.css';
+
 //Display Account info content in My account page Page
-const AccountinfoComp = () => {
+const AccountinfoComp = (props) => {
     const dispatch = useDispatch();  
     const selector = useSelector(state => state);
     const [customerDatass, setCustomerDatass] = useState([]);
@@ -104,8 +108,18 @@ const changeEmailPasswordLayout = () => {
     </div>
 }
 
+
+//show the selected page content      
+const handleMainContent = (data) => {  
+    let url = "/account/"+data+"";  
+    props.history.push(url);
+  }
+
 return (
-                    <div className="">
+ <section>    
+        <div className="row col-12 pt-3 p-2 m-2">
+        <MyaccountSidemenu handleMainContent={handleMainContent} content={"accountinfo"} />
+        <div className="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 mx-auto">
                             <p id="title">Edit Account Information</p>
                             <div className="row">
                             <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pt-3">
@@ -161,7 +175,10 @@ return (
                             </div>
                             </div>
                             <button className="btn btn-primary btn-sm pl-3 pr-3 col-12 col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3" onClick={handleSubmit}>Save</button>                            
-                        </div>
+                            </div>
+    </div>    
+
+</section>
   );
 };
 
